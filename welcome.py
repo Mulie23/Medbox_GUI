@@ -4,11 +4,28 @@ import json
 import base64
 import random
 import string
+import os.path
 
 random_code = ""
 
-def open_window_login():
-    login_window.show(wait=True)
+def get_started():
+    file_exists = os.path.isfile('data.json') 
+    # print(file_exists)
+    if file_exists:
+        f = open("data.json", "r")
+        if f.read() == "":
+            login_window.show(wait=True)
+            f.close
+        else:
+            with open('D:\Term 8\Capstone\guizero\Medbox_GUI/data.json') as f:
+                data = json.load(f)
+            if data["success"]==1:
+                menu_window.show(wait=True)
+    else:
+        f = open("data.json", "w")
+        f.write("")
+        f.close
+        login_window.show(wait=True)
 
 def back_window_login():
     login_window.hide()
@@ -85,13 +102,30 @@ def open_menu():
 
 app = App(title="Homepage",bg = "white")
 app.set_full_screen()
+app.hide()
 login_window = Window(app, title="Login",bg = "white")
 login_window.set_full_screen()
 login_window.hide()
 
 menu_window = Window(app, title="Menu",bg = "white")
 menu_window.set_full_screen()
-menu_window.hide()
+file_exists = os.path.isfile('data.json') 
+# print(file_exists)
+if file_exists:
+    f = open("data.json", "r")
+    if f.read() == "":
+        app.show()
+        f.close
+    else:
+        with open('D:\Term 8\Capstone\guizero\Medbox_GUI/data.json') as f:
+            data = json.load(f)
+        if data["success"]==1:
+            menu_window.show(wait=True)
+else:
+    f = open("data.json", "w")
+    f.write("")
+    f.close
+    app.show()
 add_med_window = Window(app, title="Add Medicine Window",bg = "white")
 add_med_window.set_full_screen()
 add_med_window.hide()
@@ -108,8 +142,8 @@ code_window = Window(app, title="Code",bg = "white")
 code_window.set_full_screen()
 code_window.hide()
 
-welcome_text = Text(app,text="Welcome to use the Smart Medbox, please login to proceed")
-login_button = PushButton(app, command=open_window_login, text="Login", width=20)
+welcome_text = Text(app,text="Welcome to use the Smart Medbox")
+login_button = PushButton(app, command=get_started, text="Get started", width=20)
 login_button.text_size = 15
 ask_name_text = Text(login_window, text="Please type in your username")
 my_name = TextBox(login_window,width = 25)
