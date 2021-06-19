@@ -168,13 +168,15 @@ back_button1 = PushButton(login_window, text="Back", command=back_window_login, 
 back_button1.text_size=50
 
 menu_box1 = Box(menu_window,align="top",width="fill")
-add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=25,align="left")
+add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=15,align="left")
 add_med_button.text_size=50
+blank_text5=Text(menu_box1,text="",align="left",width=15)
 quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left")
 quit_med_button.text_size=50
 menu_box2 = Box(menu_window,align="top",width="fill")
 check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=15,align="left")
 check_pre.text_size=50
+blank_text6=Text(menu_box2,text="",align="left",width=15)
 emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left")
 emergency.text_size=50
 menu_box3 = Box(menu_window,align="top",width="fill")
