@@ -17,7 +17,7 @@ def get_started():
             login_window.show(wait=True)
             f.close
         else:
-            with open('/home/pi/Documents/data.json') as f:
+            with open('/home/pi/Documents/Medbox_GUI/data.json') as f:
                 data = json.load(f)
             if data["success"]==1:
                 menu_window.show(wait=True)
@@ -93,7 +93,7 @@ def back_window5():
     code_window.hide()
 
 def save_data():
-    f=open('/home/pi/Documents/medbox_data.txt','w')
+    f=open('/home/pi/Documents/Medbox_GUI/medbox_data.txt','w')
     f.write(my_name.value+'\n')
     f.close
 
@@ -117,7 +117,7 @@ if file_exists:
         app.show()
         f.close
     else:
-        with open('/home/pi/Documents/data.json') as f:
+        with open('/home/pi/Documents/Medbox_GUI/data.json') as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
