@@ -168,23 +168,18 @@ back_button1 = PushButton(login_window, text="Back", command=back_window_login, 
 back_button1.text_size=50
 
 menu_box1 = Box(menu_window,align="top",width="fill")
-add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width="fill",align="left")
-add_med_button.text_size=70
-# add_med_button.text_size=50
+add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=70,align="left")
+add_med_button.text_size=50
 quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left")
-quit_med_button.text_size=70
-# quit_med_button.text_size=50
+quit_med_button.text_size=50
 menu_box2 = Box(menu_window,align="top",width="fill")
 check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width="fill",align="left")
-check_pre.text_size=70
-# check_pre.text_size=50
+check_pre.text_size=50
 emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left")
-emergency.text_size=70
-# emergency.text_size=50
+emergency.text_size=50
 menu_box3 = Box(menu_window,align="top",width="fill")
 add_caregiver_code = PushButton(menu_box3, command=open_window5, text="Caregiver Code",width="fill",align="left")
-add_caregiver_code.text_size=70
-# add_caregiver_code.text_size=50
+add_caregiver_code.text_size=50
 
 # ask_med_text = Text(add_med_window, text="Please type in your medicine name")
 # med_name = TextBox(add_med_window)
