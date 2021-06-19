@@ -146,16 +146,22 @@ code_window.hide()
 welcome_text = Text(app,text="Welcome to use the Smart Medbox",size=80)
 blank_text1 = Text(app,text="",size=80)
 blank_text2 = Text(app,text="",size=80)
+blank_text3 = Text(app,text="",size=50)
 login_button = PushButton(app, command=get_started, text="Get started", width=20)
 login_button.text_size = 60
-ask_name_text = Text(login_window, text="Please type in your username")
+
+ask_name_text = Text(login_window, text="Please type in your username",size=70)
 my_name = TextBox(login_window,width = 25)
 my_name.bg =(232, 240, 254)
-ask_password_text = Text(login_window, text="Please type in your password")
+my_name.text_size=70
+ask_password_text = Text(login_window, text="Please type in your password",size=70)
 my_password = TextBox(login_window,width = 25)
 my_password.bg=(232, 240, 254)
+my_password.text_size=70
 submit_button = PushButton(login_window, text="Submit",command=submit, width=10)
+submit_button.text_size=50
 back_button1 = PushButton(login_window, text="Back", command=back_window_login, width=10)
+back_button1.text_size=50
 
 
 add_med_button = PushButton(menu_window, command=open_window1, text="Add Medicine", width=15)
