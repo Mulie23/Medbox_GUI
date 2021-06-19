@@ -144,6 +144,7 @@ code_window = Window(app, title="Code",bg = (255,255,224))
 code_window.set_full_screen()
 code_window.hide()
 
+blank_text9=Text(app,text="",width="fill")
 welcome_text = Text(app,text="Welcome to use the Smart Medbox",size=80)
 blank_text1 = Text(app,text="",size=80)
 blank_text2 = Text(app,text="",size=80)
@@ -152,10 +153,12 @@ login_button = PushButton(app, command=get_started, text="Get started", width=20
 login_button.bg=(135,206,250)
 login_button.text_size = 60
 
+blank_text10=Text(login_window,text="",width="fill")
 ask_name_text = Text(login_window, text="Please type in your username",size=70)
 my_name = TextBox(login_window,width = 25)
 my_name.bg =(232, 240, 254)
 my_name.text_size=70
+blank_text11=Text(login_window,text="",width="fill")
 ask_password_text = Text(login_window, text="Please type in your password",size=70)
 my_password = TextBox(login_window,width = 25)
 my_password.bg=(232, 240, 254)
@@ -166,11 +169,12 @@ blank_text4 = Text(login_window,text="",size=80)
 submit_button = PushButton(login_window, text="Submit",command=submit, width=10)
 submit_button.bg=(152,251,152)
 submit_button.text_size=50
+blank_text10=Text(login_window,text="",width="fill",align="bottom")
 back_button1 = PushButton(login_window, text="Back", command=back_window_login, width=10,align="bottom")
 back_button1.bg=(255,160,122)
 back_button1.text_size=50
 
-blank_text5=Text(menu_window,text="",width="fill",height=5)
+blank_text5=Text(menu_window,text="",width="fill",height=6)
 menu_box1 = Box(menu_window,align="top",width="fill")
 add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=15,align="left",height=2)
 add_med_button.bg=(135,206,250)
@@ -180,7 +184,7 @@ quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicin
 quit_med_button.bg=(135,206,250)
 quit_med_button.text_size=50
 
-blank_text7=Text(menu_window,text="",width="fill",height=5)
+blank_text7=Text(menu_window,text="",width="fill",height=7)
 menu_box2 = Box(menu_window,align="top",width="fill")
 check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=15,align="left",height=2)
 check_pre.bg=(135,206,250)
@@ -190,7 +194,7 @@ emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",wi
 emergency.bg=(135,206,250)
 emergency.text_size=50
 
-blank_text9=Text(menu_window,text="",width="fill",height=5)
+blank_text9=Text(menu_window,text="",width="fill",height=7)
 menu_box3 = Box(menu_window,align="top",width="fill")
 add_caregiver_code = PushButton(menu_box3, command=open_window5, text="Caregiver Code",width=15,align="left",height=2)
 add_caregiver_code.bg=(135,206,250)
