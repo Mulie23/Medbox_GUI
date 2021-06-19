@@ -146,7 +146,7 @@ code_window.hide()
 
 blank_text9=Text(app,text="",width="fill",height=6)
 welcome_text = Text(app,text="Welcome to use the Smart Medbox",size=80)
-blank_text1 = Text(app,text="",size=80,height=8)
+blank_text1 = Text(app,text="",height=8)
 login_button = PushButton(app, command=get_started, text="Get started", width=20,height=3)
 login_button.bg=(135,206,250)
 login_button.text_size = 60
