@@ -108,6 +108,7 @@ login_window = Window(app, title="Login",bg = "white")
 login_window.hide()
 
 menu_window = Window(app, title="Menu",bg = "white")
+menu_window.hide()
 # menu_window.set_full_screen()
 file_exists = os.path.isfile('data.json') 
 # print(file_exists)
