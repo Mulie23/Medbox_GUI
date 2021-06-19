@@ -17,7 +17,7 @@ def get_started():
             login_window.show(wait=True)
             f.close
         else:
-            with open('/home/rpi/Documents/data.json') as f:
+            with open('/home/pi/Documents/data.json') as f:
                 data = json.load(f)
             if data["success"]==1:
                 menu_window.show(wait=True)
@@ -78,7 +78,7 @@ def back_window4():
 def open_window5():
     random_code =  ''.join(random.choice(string.ascii_letters) for _ in range(3))+''.join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    # with open('/home/rpi/Doucments/data.json') as f:
+    # with open('/home/pi/Doucments/data.json') as f:
     #     data = json.load(f)
     # # print(data)
     # header = {'jwt':data['data']['jwt']}
@@ -93,7 +93,7 @@ def back_window5():
     code_window.hide()
 
 def save_data():
-    f=open('/home/rpi/Documents/medbox_data.txt','w')
+    f=open('/home/pi/Documents/medbox_data.txt','w')
     f.write(my_name.value+'\n')
     f.close
 
@@ -117,7 +117,7 @@ if file_exists:
         app.show()
         f.close
     else:
-        with open('/home/rpi/Documents/data.json') as f:
+        with open('/home/pi/Documents/data.json') as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
