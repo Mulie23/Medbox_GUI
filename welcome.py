@@ -170,7 +170,7 @@ back_button1.text_size=50
 menu_box1 = Box(menu_window,align="top",width="fill")
 add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=15,align="left")
 add_med_button.text_size=50
-blank_text5=Text(menu_box1,text="",align="left",width=15)
+blank_text5=Text(menu_box1,text="",align="left",width=15,size=50)
 quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left")
 quit_med_button.text_size=50
 menu_box2 = Box(menu_window,align="top",width="fill")
