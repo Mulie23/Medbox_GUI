@@ -1,4 +1,4 @@
-from guizero import App, Combo, Text, CheckBox, ButtonGroup, PushButton, info, TextBox, Picture, Slider, Window, info
+from guizero import App, Combo, Text, CheckBox, ButtonGroup, PushButton, info, TextBox, Picture, Slider, Window, info, Box
 import requests 
 import json
 import base64
@@ -167,22 +167,40 @@ submit_button.text_size=50
 back_button1 = PushButton(login_window, text="Back", command=back_window_login, width=10,align="bottom")
 back_button1.text_size=50
 
+menu_box1 = Box(menu_window,align="top",width="fill")
+add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width="fill",align="left")
+add_med_button.text_size=70
+# add_med_button.text_size=50
+quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left")
+quit_med_button.text_size=70
+# quit_med_button.text_size=50
+menu_box2 = Box(menu_window,align="top",width="fill")
+check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width="fill",align="left")
+check_pre.text_size=70
+# check_pre.text_size=50
+emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left")
+emergency.text_size=70
+# emergency.text_size=50
+menu_box3 = Box(menu_window,align="top",width="fill")
+add_caregiver_code = PushButton(menu_box3, command=open_window5, text="Caregiver Code",width="fill",align="left")
+add_caregiver_code.text_size=70
+# add_caregiver_code.text_size=50
 
-add_med_button = PushButton(menu_window, command=open_window1, text="Add Medicine", width=15)
-ask_med_text = Text(add_med_window, text="Please type in your medicine name")
-med_name = TextBox(add_med_window)
-next_button = PushButton(add_med_window,text="Next",command=save_data, width=15)
-back_button1 = PushButton(add_med_window, text="Back", command=back_window1, width=15)
+# ask_med_text = Text(add_med_window, text="Please type in your medicine name")
+# med_name = TextBox(add_med_window)
+# next_button = PushButton(add_med_window,text="Next",command=save_data, width=15)
+back_button2 = PushButton(add_med_window, text="Back", command=back_window1, width=15,align="bottom")
+back_button2.text_size=50
+back_button3 = PushButton(quit_med_window, text="Back", command=back_window2, width=15,align="bottom")
+back_button3.text_size=50
+back_button4 = PushButton(check_pre_window, text="Back", command=back_window3, width=15,align="bottom")
+back_button4.text_size=50
+back_button5 = PushButton(emergency_window, text="Back", command=back_window4, width=15,align="bottom")
+back_button5.text_size=50
 
-quit_med_button = PushButton(menu_window, command=open_window2, text="Quit Medicine", width=15)
-back_button2 = PushButton(quit_med_window, text="Back", command=back_window2, width=15)
-check_pre = PushButton(menu_window, command=open_window3, text="Check Prescription", width=15)
-back_button3 = PushButton(check_pre_window, text="Back", command=back_window3, width=15)
-emergency = PushButton(menu_window, command=open_window4, text="Emergency call", width=15)
-back_button4 = PushButton(emergency_window, text="Back", command=back_window4, width=15)
-add_caregiver_code = PushButton(menu_window, command=open_window5, text="Caregiver Code", width=15)
-medbox_id = Text(code_window, text="Your medbox id is: 1")
-caregiver_code = Text(code_window, text=f"Your caregiver code is: {random_code}")
-back_button5 = PushButton(code_window, text="Back", command=back_window5, width=15)
+medbox_id = Text(code_window, text="Your medbox id is: 1",size=70)
+caregiver_code = Text(code_window, text=f"Your caregiver code is: {random_code}",size=70)
+back_button6 = PushButton(code_window, text="Back", command=back_window5, width=15,align="bottom")
+back_button6.text_size=50
 
 app.display()
