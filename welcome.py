@@ -169,23 +169,23 @@ back_button1.text_size=50
 
 blank_text5=Text(menu_window,text="",width="fill",height=10)
 menu_box1 = Box(menu_window,align="top",width="fill")
-add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=15,align="left",height=1)
+add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=15,align="left",height=2)
 add_med_button.text_size=50
 blank_text6=Text(menu_box1,text="",align="left",width=70)
-quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left",height=1)
+quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left",height=2)
 quit_med_button.text_size=50
 
 blank_text7=Text(menu_window,text="",width="fill",height=10)
 menu_box2 = Box(menu_window,align="top",width="fill")
-check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=15,align="left",height=3)
+check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=15,align="left",height=2)
 check_pre.text_size=50
 blank_text8=Text(menu_box2,text="",align="left",width=70)
-emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left",height=3)
+emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left",height=2)
 emergency.text_size=50
 
 blank_text9=Text(menu_window,text="",width="fill",height=10)
 menu_box3 = Box(menu_window,align="top",width="fill")
-add_caregiver_code = PushButton(menu_box3, command=open_window5, text="Caregiver Code",width=15,align="left",height=5)
+add_caregiver_code = PushButton(menu_box3, command=open_window5, text="Caregiver Code",width=15,align="left",height=2)
 add_caregiver_code.text_size=50
 
 # ask_med_text = Text(add_med_window, text="Please type in your medicine name")
