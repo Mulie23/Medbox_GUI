@@ -214,11 +214,11 @@ back_button5 = PushButton(emergency_window, text="Back", command=back_window4, w
 back_button5.bg=(255,160,122)
 back_button5.text_size=50
 
-blank_text14=Text(login_window,text="",width="fill")
+blank_text14=Text(code_window,text="",width="fill")
 medbox_id = Text(code_window, text="Your medbox id is: 1",size=70)
-blank_text15=Text(login_window,text="",width="fill")
+blank_text15=Text(code_window,text="",width="fill")
 caregiver_code = Text(code_window, text=f"Your caregiver code is: {random_code}",size=70)
-blank_text13=Text(login_window,text="",width="fill",align="bottom")
+blank_text13=Text(code_window,text="",width="fill",align="bottom")
 back_button6 = PushButton(code_window, text="Back", command=back_window5, width=15,align="bottom")
 back_button6.bg=(255,160,122)
 back_button6.text_size=50
