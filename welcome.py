@@ -160,7 +160,7 @@ my_password = TextBox(login_window,width = 25)
 my_password.bg=(232, 240, 254)
 my_password.text_size=70
 
-blank_text4 = Text(app,text="",size=80)
+blank_text4 = Text(login_window,text="",size=80)
 
 submit_button = PushButton(login_window, text="Submit",command=submit, width=10)
 submit_button.text_size=50
