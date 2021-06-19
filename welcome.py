@@ -159,9 +159,12 @@ ask_password_text = Text(login_window, text="Please type in your password",size=
 my_password = TextBox(login_window,width = 25)
 my_password.bg=(232, 240, 254)
 my_password.text_size=70
+
+blank_text4 = Text(app,text="",size=80)
+
 submit_button = PushButton(login_window, text="Submit",command=submit, width=10)
 submit_button.text_size=50
-back_button1 = PushButton(login_window, text="Back", command=back_window_login, width=10)
+back_button1 = PushButton(login_window, text="Back", command=back_window_login, width=10,align="bottom")
 back_button1.text_size=50
 
 
