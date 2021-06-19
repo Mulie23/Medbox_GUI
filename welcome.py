@@ -173,7 +173,7 @@ add_med_button.text_size=50
 quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left")
 quit_med_button.text_size=50
 menu_box2 = Box(menu_window,align="top",width="fill")
-check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width="fill",align="left")
+check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=50,align="left")
 check_pre.text_size=50
 emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left")
 emergency.text_size=50
