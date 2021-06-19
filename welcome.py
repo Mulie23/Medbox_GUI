@@ -117,6 +117,7 @@ if file_exists:
     if f.read() == "":
         app.show()
         f.close
+        app.show()
     else:
         with open('/home/pi/Documents/Medbox_GUI/data.json') as f:
             data = json.load(f)
