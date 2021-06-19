@@ -174,14 +174,16 @@ add_med_button.text_size=50
 blank_text6=Text(menu_box1,text="",align="left",width=70)
 quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left")
 quit_med_button.text_size=50
+
 blank_text7=Text(menu_window,text="",width="fill",height=10)
 menu_box2 = Box(menu_window,align="top",width="fill")
 check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=15,align="left")
 check_pre.text_size=50
-blank_text8=Text(menu_box2,text="",width=70)
+blank_text8=Text(menu_box2,text="",align="left",width=70)
 emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left")
 emergency.text_size=50
-blank_text9=Text(menu_window,text="",align="left",width="fill",height=10)
+
+blank_text9=Text(menu_window,text="",width="fill",height=10)
 menu_box3 = Box(menu_window,align="top",width="fill")
 add_caregiver_code = PushButton(menu_box3, command=open_window5, text="Caregiver Code",width="fill",align="left")
 add_caregiver_code.text_size=50
