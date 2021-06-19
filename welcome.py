@@ -17,7 +17,7 @@ def get_started():
             login_window.show(wait=True)
             f.close
         else:
-            with open('D:\Term 8\Capstone\guizero\Medbox_GUI/data.json') as f:
+            with open('/home/rpi/Documents/data.json') as f:
                 data = json.load(f)
             if data["success"]==1:
                 menu_window.show(wait=True)
@@ -31,23 +31,23 @@ def back_window_login():
     login_window.hide()
 
 def submit():
-    body =  {'username': my_name.value , 'password' : my_password.value }
-    # print(body)
-    response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
-    data = response.json()
-    with open('data.json', 'w') as f:
-        json.dump(data, f)
-    # print(data)
-    if data["success"] == 1:
-        menu_window.show(wait=True)
-    elif data["success"] == 0:
-        if data["error"] == "db connection error":
-            app.info("Error", "Cannot connect to the database")
-        elif data["error"] == "no such user exists":
-            app.info("Error", "This is not a valid account")
-        elif data["error"] == "username and passowrd did not match":
-            app.info("Error", "Username and passowrd do not match")
-    # menu_window.show(wait=True)
+    # body =  {'username': my_name.value , 'password' : my_password.value }
+    # # print(body)
+    # response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
+    # data = response.json()
+    # with open('data.json', 'w') as f:
+    #     json.dump(data, f)
+    # # print(data)
+    # if data["success"] == 1:
+    #     menu_window.show(wait=True)
+    # elif data["success"] == 0:
+    #     if data["error"] == "db connection error":
+    #         app.info("Error", "Cannot connect to the database")
+    #     elif data["error"] == "no such user exists":
+    #         app.info("Error", "This is not a valid account")
+    #     elif data["error"] == "username and passowrd did not match":
+    #         app.info("Error", "Username and passowrd do not match")
+    menu_window.show(wait=True)
 def add_med():
     pass
 
@@ -78,14 +78,14 @@ def back_window4():
 def open_window5():
     random_code =  ''.join(random.choice(string.ascii_letters) for _ in range(3))+''.join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    with open('D:\Term 8\Capstone\guizero\Medbox_GUI/data.json') as f:
-        data = json.load(f)
-    # print(data)
-    header = {'jwt':data['data']['jwt']}
-    body = {'password':random_code,'medboxID':'1'}
+    # with open('/home/rpi/Doucments/data.json') as f:
+    #     data = json.load(f)
+    # # print(data)
+    # header = {'jwt':data['data']['jwt']}
+    # body = {'password':random_code,'medboxID':'1'}
     # print(header)
     # print(body)
-    response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
+    # response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
     code_window.show(wait=True)
 
 
@@ -93,7 +93,7 @@ def back_window5():
     code_window.hide()
 
 def save_data():
-    f=open('D:/Term 8/Capstone/medbox_data.txt','w')
+    f=open('/home/rpi/Documents/medbox_data.txt','w')
     f.write(my_name.value+'\n')
     f.close
 
@@ -117,7 +117,7 @@ if file_exists:
         app.show()
         f.close
     else:
-        with open('D:\Term 8\Capstone\guizero\Medbox_GUI/data.json') as f:
+        with open('/home/rpi/Documents/data.json') as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
@@ -142,9 +142,9 @@ code_window = Window(app, title="Code",bg = "white")
 code_window.set_full_screen()
 code_window.hide()
 
-welcome_text = Text(app,text="Welcome to use the Smart Medbox")
+welcome_text = Text(app,text="Welcome to use the Smart Medbox",size=80)
 login_button = PushButton(app, command=get_started, text="Get started", width=20)
-login_button.text_size = 15
+login_button.text_size = 70
 ask_name_text = Text(login_window, text="Please type in your username")
 my_name = TextBox(login_window,width = 25)
 my_name.bg =(232, 240, 254)
