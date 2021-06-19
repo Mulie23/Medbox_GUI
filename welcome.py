@@ -169,7 +169,7 @@ blank_text4 = Text(login_window,text="",size=80)
 submit_button = PushButton(login_window, text="Submit",command=submit, width=10)
 submit_button.bg=(152,251,152)
 submit_button.text_size=50
-blank_text10=Text(login_window,text="",width="fill",align="bottom")
+blank_text12=Text(login_window,text="",width="fill",align="bottom")
 back_button1 = PushButton(login_window, text="Back", command=back_window_login, width=10,align="bottom")
 back_button1.bg=(255,160,122)
 back_button1.text_size=50
