@@ -248,7 +248,7 @@ back_button6.text_size=50
 blank_text18=Text(setting_window,text="",width="fill")
 default_text = Text(setting_window, text="Please select your default time sessions",size=60,align="top")
 tip_text = Text(setting_window, text="(Press the button to select)",size=40,align="top")
-blank_text23=Text(setting_window,text="",width="fill")
+blank_text23=Text(setting_window,text="",width="fill",height=4)
 
 time_box1 = Box(setting_window,align="top",width="fill")
 
@@ -261,6 +261,8 @@ after_text = Text(time_box1, text="Afternoon:",size=40,align="left")
 blank_text27=Text(time_box1,text="",align="left",width=8)
 even_text = Text(time_box1, text="Evening:",size=40,align="left")
 blank_text28=Text(time_box1,text="",align="left",width=8)
+
+blank_text34=Text(setting_window,text="",align="top",width="fill")
 
 time_box2 = Box(setting_window,align="top",width="fill")
 
@@ -282,12 +284,12 @@ even_set.bg =(232, 240, 254)
 even_set.text_size=40
 blank_text33=Text(time_box2,text="",align="left",width=8)
 
-blank_text21 = Text(setting_window,text="",size=40)
+blank_text21 = Text(setting_window,text="",height=8)
 submit_set_button = PushButton(setting_window, text="Submit",command=submit_setting, width=10)
 submit_set_button.bg=(152,251,152)
 submit_set_button.text_size=50
 blank_text17=Text(setting_window,text="",width="fill",align="bottom")
-back_button7 = PushButton(setting_window, text="Back", command=back_window6, width=15,align="bottom")
+back_button7 = PushButton(setting_window, text="Back", command=back_window6, width=10,align="bottom")
 back_button7.bg=(255,160,122)
 back_button7.text_size=50
 
