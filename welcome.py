@@ -1,4 +1,4 @@
-from guizero import setting_window, Combo, Text, CheckBox, ButtonGroup, PushButton, info, TextBox, Picture, Slider, Window, info, Box
+from guizero import App, Combo, Text, CheckBox, ButtonGroup, PushButton, info, TextBox, Picture, Slider, Window, info, Box
 import requests 
 import json
 import base64
@@ -42,11 +42,11 @@ def submit():
     #     menu_window.show(wait=True)
     # elif data["success"] == 0:
     #     if data["error"] == "db connection error":
-    #         setting_window.info("Error", "Cannot connect to the database")
+    #         app.info("Error", "Cannot connect to the database")
     #     elif data["error"] == "no such user exists":
-    #         setting_window.info("Error", "This is not a valid account")
+    #         app.info("Error", "This is not a valid account")
     #     elif data["error"] == "username and passowrd did not match":
-    #         setting_window.info("Error", "Username and passowrd do not match")
+    #         app.info("Error", "Username and passowrd do not match")
     menu_window.show(wait=True)
 def add_med():
     pass
@@ -114,14 +114,14 @@ def submit_setting():
     f.write(even_set.value)
     f.close
 
-setting_window = setting_window(title="Homepage",bg = (255,255,224))
-setting_window.set_full_screen()
-setting_window.hide()
-login_window = Window(setting_window, title="Login",bg = (255,255,224))
+app = App(title="Homepage",bg = (255,255,224))
+app.set_full_screen()
+app.hide()
+login_window = Window(app, title="Login",bg = (255,255,224))
 login_window.set_full_screen()
 login_window.hide()
 
-menu_window = Window(setting_window, title="Menu",bg = (255,255,224))
+menu_window = Window(app, title="Menu",bg = (255,255,224))
 menu_window.hide()
 menu_window.set_full_screen()
 file_exists = os.path.isfile('data.json') 
@@ -129,9 +129,9 @@ file_exists = os.path.isfile('data.json')
 if file_exists:
     f = open("data.json", "r")
     if f.read() == "":
-        setting_window.show()
+        app.show()
         f.close
-        setting_window.show()
+        app.show()
     else:
         with open('/home/pi/Documents/Medbox_GUI/data.json') as f:
             data = json.load(f)
@@ -141,30 +141,30 @@ else:
     f = open("data.json", "w")
     f.write("")
     f.close
-    setting_window.show()
-add_med_window = Window(setting_window, title="Add Medicine Window",bg = (255,255,224))
+    app.show()
+add_med_window = Window(app, title="Add Medicine Window",bg = (255,255,224))
 add_med_window.set_full_screen()
 add_med_window.hide()
-quit_med_window = Window(setting_window, title="Quit Medicine Window",bg = (255,255,224))
+quit_med_window = Window(app, title="Quit Medicine Window",bg = (255,255,224))
 quit_med_window.set_full_screen()
 quit_med_window.hide()
-check_pre_window = Window(setting_window, title="Check Prescription Window",bg = (255,255,224))
+check_pre_window = Window(app, title="Check Prescription Window",bg = (255,255,224))
 check_pre_window.set_full_screen()
 check_pre_window.hide()
-emergency_window = Window(setting_window, title="Emergency Window",bg = (255,255,224))
+emergency_window = Window(app, title="Emergency Window",bg = (255,255,224))
 emergency_window.set_full_screen()
 emergency_window.hide()
-code_window = Window(setting_window, title="Code",bg = (255,255,224))
+code_window = Window(app, title="Code",bg = (255,255,224))
 code_window.set_full_screen()
 code_window.hide()
-setting_window = Window(setting_window, title="Setting",bg = (255,255,224))
+setting_window = Window(app, title="Setting",bg = (255,255,224))
 setting_window.set_full_screen()
 setting_window.hide()
 
-blank_text9=Text(setting_window,text="",width="fill",height=6)
-welcome_text = Text(setting_window,text="Welcome to use the Smart Medbox",size=80)
-blank_text1 = Text(setting_window,text="",height=8)
-login_button = PushButton(setting_window, command=get_started, text="Get started", width=20,height=3)
+blank_text9=Text(app,text="",width="fill",height=6)
+welcome_text = Text(app,text="Welcome to use the Smart Medbox",size=80)
+blank_text1 = Text(app,text="",height=8)
+login_button = PushButton(app, command=get_started, text="Get started", width=20,height=3)
 login_button.bg=(135,206,250)
 login_button.text_size = 60
 
@@ -272,4 +272,4 @@ back_button7 = PushButton(setting_window, text="Back", command=back_window6, wid
 back_button7.bg=(255,160,122)
 back_button7.text_size=50
 
-setting_window.display()
+app.display()
