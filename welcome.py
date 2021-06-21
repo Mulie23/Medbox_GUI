@@ -92,6 +92,9 @@ def open_window5():
 def back_window5():
     code_window.hide()
 
+def back_window6():
+    setting_window.hide()
+
 def save_data():
     f=open('/home/pi/Documents/Medbox_GUI/medbox_data.txt','w')
     f.write(my_name.value+'\n')
@@ -99,6 +102,17 @@ def save_data():
 
 def open_menu():
     menu_window.show(wait=True)
+
+def setting():
+    setting_window.show(wait=True)
+
+def submit_setting():
+    f=open('/home/pi/Documents/Medbox_GUI/default_time_session.txt','w')
+    f.write(morn_set.value+'\n')
+    f.write(noon_set.value+'\n')
+    f.write(after_set.value+'\n')
+    f.write(even_set.value)
+    f.close
 
 app = App(title="Homepage",bg = (255,255,224))
 app.set_full_screen()
@@ -143,6 +157,9 @@ emergency_window.hide()
 code_window = Window(app, title="Code",bg = (255,255,224))
 code_window.set_full_screen()
 code_window.hide()
+setting_window = Window(app, title="Setting",bg = (255,255,224))
+setting_window.set_full_screen()
+setting_window.hide()
 
 blank_text9=Text(app,text="",width="fill",height=6)
 welcome_text = Text(app,text="Welcome to use the Smart Medbox",size=80)
@@ -197,7 +214,10 @@ menu_box3 = Box(menu_window,align="top",width="fill")
 add_caregiver_code = PushButton(menu_box3, command=open_window5, text="Caregiver Code",width=15,align="left",height=2)
 add_caregiver_code.bg=(135,206,250)
 add_caregiver_code.text_size=50
-
+blank_text16=Text(menu_box3,text="",align="left",width=70)
+setting_button = PushButton(menu_box3, command=setting, text="Setting",width=15,align="left",height=2)
+setting_button.bg=(135,206,250)
+setting_button.text_size=50
 # ask_med_text = Text(add_med_window, text="Please type in your medicine name")
 # med_name = TextBox(add_med_window)
 # next_button = PushButton(add_med_window,text="Next",command=save_data, width=15)
@@ -222,5 +242,34 @@ blank_text13=Text(code_window,text="",width="fill",align="bottom")
 back_button6 = PushButton(code_window, text="Back", command=back_window5, width=15,align="bottom")
 back_button6.bg=(255,160,122)
 back_button6.text_size=50
+
+blank_text18=Text(setting_window,text="",width="fill")
+morn_text = Text(setting_window, text="Please select your default morning alert time",size=70)
+morn_set = Combo(app, options=["5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM"])
+morn_set.bg =(232, 240, 254)
+morn_set.text_size=70
+blank_text19=Text(setting_window,text="",width="fill")
+noon_text = Text(setting_window, text="Please select your default noon alert time",size=70)
+noon_set = Combo(app, options=["10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30AM"])
+noon_set.bg =(232, 240, 254)
+noon_set.text_size=70
+blank_text20=Text(setting_window,text="",width="fill")
+after_text = Text(setting_window, text="Please select your default noon alert time",size=70)
+after_set = Combo(app, options=["1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM"])
+after_set.bg =(232, 240, 254)
+after_set.text_size=70
+blank_text22=Text(setting_window,text="",width="fill")
+even_text = Text(setting_window, text="Please select your default noon alert time",size=70)
+even_set = Combo(app, options=["5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM"])
+even_set.bg =(232, 240, 254)
+even_set.text_size=70
+blank_text21 = Text(setting_window,text="",size=80)
+submit_set_button = PushButton(setting_window, text="Submit",command=submit_setting, width=10)
+submit_set_button.bg=(152,251,152)
+submit_set_button.text_size=50
+blank_text17=Text(setting_window,text="",width="fill",align="bottom")
+back_button7 = PushButton(setting_window, text="Back", command=back_window6, width=15,align="bottom")
+back_button7.bg=(255,160,122)
+back_button7.text_size=50
 
 app.display()
