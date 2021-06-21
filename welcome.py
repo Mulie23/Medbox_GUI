@@ -1,4 +1,4 @@
-from guizero import App, Combo, Text, CheckBox, ButtonGroup, PushButton, info, TextBox, Picture, Slider, Window, info, Box
+from guizero import setting_window, Combo, Text, CheckBox, ButtonGroup, PushButton, info, TextBox, Picture, Slider, Window, info, Box
 import requests 
 import json
 import base64
@@ -42,11 +42,11 @@ def submit():
     #     menu_window.show(wait=True)
     # elif data["success"] == 0:
     #     if data["error"] == "db connection error":
-    #         app.info("Error", "Cannot connect to the database")
+    #         setting_window.info("Error", "Cannot connect to the database")
     #     elif data["error"] == "no such user exists":
-    #         app.info("Error", "This is not a valid account")
+    #         setting_window.info("Error", "This is not a valid account")
     #     elif data["error"] == "username and passowrd did not match":
-    #         app.info("Error", "Username and passowrd do not match")
+    #         setting_window.info("Error", "Username and passowrd do not match")
     menu_window.show(wait=True)
 def add_med():
     pass
@@ -114,14 +114,14 @@ def submit_setting():
     f.write(even_set.value)
     f.close
 
-app = App(title="Homepage",bg = (255,255,224))
-app.set_full_screen()
-app.hide()
-login_window = Window(app, title="Login",bg = (255,255,224))
+setting_window = setting_window(title="Homepage",bg = (255,255,224))
+setting_window.set_full_screen()
+setting_window.hide()
+login_window = Window(setting_window, title="Login",bg = (255,255,224))
 login_window.set_full_screen()
 login_window.hide()
 
-menu_window = Window(app, title="Menu",bg = (255,255,224))
+menu_window = Window(setting_window, title="Menu",bg = (255,255,224))
 menu_window.hide()
 menu_window.set_full_screen()
 file_exists = os.path.isfile('data.json') 
@@ -129,9 +129,9 @@ file_exists = os.path.isfile('data.json')
 if file_exists:
     f = open("data.json", "r")
     if f.read() == "":
-        app.show()
+        setting_window.show()
         f.close
-        app.show()
+        setting_window.show()
     else:
         with open('/home/pi/Documents/Medbox_GUI/data.json') as f:
             data = json.load(f)
@@ -141,30 +141,30 @@ else:
     f = open("data.json", "w")
     f.write("")
     f.close
-    app.show()
-add_med_window = Window(app, title="Add Medicine Window",bg = (255,255,224))
+    setting_window.show()
+add_med_window = Window(setting_window, title="Add Medicine Window",bg = (255,255,224))
 add_med_window.set_full_screen()
 add_med_window.hide()
-quit_med_window = Window(app, title="Quit Medicine Window",bg = (255,255,224))
+quit_med_window = Window(setting_window, title="Quit Medicine Window",bg = (255,255,224))
 quit_med_window.set_full_screen()
 quit_med_window.hide()
-check_pre_window = Window(app, title="Check Prescription Window",bg = (255,255,224))
+check_pre_window = Window(setting_window, title="Check Prescription Window",bg = (255,255,224))
 check_pre_window.set_full_screen()
 check_pre_window.hide()
-emergency_window = Window(app, title="Emergency Window",bg = (255,255,224))
+emergency_window = Window(setting_window, title="Emergency Window",bg = (255,255,224))
 emergency_window.set_full_screen()
 emergency_window.hide()
-code_window = Window(app, title="Code",bg = (255,255,224))
+code_window = Window(setting_window, title="Code",bg = (255,255,224))
 code_window.set_full_screen()
 code_window.hide()
-setting_window = Window(app, title="Setting",bg = (255,255,224))
+setting_window = Window(setting_window, title="Setting",bg = (255,255,224))
 setting_window.set_full_screen()
 setting_window.hide()
 
-blank_text9=Text(app,text="",width="fill",height=6)
-welcome_text = Text(app,text="Welcome to use the Smart Medbox",size=80)
-blank_text1 = Text(app,text="",height=8)
-login_button = PushButton(app, command=get_started, text="Get started", width=20,height=3)
+blank_text9=Text(setting_window,text="",width="fill",height=6)
+welcome_text = Text(setting_window,text="Welcome to use the Smart Medbox",size=80)
+blank_text1 = Text(setting_window,text="",height=8)
+login_button = PushButton(setting_window, command=get_started, text="Get started", width=20,height=3)
 login_button.bg=(135,206,250)
 login_button.text_size = 60
 
@@ -245,22 +245,22 @@ back_button6.text_size=50
 
 blank_text18=Text(setting_window,text="",width="fill")
 morn_text = Text(setting_window, text="Please select your default morning alert time",size=70)
-morn_set = Combo(app, options=["5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM"])
+morn_set = Combo(setting_window, options=["5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM"])
 morn_set.bg =(232, 240, 254)
 morn_set.text_size=70
 blank_text19=Text(setting_window,text="",width="fill")
 noon_text = Text(setting_window, text="Please select your default noon alert time",size=70)
-noon_set = Combo(app, options=["10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30AM"])
+noon_set = Combo(setting_window, options=["10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30AM"])
 noon_set.bg =(232, 240, 254)
 noon_set.text_size=70
 blank_text20=Text(setting_window,text="",width="fill")
 after_text = Text(setting_window, text="Please select your default noon alert time",size=70)
-after_set = Combo(app, options=["1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM"])
+after_set = Combo(setting_window, options=["1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM"])
 after_set.bg =(232, 240, 254)
 after_set.text_size=70
 blank_text22=Text(setting_window,text="",width="fill")
 even_text = Text(setting_window, text="Please select your default noon alert time",size=70)
-even_set = Combo(app, options=["5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM"])
+even_set = Combo(setting_window, options=["5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM"])
 even_set.bg =(232, 240, 254)
 even_set.text_size=70
 blank_text21 = Text(setting_window,text="",size=80)
@@ -272,4 +272,4 @@ back_button7 = PushButton(setting_window, text="Back", command=back_window6, wid
 back_button7.bg=(255,160,122)
 back_button7.text_size=50
 
-app.display()
+setting_window.display()
