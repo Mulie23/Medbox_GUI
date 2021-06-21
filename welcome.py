@@ -252,15 +252,15 @@ blank_text23=Text(setting_window,text="",width="fill",height=4)
 
 time_box1 = Box(setting_window,align="top",width="fill")
 
-blank_text24=Text(time_box1,text="",align="left",width=23)
+blank_text24=Text(time_box1,text="",align="left",width=18)
 morn_text = Text(time_box1, text="Morning:",size=40,align="left")
-blank_text210=Text(time_box1,text="",align="left",width=23)
+blank_text210=Text(time_box1,text="",align="left",width=28)
 noon_text = Text(time_box1, text="Noon:",size=40,align="left")
-blank_text26=Text(time_box1,text="",align="left",width=23)
+blank_text26=Text(time_box1,text="",align="left",width=26)
 after_text = Text(time_box1, text="Afternoon:",size=40,align="left")
 blank_text27=Text(time_box1,text="",align="left",width=23)
 even_text = Text(time_box1, text="Evening:",size=40,align="left")
-blank_text28=Text(time_box1,text="",align="left",width=23)
+# blank_text28=Text(time_box1,text="",align="left",width=23)
 
 blank_text34=Text(setting_window,text="",align="top",width="fill")
 
