@@ -189,25 +189,25 @@ back_button1 = PushButton(login_window, text="Back", command=back_window_login, 
 back_button1.bg=(255,160,122)
 back_button1.text_size=50
 
-blank_text5=Text(menu_window,text="",width="fill",height=6)
-menu_box1 = Box(menu_window,align="top",width="fill")
-add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=15,align="left",height=2)
-add_med_button.bg=(135,206,250)
-add_med_button.text_size=50
-blank_text6=Text(menu_box1,text="",align="left",width=70)
-quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left",height=2)
-quit_med_button.bg=(135,206,250)
-quit_med_button.text_size=50
+# blank_text5=Text(menu_window,text="",width="fill",height=6)
+# menu_box1 = Box(menu_window,align="top",width="fill")
+# add_med_button = PushButton(menu_box1, command=open_window1, text="Add Medicine" ,width=15,align="left",height=2)
+# add_med_button.bg=(135,206,250)
+# add_med_button.text_size=50
+# blank_text6=Text(menu_box1,text="",align="left",width=70)
+# quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left",height=2)
+# quit_med_button.bg=(135,206,250)
+# quit_med_button.text_size=50
 
-blank_text7=Text(menu_window,text="",width="fill",height=7)
-menu_box2 = Box(menu_window,align="top",width="fill")
-check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=15,align="left",height=2)
-check_pre.bg=(135,206,250)
-check_pre.text_size=50
-blank_text8=Text(menu_box2,text="",align="left",width=70)
-emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left",height=2)
-emergency.bg=(135,206,250)
-emergency.text_size=50
+# blank_text7=Text(menu_window,text="",width="fill",height=7)
+# menu_box2 = Box(menu_window,align="top",width="fill")
+# check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=15,align="left",height=2)
+# check_pre.bg=(135,206,250)
+# check_pre.text_size=50
+# blank_text8=Text(menu_box2,text="",align="left",width=70)
+# emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left",height=2)
+# emergency.bg=(135,206,250)
+# emergency.text_size=50
 
 blank_text9=Text(menu_window,text="",width="fill",height=7)
 menu_box3 = Box(menu_window,align="top",width="fill")
@@ -244,22 +244,24 @@ back_button6.bg=(255,160,122)
 back_button6.text_size=50
 
 blank_text18=Text(setting_window,text="",width="fill")
-morn_text = Text(setting_window, text="Please select your default morning alert time",size=70)
+default_text = Text(setting_window, text="Please select your default time sessions",size=70)
+blank_text23=Text(setting_window,text="",width="fill")
+morn_text = Text(setting_window, text="Morning:",size=70)
 morn_set = Combo(setting_window, options=["5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM"])
 morn_set.bg =(232, 240, 254)
 morn_set.text_size=70
 blank_text19=Text(setting_window,text="",width="fill")
-noon_text = Text(setting_window, text="Please select your default noon alert time",size=70)
+noon_text = Text(setting_window, text="Noon:",size=70)
 noon_set = Combo(setting_window, options=["10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30AM"])
 noon_set.bg =(232, 240, 254)
 noon_set.text_size=70
 blank_text20=Text(setting_window,text="",width="fill")
-after_text = Text(setting_window, text="Please select your default noon alert time",size=70)
+after_text = Text(setting_window, text="Afternoon:",size=70)
 after_set = Combo(setting_window, options=["1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM"])
 after_set.bg =(232, 240, 254)
 after_set.text_size=70
 blank_text22=Text(setting_window,text="",width="fill")
-even_text = Text(setting_window, text="Please select your default noon alert time",size=70)
+even_text = Text(setting_window, text="Evening:",size=70)
 even_set = Combo(setting_window, options=["5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM"])
 even_set.bg =(232, 240, 254)
 even_set.text_size=70
