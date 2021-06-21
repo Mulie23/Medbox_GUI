@@ -275,7 +275,7 @@ after_set = Combo(time_box2, options=["1:00PM", "1:30PM", "2:00PM", "2:30PM", "3
 after_set.bg =(232, 240, 254)
 after_set.text_size=40
 blank_text32=Text(time_box1,text="",align="left",width=5)
-even_set = Combo(time_box2, options=["5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM"],align="left",width=5)
+even_set = Combo(time_box2, options=["5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM"],align="left",width=5)
 even_set.bg =(232, 240, 254)
 even_set.text_size=40
 blank_text33=Text(time_box1,text="",align="left",width=5)
