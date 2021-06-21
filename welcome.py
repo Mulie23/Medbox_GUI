@@ -262,23 +262,23 @@ blank_text28=Text(time_box1,text="",align="left",width=10)
 
 time_box2 = Box(setting_window,align="top",width="fill")
 
-blank_text29=Text(time_box1,text="",align="left",width=10)
+blank_text29=Text(time_box2,text="",align="left",width=10)
 morn_set = Combo(time_box2, options=["5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM"],align="left",width=10)
 morn_set.bg =(232, 240, 254)
 morn_set.text_size=40
-blank_text30=Text(time_box1,text="",align="left",width=10)
+blank_text30=Text(time_box2,text="",align="left",width=10)
 noon_set = Combo(time_box2, options=["10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30AM"],align="left",width=10)
 noon_set.bg =(232, 240, 254)
 noon_set.text_size=40
-blank_text31=Text(time_box1,text="",align="left",width=10)
+blank_text31=Text(time_box2,text="",align="left",width=10)
 after_set = Combo(time_box2, options=["1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM"],align="left",width=10)
 after_set.bg =(232, 240, 254)
 after_set.text_size=40
-blank_text32=Text(time_box1,text="",align="left",width=10)
+blank_text32=Text(time_box2,text="",align="left",width=10)
 even_set = Combo(time_box2, options=["5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM"],align="left",width=10)
 even_set.bg =(232, 240, 254)
 even_set.text_size=40
-blank_text33=Text(time_box1,text="",align="left",width=10)
+blank_text33=Text(time_box2,text="",align="left",width=10)
 
 blank_text21 = Text(setting_window,text="",size=40)
 submit_set_button = PushButton(setting_window, text="Submit",command=submit_setting, width=10)
