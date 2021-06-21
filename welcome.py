@@ -244,27 +244,28 @@ back_button6.bg=(255,160,122)
 back_button6.text_size=50
 
 blank_text18=Text(setting_window,text="",width="fill")
-default_text = Text(setting_window, text="Please select your default time sessions",size=70)
+default_text = Text(setting_window, text="Please select your default time sessions",size=60)
+tip_text = Text(setting_window, text="(Press the button to select)",size=40)
 blank_text23=Text(setting_window,text="",width="fill")
-morn_text = Text(setting_window, text="Morning:",size=70)
+morn_text = Text(setting_window, text="Morning:",size=40)
 morn_set = Combo(setting_window, options=["5:00AM", "5:30AM", "6:00AM", "6:30AM", "7:00AM", "7:30AM", "8:00AM", "8:30AM", "9:00AM", "9:30AM"])
 morn_set.bg =(232, 240, 254)
-morn_set.text_size=70
+morn_set.text_size=40
 blank_text19=Text(setting_window,text="",width="fill")
-noon_text = Text(setting_window, text="Noon:",size=70)
+noon_text = Text(setting_window, text="Noon:",size=40)
 noon_set = Combo(setting_window, options=["10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM", "2:00PM", "2:30AM"])
 noon_set.bg =(232, 240, 254)
-noon_set.text_size=70
+noon_set.text_size=40
 blank_text20=Text(setting_window,text="",width="fill")
-after_text = Text(setting_window, text="Afternoon:",size=70)
+after_text = Text(setting_window, text="Afternoon:",size=40)
 after_set = Combo(setting_window, options=["1:00PM", "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "5:30PM"])
 after_set.bg =(232, 240, 254)
-after_set.text_size=70
+after_set.text_size=40
 blank_text22=Text(setting_window,text="",width="fill")
-even_text = Text(setting_window, text="Evening:",size=70)
+even_text = Text(setting_window, text="Evening:",size=40)
 even_set = Combo(setting_window, options=["5:00PM", "5:30PM", "6:00PM", "6:30PM", "7:00PM", "7:30PM", "8:00PM", "8:30PM", "9:00PM", "9:30PM", "10:00PM", "10:30PM", "11:00PM", "11:30PM"])
 even_set.bg =(232, 240, 254)
-even_set.text_size=70
+even_set.text_size=40
 blank_text21 = Text(setting_window,text="",size=80)
 submit_set_button = PushButton(setting_window, text="Submit",command=submit_setting, width=10)
 submit_set_button.bg=(152,251,152)
