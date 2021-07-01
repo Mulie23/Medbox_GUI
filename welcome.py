@@ -31,23 +31,23 @@ def back_window_login():
     login_window.hide()
 
 def submit():
-    body =  {'username': my_name.value , 'password' : my_password.value }
-    # print(body)
-    response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
-    data = response.json()
-    with open('data.json', 'w') as f:
-        json.dump(data, f)
-    # print(data)
-    if data["success"] == 1:
-        menu_window.show(wait=True)
-    elif data["success"] == 0:
-        if data["error"] == "db connection error":
-            app.info("Error", "Cannot connect to the database")
-        elif data["error"] == "no such user exists":
-            app.info("Error", "This is not a valid account")
-        elif data["error"] == "username and passowrd did not match":
-            app.info("Error", "Username and passowrd do not match")
-    # menu_window.show(wait=True)
+    # body =  {'username': my_name.value , 'password' : my_password.value }
+    # # print(body)
+    # response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
+    # data = response.json()
+    # with open('data.json', 'w') as f:
+    #     json.dump(data, f)
+    # # print(data)
+    # if data["success"] == 1:
+    #     menu_window.show(wait=True)
+    # elif data["success"] == 0:
+    #     if data["error"] == "db connection error":
+    #         app.info("Error", "Cannot connect to the database")
+    #     elif data["error"] == "no such user exists":
+    #         app.info("Error", "This is not a valid account")
+    #     elif data["error"] == "username and passowrd did not match":
+    #         app.info("Error", "Username and passowrd do not match")
+    menu_window.show(wait=True)
 def add_med():
     pass
 
@@ -64,6 +64,8 @@ def back_window2():
     quit_med_window.hide()
 
 def open_window3():
+    # REQUEST PRESCRIPTION FROM MESSAGE QUEUE
+    
     check_pre_window.show(wait=True)
 
 def back_window3():
@@ -85,7 +87,7 @@ def open_window5():
     body = {'password':random_code,'medboxID':'1'}
     # print(header)
     # print(body)
-    response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
+    # response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
     code_window.show(wait=True)
 
 
@@ -163,8 +165,10 @@ back_button1 = PushButton(add_med_window, text="Back", command=back_window1, wid
 
 quit_med_button = PushButton(menu_window, command=open_window2, text="Quit Medicine", width=15)
 back_button2 = PushButton(quit_med_window, text="Back", command=back_window2, width=15)
+
 check_pre = PushButton(menu_window, command=open_window3, text="Check Prescription", width=15)
 back_button3 = PushButton(check_pre_window, text="Back", command=back_window3, width=15)
+
 emergency = PushButton(menu_window, command=open_window4, text="Emergency call", width=15)
 back_button4 = PushButton(emergency_window, text="Back", command=back_window4, width=15)
 add_caregiver_code = PushButton(menu_window, command=open_window5, text="Caregiver Code", width=15)
