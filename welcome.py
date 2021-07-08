@@ -250,7 +250,7 @@ if file_exist_time:
     next_morn_sec = (next_morn - now_time).total_seconds()
     next_list.append(next_morn_sec)
     for i in next_list:
-        print(i)
+        # print(i)
         if i > 0:
             timer_start_time = i
             break
