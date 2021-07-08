@@ -250,12 +250,13 @@ if file_exist_time:
     next_morn_sec = (next_morn - now_time).total_seconds()
     next_list.append(next_morn_sec)
     for i in next_list:
-        print(i)
+        # print(i)
         if i > 0:
             timer_start_time = i
             break
     timer = threading.Timer(timer_start_time, dispense)
     timer.start()
+    # print(timer.isAlive())
 
 add_med_window = Window(app, title="Add Medicine Window",bg = (255,255,224))
 add_med_window.set_full_screen()
