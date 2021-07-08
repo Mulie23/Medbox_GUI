@@ -5,8 +5,25 @@ import base64
 import random
 import string
 import os.path
+from dispensefunc import dispense
+import datetime
+import threading
 
 random_code = ""
+
+def pm_to_am(time_string):
+    if time_string[-2]=="A":
+        time_string = time_string[:-2]
+        hour_minute=time_string.split(":")
+        if len(hour_minute[0]) == 1:
+            hour_minute[0] = "0" + hour_minute[0]
+        return hour_minute
+    else:
+        time_string = time_string[:-2]
+        hour_minute=time_string.split(":")
+        hour_int = int(hour_minute[0])+12
+        hour_minute = [str(hour_int),hour_minute[1]]
+        return hour_minute
 
 def get_started():
     file_exists = os.path.isfile('data.json') 
@@ -26,6 +43,9 @@ def get_started():
         f.write("")
         f.close
         login_window.show(wait=True)
+
+
+
 
 def back_window_login():
     login_window.hide()
@@ -47,7 +67,7 @@ def submit():
     #         login_screen.info("Error", "This is not a valid account")
     #     elif data["error"] == "username and passowrd did not match":
     #         login_screen.info("Error", "Username and passowrd do not match")
-    menu_window.show(wait=True)
+    setting_window.show(wait=True)
 def add_med():
     pass
 
@@ -78,7 +98,7 @@ def back_window4():
 def open_window5():
     random_code =  ''.join(random.choice(string.ascii_letters) for _ in range(3))+''.join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    # with open('/home/pi/Doucments/data.json') as f:
+    # with open('/home/pi/Doucments/MedBox_GUI/data.json') as f:
     #     data = json.load(f)
     # # print(data)
     # header = {'jwt':data['data']['jwt']}
@@ -107,13 +127,59 @@ def setting():
     setting_window.show(wait=True)
 
 def submit_setting():
-    f=open('D:/Term 8/Capstone/guizero/Medbox_GUI/default_time_session.txt','w')
-    f.write(morn_set.value+'\n')
-    f.write(noon_set.value+'\n')
-    f.write(after_set.value+'\n')
-    f.write(even_set.value)
-    f.close
+    slot_dict = {}
+    slot_dict["morn"]=pm_to_am(morn_set.value)
+    slot_dict["noon"]=pm_to_am(noon_set.value)
+    slot_dict["after"]=pm_to_am(after_set.value)
+    slot_dict["even"]=pm_to_am(even_set.value)
+    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json','w') as f:
+        json.dump(slot_dict,f)
+    timer.cancel()
+    now_time = datetime.datetime.now()
+    now_year = now_time.date().year
+    now_month = now_time.date().month
+    now_day = now_time.date().day
+    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json') as f:
+        data = json.load(f)
+    next_list=[]
+    morn_hms = data["morn"]
+    morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
+    morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+    morn_sec = (morn_time - now_time).total_seconds()
+    next_list.append(morn_sec)
+    noon_hms = data["noon"]
+    noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
+    noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
+    noon_sec = (noon_time - now_time).total_seconds()
+    next_list.append(noon_sec)
+    after_hms = data["after"]
+    after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
+    after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
+    after_sec = (after_time - now_time).total_seconds()
+    next_list.append(after_sec)
+    even_hms = data["even"]
+    even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
+    even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
+    even_sec = (even_time - now_time).total_seconds()
+    next_list.append(even_sec)
+    next_time = now_time + datetime.timedelta(days=+1)
+    next_year = next_time.date().year
+    next_month = next_time.date().month
+    next_day = next_time.date().day
+    next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+    next_morn_sec = (next_morn - now_time).total_seconds()
+    next_list.append(next_morn_sec)
+    for i in next_list:
+        print(i)
+        if i > 0:
+            timer_start_time = i
+            break
+    timer1 = threading.Timer(timer_start_time, dispense)
+    timer1.start()
     setting_window.info("Info", "Your changes have been saved")
+    setting_window.hide()
+    menu_window.show(wait=True)
+
 
 
 app = App(title="Homepage",bg = (255,255,224))
@@ -144,6 +210,53 @@ else:
     f.write("")
     f.close
     app.show()
+
+
+
+file_exist_time = os.path.isfile('slot.json') 
+if file_exist_time:
+    now_time = datetime.datetime.now()
+    now_year = now_time.date().year
+    now_month = now_time.date().month
+    now_day = now_time.date().day
+    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json') as f:
+        data = json.load(f)
+    next_list=[]
+    morn_hms = data["morn"]
+    morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
+    morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+    morn_sec = (morn_time - now_time).total_seconds()
+    next_list.append(morn_sec)
+    noon_hms = data["noon"]
+    noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
+    noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
+    noon_sec = (noon_time - now_time).total_seconds()
+    next_list.append(noon_sec)
+    after_hms = data["after"]
+    after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
+    after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
+    after_sec = (after_time - now_time).total_seconds()
+    next_list.append(after_sec)
+    even_hms = data["even"]
+    even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
+    even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
+    even_sec = (even_time - now_time).total_seconds()
+    next_list.append(even_sec)
+    next_time = now_time + datetime.timedelta(days=+1)
+    next_year = next_time.date().year
+    next_month = next_time.date().month
+    next_day = next_time.date().day
+    next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+    next_morn_sec = (next_morn - now_time).total_seconds()
+    next_list.append(next_morn_sec)
+    for i in next_list:
+        print(i)
+        if i > 0:
+            timer_start_time = i
+            break
+    timer = threading.Timer(timer_start_time, dispense)
+    timer.start()
+
 add_med_window = Window(app, title="Add Medicine Window",bg = (255,255,224))
 add_med_window.set_full_screen()
 add_med_window.hide()
