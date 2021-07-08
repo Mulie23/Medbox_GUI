@@ -1,4 +1,6 @@
 {
+    "current_pos": 1,
+
     "container_1":{
         "angleServo": 12,
         "filled": 0,
