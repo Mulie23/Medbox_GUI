@@ -59,7 +59,7 @@ def submit():
         json.dump(data, f)
     # print(data)
     if data["success"] == 1:
-        menu_window.show(wait=True)
+        setting_window.show(wait=True)
     elif data["success"] == 0:
         if data["error"] == "db connection error":
             login_window.info("Error", "Cannot connect to the database")
@@ -67,7 +67,7 @@ def submit():
             login_window.info("Error", "This is not a valid account")
         elif data["error"] == "username and passowrd did not match":
             login_window.info("Error", "Username and passowrd do not match")
-    setting_window.show(wait=True)
+    # setting_window.show(wait=True)
 def add_med():
     pass
 
