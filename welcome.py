@@ -51,22 +51,22 @@ def back_window_login():
     login_window.hide()
 
 def submit():
-    # body =  {'username': my_name.value , 'password' : my_password.value }
-    # # print(body)
-    # response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
-    # data = response.json()
-    # with open('data.json', 'w') as f:
-    #     json.dump(data, f)
-    # # print(data)
-    # if data["success"] == 1:
-    #     menu_window.show(wait=True)
-    # elif data["success"] == 0:
-    #     if data["error"] == "db connection error":
-    #         login_screen.info("Error", "Cannot connect to the database")
-    #     elif data["error"] == "no such user exists":
-    #         login_screen.info("Error", "This is not a valid account")
-    #     elif data["error"] == "username and passowrd did not match":
-    #         login_screen.info("Error", "Username and passowrd do not match")
+    body =  {'username': my_name.value , 'password' : my_password.value }
+    # print(body)
+    response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
+    data = response.json()
+    with open('data.json', 'w') as f:
+        json.dump(data, f)
+    # print(data)
+    if data["success"] == 1:
+        menu_window.show(wait=True)
+    elif data["success"] == 0:
+        if data["error"] == "db connection error":
+            login_window.info("Error", "Cannot connect to the database")
+        elif data["error"] == "no such user exists":
+            login_window.info("Error", "This is not a valid account")
+        elif data["error"] == "username and passowrd did not match":
+            login_window.info("Error", "Username and passowrd do not match")
     setting_window.show(wait=True)
 def add_med():
     pass
@@ -98,14 +98,18 @@ def back_window4():
 def open_window5():
     random_code =  ''.join(random.choice(string.ascii_letters) for _ in range(3))+''.join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    # with open('/home/pi/Doucments/MedBox_GUI/data.json') as f:
-    #     data = json.load(f)
-    # # print(data)
-    # header = {'jwt':data['data']['jwt']}
-    # body = {'password':random_code,'medboxID':'1'}
+    with open('/home/pi/Doucments/MedBox_GUI/data.json') as f:
+        data = json.load(f)
+    # print(data)
+    header = {'jwt':data['data']['jwt']}
+    body = {'password':random_code,'medboxID':'1'}
     # print(header)
     # print(body)
-    # response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
+    response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
+    caregiver_response_data = response2.json()
+    with open('caregiver_response_data.json', 'w') as f:
+        json.dump(caregiver_response_data, f)
+
     code_window.show(wait=True)
 
 
