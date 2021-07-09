@@ -31,23 +31,23 @@ def back_window_login():
     login_window.hide()
 
 def submit():
-    # body =  {'username': my_name.value , 'password' : my_password.value }
-    # # print(body)
-    # response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
-    # data = response.json()
-    # with open('data.json', 'w') as f:
-    #     json.dump(data, f)
-    # # print(data)
-    # if data["success"] == 1:
-    #     menu_window.show(wait=True)
-    # elif data["success"] == 0:
-    #     if data["error"] == "db connection error":
-    #         app.info("Error", "Cannot connect to the database")
-    #     elif data["error"] == "no such user exists":
-    #         app.info("Error", "This is not a valid account")
-    #     elif data["error"] == "username and passowrd did not match":
-    #         app.info("Error", "Username and passowrd do not match")
-    menu_window.show(wait=True)
+    body =  {'username': my_name.value , 'password' : my_password.value }
+    # print(body)
+    response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
+    data = response.json()
+    with open('data.json', 'w') as f:
+        json.dump(data, f)
+    # print(data)
+    if data["success"] == 1:
+        menu_window.show(wait=True)
+    elif data["success"] == 0:
+        if data["error"] == "db connection error":
+            app.info("Error", "Cannot connect to the database")
+        elif data["error"] == "no such user exists":
+            app.info("Error", "This is not a valid account")
+        elif data["error"] == "username and passowrd did not match":
+            app.info("Error", "Username and passowrd do not match")
+    # menu_window.show(wait=True)
 def add_med():
     pass
 
@@ -87,7 +87,10 @@ def open_window5():
     body = {'password':random_code,'medboxID':'1'}
     # print(header)
     # print(body)
-    # response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
+    response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
+    data = response2.json()
+    with open("care.json","w") as f:
+        json.dump(data,f)
     code_window.show(wait=True)
 
 
