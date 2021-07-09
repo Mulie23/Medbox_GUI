@@ -106,7 +106,9 @@ def open_window5():
     # print(header)
     # print(body)
     response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
-    
+    caregiver_response_data = response2.json
+    with open('caregiver_response_data.json', 'w') as f:
+        json.dump(caregiver_response_data, f)
     code_window.show(wait=True)
 
 
