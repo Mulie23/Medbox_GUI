@@ -38,6 +38,9 @@ def get_started():
                 data = json.load(f)
             if data["success"]==1:
                 menu_window.show(wait=True)
+            else:
+                login_window.show(wait=True)
+
     else:
         f = open("data.json", "w")
         f.write("")
@@ -59,7 +62,7 @@ def submit():
         json.dump(data, f)
     # print(data)
     if data["success"] == 1:
-        menu_window.show(wait=True)
+        setting_window.show(wait=True)
     elif data["success"] == 0:
         if data["error"] == "db connection error":
             login_window.info("Error", "Cannot connect to the database")
@@ -67,7 +70,7 @@ def submit():
             login_window.info("Error", "This is not a valid account")
         elif data["error"] == "username and passowrd did not match":
             login_window.info("Error", "Username and passowrd do not match")
-    setting_window.show(wait=True)
+
 def add_med():
     pass
 
@@ -137,48 +140,48 @@ def submit_setting():
     slot_dict["even"]=pm_to_am(even_set.value)
     with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json','w') as f:
         json.dump(slot_dict,f)
-    timer.cancel()
-    now_time = datetime.datetime.now()
-    now_year = now_time.date().year
-    now_month = now_time.date().month
-    now_day = now_time.date().day
-    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json') as f:
-        data = json.load(f)
-    next_list=[]
-    morn_hms = data["morn"]
-    morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
-    morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    morn_sec = (morn_time - now_time).total_seconds()
-    next_list.append(morn_sec)
-    noon_hms = data["noon"]
-    noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
-    noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
-    noon_sec = (noon_time - now_time).total_seconds()
-    next_list.append(noon_sec)
-    after_hms = data["after"]
-    after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
-    after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
-    after_sec = (after_time - now_time).total_seconds()
-    next_list.append(after_sec)
-    even_hms = data["even"]
-    even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
-    even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
-    even_sec = (even_time - now_time).total_seconds()
-    next_list.append(even_sec)
-    next_time = now_time + datetime.timedelta(days=+1)
-    next_year = next_time.date().year
-    next_month = next_time.date().month
-    next_day = next_time.date().day
-    next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    next_morn_sec = (next_morn - now_time).total_seconds()
-    next_list.append(next_morn_sec)
-    for i in next_list:
-        print(i)
-        if i > 0:
-            timer_start_time = i
-            break
-    timer1 = threading.Timer(timer_start_time, dispense)
-    timer1.start()
+    # timer.cancel()
+    # now_time = datetime.datetime.now()
+    # now_year = now_time.date().year
+    # now_month = now_time.date().month
+    # now_day = now_time.date().day
+    # with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json') as f:
+    #     data = json.load(f)
+    # next_list=[]
+    # morn_hms = data["morn"]
+    # morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
+    # morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+    # morn_sec = (morn_time - now_time).total_seconds()
+    # next_list.append(morn_sec)
+    # noon_hms = data["noon"]
+    # noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
+    # noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
+    # noon_sec = (noon_time - now_time).total_seconds()
+    # next_list.append(noon_sec)
+    # after_hms = data["after"]
+    # after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
+    # after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
+    # after_sec = (after_time - now_time).total_seconds()
+    # next_list.append(after_sec)
+    # even_hms = data["even"]
+    # even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
+    # even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
+    # even_sec = (even_time - now_time).total_seconds()
+    # next_list.append(even_sec)
+    # next_time = now_time + datetime.timedelta(days=+1)
+    # next_year = next_time.date().year
+    # next_month = next_time.date().month
+    # next_day = next_time.date().day
+    # next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+    # next_morn_sec = (next_morn - now_time).total_seconds()
+    # next_list.append(next_morn_sec)
+    # for i in next_list:
+    #     print(i)
+    #     if i > 0:
+    #         timer_start_time = i
+    #         break
+    # timer1 = threading.Timer(timer_start_time, dispense)
+    # timer1.start()
     setting_window.info("Info", "Your changes have been saved")
     setting_window.hide()
     menu_window.show(wait=True)
@@ -202,12 +205,13 @@ if file_exists:
     if f.read() == "":
         app.show()
         f.close
-        app.show()
     else:
         with open('D:/Term 8/Capstone/guizero/Medbox_GUI/data.json') as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
+        else:
+            app.show()
 else:
     f = open("data.json", "w")
     f.write("")
@@ -216,49 +220,49 @@ else:
 
 
 
-file_exist_time = os.path.isfile('slot.json') 
-if file_exist_time:
-    now_time = datetime.datetime.now()
-    now_year = now_time.date().year
-    now_month = now_time.date().month
-    now_day = now_time.date().day
-    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json') as f:
-        data = json.load(f)
-    next_list=[]
-    morn_hms = data["morn"]
-    morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
-    morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    morn_sec = (morn_time - now_time).total_seconds()
-    next_list.append(morn_sec)
-    noon_hms = data["noon"]
-    noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
-    noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
-    noon_sec = (noon_time - now_time).total_seconds()
-    next_list.append(noon_sec)
-    after_hms = data["after"]
-    after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
-    after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
-    after_sec = (after_time - now_time).total_seconds()
-    next_list.append(after_sec)
-    even_hms = data["even"]
-    even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
-    even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
-    even_sec = (even_time - now_time).total_seconds()
-    next_list.append(even_sec)
-    next_time = now_time + datetime.timedelta(days=+1)
-    next_year = next_time.date().year
-    next_month = next_time.date().month
-    next_day = next_time.date().day
-    next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    next_morn_sec = (next_morn - now_time).total_seconds()
-    next_list.append(next_morn_sec)
-    for i in next_list:
-        # print(i)
-        if i > 0:
-            timer_start_time = i
-            break
-    timer = threading.Timer(timer_start_time, dispense)
-    timer.start()
+# file_exist_time = os.path.isfile('slot.json') 
+# if file_exist_time:
+#     now_time = datetime.datetime.now()
+#     now_year = now_time.date().year
+#     now_month = now_time.date().month
+#     now_day = now_time.date().day
+#     with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json') as f:
+#         data = json.load(f)
+#     next_list=[]
+#     morn_hms = data["morn"]
+#     morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
+#     morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+#     morn_sec = (morn_time - now_time).total_seconds()
+#     next_list.append(morn_sec)
+#     noon_hms = data["noon"]
+#     noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
+#     noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
+#     noon_sec = (noon_time - now_time).total_seconds()
+#     next_list.append(noon_sec)
+#     after_hms = data["after"]
+#     after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
+#     after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
+#     after_sec = (after_time - now_time).total_seconds()
+#     next_list.append(after_sec)
+#     even_hms = data["even"]
+#     even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
+#     even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
+#     even_sec = (even_time - now_time).total_seconds()
+#     next_list.append(even_sec)
+#     next_time = now_time + datetime.timedelta(days=+1)
+#     next_year = next_time.date().year
+#     next_month = next_time.date().month
+#     next_day = next_time.date().day
+#     next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+#     next_morn_sec = (next_morn - now_time).total_seconds()
+#     next_list.append(next_morn_sec)
+#     for i in next_list:
+#         # print(i)
+#         if i > 0:
+#             timer_start_time = i
+#             break
+#     timer = threading.Timer(timer_start_time, dispense)
+#     timer.start()
     # print(timer.isAlive())
 
 add_med_window = Window(app, title="Add Medicine Window",bg = (255,255,224))
