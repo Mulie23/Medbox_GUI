@@ -59,7 +59,7 @@ def submit():
         json.dump(data, f)
     # print(data)
     if data["success"] == 1:
-        setting_window.show(wait=True)
+        menu_window.show(wait=True)
     elif data["success"] == 0:
         if data["error"] == "db connection error":
             login_window.info("Error", "Cannot connect to the database")
@@ -67,7 +67,7 @@ def submit():
             login_window.info("Error", "This is not a valid account")
         elif data["error"] == "username and passowrd did not match":
             login_window.info("Error", "Username and passowrd do not match")
-    
+    setting_window.show(wait=True)
 def add_med():
     pass
 
@@ -270,7 +270,7 @@ quit_med_window.hide()
 check_pre_window = Window(app, title="Check Prescription Window",bg = (255,255,224))
 check_pre_window.set_full_screen()
 check_pre_window.hide()
-emergency_window = Window(app, title="Refill Window",bg = (255,255,224))
+emergency_window = Window(app, title="Emergency Window",bg = (255,255,224))
 emergency_window.set_full_screen()
 emergency_window.hide()
 code_window = Window(app, title="Code",bg = (255,255,224))
@@ -324,7 +324,7 @@ check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription
 check_pre.bg=(135,206,250)
 check_pre.text_size=50
 # blank_text8=Text(menu_box2,text="",align="left",width=70)
-emergency = PushButton(menu_box2, command=open_window4, text="Refill Medicine",width="fill",align="left",height=2)
+emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left",height=2)
 emergency.bg=(135,206,250)
 emergency.text_size=50
 
