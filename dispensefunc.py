@@ -1,2 +1,2 @@
 def dispense():
-    print("PILL")
+    print("PILL!")
