@@ -17,7 +17,7 @@ def get_started():
             login_window.show(wait=True)
             f.close
         else:
-            with open('D:\Term 8\Capstone\guizero\Medbox_GUI/data.json') as f:
+            with open('D:\Term 8\Capstone\guizero\Medbox_GUI\data.json') as f:
                 data = json.load(f)
             if data["success"]==1:
                 menu_window.show(wait=True)
@@ -80,7 +80,7 @@ def back_window4():
 def open_window5():
     random_code =  ''.join(random.choice(string.ascii_letters) for _ in range(3))+''.join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    with open('D:\Term 8\Capstone\guizero\Medbox_GUI/data.json') as f:
+    with open('D:\Term 8\Capstone\guizero\Medbox_GUI\data.json') as f:
         data = json.load(f)
     # print(data)
     header = {'jwt':data['data']['jwt']}
@@ -122,7 +122,7 @@ if file_exists:
         app.show()
         f.close
     else:
-        with open('D:\Term 8\Capstone\guizero\Medbox_GUI/data.json') as f:
+        with open('D:\Term 8\Capstone\guizero\Medbox_GUI\data.json') as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
