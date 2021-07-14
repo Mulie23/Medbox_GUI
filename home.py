@@ -28,8 +28,8 @@ def close_window4():
     emergency_window.hide()
 
 def save_data():
-    f=open('D:/Term 8/Capstone/medbox_data.txt','w')
-    f.write(my_name.value+'\n')
+    f=open("D:/Term 8/Capstone/medbox_data.txt","w")
+    f.write(my_name.value+"\n")
     f.close
     
 app = App(title="Homepage",layout="grid", width=476, height=208)

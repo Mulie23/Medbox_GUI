@@ -9,7 +9,7 @@ import os.path
 random_code = ""
 
 def get_started():
-    file_exists = os.path.isfile('data.json') 
+    file_exists = os.path.isfile("data.json") 
     # print(file_exists)
     if file_exists:
         f = open("data.json", "r")
@@ -17,7 +17,7 @@ def get_started():
             login_window.show(wait=True)
             f.close
         else:
-            with open('D:\Term 8\Capstone\guizero\Medbox_GUI\data.json') as f:
+            with open("D:\Term 8\Capstone\guizero\Medbox_GUI\data.json") as f:
                 data = json.load(f)
             if data["success"]==1:
                 menu_window.show(wait=True)
@@ -31,11 +31,13 @@ def back_window_login():
     login_window.hide()
 
 def submit():
-    body =  {'username': my_name.value , 'password' : my_password.value }
+    body =  {"username": my_name.value , "password" : my_password.value }
     # print(body)
-    response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
+    with open("pass.json", "w") as f:
+        json.dump(body, f)
+    response = requests.post("http://3.0.17.207:4000/medboxAuth/login", body)
     data = response.json()
-    with open('data.json', 'w') as f:
+    with open("data.json", "w") as f:
         json.dump(data, f)
     # print(data)
     if data["success"] == 1:
@@ -65,7 +67,23 @@ def back_window2():
 
 def open_window3():
     # REQUEST PRESCRIPTION FROM MESSAGE QUEUE
-    
+    with open("D:\Term 8\Capstone\guizero\Medbox_GUI\data.json") as f:
+        data = json.load(f)
+    print(data)
+    header = {"jwt":data["data"]["jwt"]}
+    with open("D:\Term 8\Capstone\guizero\Medbox_GUI\pass.json") as f:
+        data = json.load(f)
+    body = {"username":data["username"],"medboxID":"1"}
+    print(header)
+    print(body)
+    # headers = {"jwt":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2MjMzNDAyLCJleHAiOjE2MjYzMTk4MDJ9._HjrM5XbmKZbMATpCZ2_1w3hbWpfQm2-svLTOxW7AAE"}
+    # body = {"username":"user1","medboxID":"1"}
+    # print(headers)
+    # print(body)
+    response3 = requests.post("http://3.0.17.207:4000/queue/consume", body,header)
+    data = response3.json()
+    with open("pres.json","w") as f:
+        json.dump(data,f)
     check_pre_window.show(wait=True)
 
 def back_window3():
@@ -78,16 +96,16 @@ def back_window4():
     emergency_window.hide()
 
 def open_window5():
-    random_code =  ''.join(random.choice(string.ascii_letters) for _ in range(3))+''.join(random.choice(string.digits) for _ in range(3))
+    random_code =  "".join(random.choice(string.ascii_letters) for _ in range(3))+"".join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    with open('D:\Term 8\Capstone\guizero\Medbox_GUI\data.json') as f:
+    with open("D:\Term 8\Capstone\guizero\Medbox_GUI\data.json") as f:
         data = json.load(f)
     # print(data)
-    header = {'jwt':data['data']['jwt']}
-    body = {'password':random_code,'medboxID':'1'}
+    header = {"jwt":data["data"]["jwt"]}
+    body = {"password":random_code,"medboxID":"1"}
     # print(header)
     # print(body)
-    response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
+    response2 = requests.post("http://3.0.17.207:4000/onboard/register", body,header)
     data = response2.json()
     with open("care.json","w") as f:
         json.dump(data,f)
@@ -98,8 +116,8 @@ def back_window5():
     code_window.hide()
 
 def save_data():
-    f=open('D:/Term 8/Capstone/medbox_data.txt','w')
-    f.write(my_name.value+'\n')
+    f=open("D:/Term 8/Capstone/medbox_data.txt","w")
+    f.write(my_name.value+"\n")
     f.close
 
 def open_menu():
@@ -114,7 +132,7 @@ login_window.hide()
 
 menu_window = Window(app, title="Menu",bg = "white")
 menu_window.set_full_screen()
-file_exists = os.path.isfile('data.json') 
+file_exists = os.path.isfile("data.json") 
 # print(file_exists)
 if file_exists:
     f = open("data.json", "r")
@@ -122,7 +140,7 @@ if file_exists:
         app.show()
         f.close
     else:
-        with open('D:\Term 8\Capstone\guizero\Medbox_GUI\data.json') as f:
+        with open("D:\Term 8\Capstone\guizero\Medbox_GUI\data.json") as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
@@ -131,6 +149,7 @@ else:
     f.write("")
     f.close
     app.show()
+
 add_med_window = Window(app, title="Add Medicine Window",bg = "white")
 add_med_window.set_full_screen()
 add_med_window.hide()
@@ -140,7 +159,7 @@ quit_med_window.hide()
 check_pre_window = Window(app, title="Check Prescription Window",bg = "white")
 check_pre_window.set_full_screen()
 check_pre_window.hide()
-emergency_window = Window(app, title="Emergency Window",bg = "white")
+emergency_window = Window(app, title="Refill Window",bg = "white")
 emergency_window.set_full_screen()
 emergency_window.hide()
 code_window = Window(app, title="Code",bg = "white")
@@ -172,8 +191,9 @@ back_button2 = PushButton(quit_med_window, text="Back", command=back_window2, wi
 check_pre = PushButton(menu_window, command=open_window3, text="Check Prescription", width=15)
 back_button3 = PushButton(check_pre_window, text="Back", command=back_window3, width=15)
 
-emergency = PushButton(menu_window, command=open_window4, text="Emergency call", width=15)
+emergency = PushButton(menu_window, command=open_window4, text="Refill Medicine", width=15)
 back_button4 = PushButton(emergency_window, text="Back", command=back_window4, width=15)
+
 add_caregiver_code = PushButton(menu_window, command=open_window5, text="Caregiver Code", width=15)
 medbox_id = Text(code_window, text="Your medbox id is: 1")
 caregiver_code = Text(code_window, text=f"Your caregiver code is: {random_code}")

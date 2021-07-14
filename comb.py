@@ -6,7 +6,7 @@ import random
 import string
 
 
-random_code =  ''.join(random.choice(string.ascii_letters) for _ in range(3))+''.join(random.choice(string.digits) for _ in range(3))
+random_code =  "".join(random.choice(string.ascii_letters) for _ in range(3))+"".join(random.choice(string.digits) for _ in range(3))
 
 def open_window_login():
     login_window.show(wait=True)
@@ -15,19 +15,19 @@ def close_window_login():
     login_window.hide()
 
 def submit():
-    body =  {'username': my_name.value , 'password' : my_password.value }
+    body =  {"username": my_name.value , "password" : my_password.value }
     print(body)
-    response = requests.post('http://3.0.17.207:4000/medboxAuth/login', body)
+    response = requests.post("http://3.0.17.207:4000/medboxAuth/login", body)
     data = response.json()
-    with open('data.json', 'w') as f:
+    with open("data.json", "w") as f:
         json.dump(data, f)
     print(data)
     if data["success"] == 1:
-        header = {'jwt':data['data']['jwt']}
-        body = {'password':random_code,'medboxID':'1'}
+        header = {"jwt":data["data"]["jwt"]}
+        body = {"password":random_code,"medboxID":"1"}
         print(header)
         print(body)
-        response2 = requests.post('http://3.0.17.207:4000/onboard/register', body,header)
+        response2 = requests.post("http://3.0.17.207:4000/onboard/register", body,header)
         code_window.show(wait=True)
 
 def add_med():
@@ -58,8 +58,8 @@ def close_window4():
     emergency_window.hide()
 
 def save_data():
-    f=open('D:/Term 8/Capstone/medbox_data.txt','w')
-    f.write(my_name.value+'\n')
+    f=open("D:/Term 8/Capstone/medbox_data.txt","w")
+    f.write(my_name.value+"\n")
     f.close
 def open_menu():
     menu_window.show(wait=True)
