@@ -73,14 +73,14 @@ def open_window3():
     header = {"jwt":data["data"]["jwt"]}
     with open("D:\Term 8\Capstone\guizero\Medbox_GUI\pass.json") as f:
         data = json.load(f)
-    body = {"username":data["username"],"medboxID":"1"}
+    body = {"username":"user1","medboxID":"1"}
     print(header)
     print(body)
     # headers = {"jwt":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2MjMzNDAyLCJleHAiOjE2MjYzMTk4MDJ9._HjrM5XbmKZbMATpCZ2_1w3hbWpfQm2-svLTOxW7AAE"}
     # body = {"username":"user1","medboxID":"1"}
     # print(headers)
     # print(body)
-    response3 = requests.post("http://3.0.17.207:4000/queue/consume", body,header)
+    response3 = requests.post("http://3.0.17.207:4000/queue/consume", body, headers=header)
     data = response3.json()
     with open("pres.json","w") as f:
         json.dump(data,f)
