@@ -29,19 +29,21 @@ def get_started():
     file_exists = os.path.isfile('data.json') 
     # print(file_exists)
     if file_exists:
-        f = open("data.json", "r")
-        if f.read() == "":
-            login_window.show(wait=True)
-            f.close
+        # f = open("data.json", "r")
+        # if f.read() == "":
+        #     login_window.show(wait=True)
+        #     f.close
+        # else:
+        with open('D:/Term 8/Capstone/guizero/Medbox_GUI/data.json') as f:
+            data = json.load(f)
+        if data["success"]==1:
+            menu_window.show(wait=True)
         else:
-            with open('D:/Term 8/Capstone/guizero/Medbox_GUI/data.json') as f:
-                data = json.load(f)
-            if data["success"]==1:
-                menu_window.show(wait=True)
+            login_window.show(wait=True)
     else:
-        f = open("data.json", "w")
-        f.write("")
-        f.close
+        # f = open("data.json", "w")
+        # f.write("")
+        # f.close
         login_window.show(wait=True)
 
 
@@ -199,20 +201,18 @@ menu_window.set_full_screen()
 file_exists = os.path.isfile('data.json') 
 # print(file_exists)
 if file_exists:
-    f = open("data.json", "r")
-    if f.read() == "":
-        app.show()
-        f.close
-        app.show()
+    # f = open("data.json", "r")
+    # if f.read() == "":
+    #     f.close
+    #     app.show()
+    # else:
+    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/data.json') as f:
+        data = json.load(f)
+    if data["success"]==1:
+        menu_window.show(wait=True)
     else:
-        with open('D:/Term 8/Capstone/guizero/Medbox_GUI/data.json') as f:
-            data = json.load(f)
-        if data["success"]==1:
-            menu_window.show(wait=True)
+        app.show() 
 else:
-    f = open("data.json", "w")
-    f.write("")
-    f.close
     app.show()
 
 
@@ -274,6 +274,7 @@ emergency_window = Window(app, title="Emergency Window",bg = (255,255,224))
 emergency_window.set_full_screen()
 emergency_window.hide()
 code_window = Window(app, title="Code",bg = (255,255,224))
+
 code_window.set_full_screen()
 code_window.hide()
 setting_window = Window(app, title="Setting",bg = (255,255,224))
