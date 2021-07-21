@@ -67,6 +67,10 @@ def back_window_login():
 def submit():
     body =  {"username": my_name.value , "password" : my_password.value }
     # print(body)
+    with open("pass.json", "w") as f:
+        json.dump(body, f)
+    # body =  {"username": my_name.value , "password" : my_password.value }
+    # print(body)
     response = requests.post("http://3.0.17.207:4000/medboxAuth/login", body)
     data = response.json()
     with open("data.json", "w") as f:
