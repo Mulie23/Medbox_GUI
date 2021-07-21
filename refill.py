@@ -21,7 +21,7 @@ def refillProcess() :
     if (pullPrescription()) :
         container = Containers() 
         stateMachine = True ; 
-        state = 'barcode'
+        state = "barcode"
         while(stateMachine) : 
             if (state=="barcode") : 
                 #display the relevant details on the front end - Wentao
@@ -35,7 +35,7 @@ def refillProcess() :
                     state="wait"
                 else : 
                     state = "error"
-                    message = "couldn't rotate container"
+                    message = "couldn"t rotate container"
             elif (state=="wait") : 
                 # wait for a button push on gui and number of pills form input 
                 # update infromation i.e container.json
@@ -83,7 +83,7 @@ class Containers() :
         self.current_pos
     
     def extractContainerData(self) : 
-        f  = open('container.json')
+        f  = open("container.json")
         self.data = json.load(f)
         self.current_pos = data["current_pos"]
         for i in self.data:
@@ -126,7 +126,7 @@ class Containers() :
     
     
     def writeToFile(self) : 
-        with open("container.json", 'w') as outfile:
+        with open("container.json", "w") as outfile:
             json.dump(self.data, outfile)
 
         
