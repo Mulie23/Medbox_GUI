@@ -11,6 +11,19 @@ import threading
 
 random_code = ""
 
+def notificate():
+    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
+        data = json.load(f)
+    header = {"jwt":data["data"]["jwt"]}
+    # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
+    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/pass.json") as f:
+        data = json.load(f)    
+    body = {"username":data["username"],"medboxID":"1"}
+    response = requests.post("http://3.0.17.207:4000/notification/send", body, headers=header)
+    data = response.json()
+    with open("notification.json", "w") as f:
+        json.dump(data, f)
+
 def pull_pres():
     with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
         data = json.load(f)
