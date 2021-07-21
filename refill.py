@@ -52,7 +52,6 @@ def refillProcess() :
             else : 
                 state = "error" 
                 error = "invalid sate" 
-
         return       
 
 

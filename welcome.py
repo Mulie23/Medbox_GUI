@@ -34,7 +34,7 @@ def get_started():
             login_window.show(wait=True)
             f.close
         else:
-            with open('/home/pi/Documents/Medbox_GUI/data.json') as f:
+            with open('D:/Term 8/Capstone/guizero/Medbox_GUI/data.json') as f:
                 data = json.load(f)
             if data["success"]==1:
                 menu_window.show(wait=True)
@@ -59,7 +59,7 @@ def submit():
         json.dump(data, f)
     # print(data)
     if data["success"] == 1:
-        menu_window.show(wait=True)
+        setting_window.show(wait=True)
     elif data["success"] == 0:
         if data["error"] == "db connection error":
             login_window.info("Error", "Cannot connect to the database")
@@ -67,7 +67,7 @@ def submit():
             login_window.info("Error", "This is not a valid account")
         elif data["error"] == "username and passowrd did not match":
             login_window.info("Error", "Username and passowrd do not match")
-    setting_window.show(wait=True)
+
 def add_med():
     pass
 
@@ -98,7 +98,7 @@ def back_window4():
 def open_window5():
     random_code =  ''.join(random.choice(string.ascii_letters) for _ in range(3))+''.join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    with open('/home/pi/Documents/MedBox_GUI/data.json') as f:
+    with open('D:/Term 8/Capstone/guizero/MedBox_GUI/data.json') as f:
         data = json.load(f)
     # print(data)
     header = {'jwt':data['data']['jwt']}
@@ -120,7 +120,7 @@ def back_window6():
     setting_window.hide()
 
 def save_data():
-    f=open('/home/pi/Documents/Medbox_GUI/medbox_data.txt','w')
+    f=open('D:/Term 8/Capstone/guizero/Medbox_GUI/medbox_data.txt','w')
     f.write(my_name.value+'\n')
     f.close
 
@@ -136,14 +136,14 @@ def submit_setting():
     slot_dict["noon"]=pm_to_am(noon_set.value)
     slot_dict["after"]=pm_to_am(after_set.value)
     slot_dict["even"]=pm_to_am(even_set.value)
-    with open('/home/pi/Documents/Medbox_GUI/slot.json','w') as f:
+    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json','w') as f:
         json.dump(slot_dict,f)
     timer.cancel()
     now_time = datetime.datetime.now()
     now_year = now_time.date().year
     now_month = now_time.date().month
     now_day = now_time.date().day
-    with open('/home/pi/Documents/Medbox_GUI/slot.json') as f:
+    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json') as f:
         data = json.load(f)
     next_list=[]
     morn_hms = data["morn"]
@@ -205,7 +205,7 @@ if file_exists:
         f.close
         app.show()
     else:
-        with open('/home/pi/Documents/Medbox_GUI/data.json') as f:
+        with open('D:/Term 8/Capstone/guizero/Medbox_GUI/data.json') as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
@@ -223,7 +223,7 @@ if file_exist_time:
     now_year = now_time.date().year
     now_month = now_time.date().month
     now_day = now_time.date().day
-    with open('/home/pi/Documents/Medbox_GUI/slot.json') as f:
+    with open('D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json') as f:
         data = json.load(f)
     next_list=[]
     morn_hms = data["morn"]

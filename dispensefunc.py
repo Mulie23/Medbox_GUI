@@ -1,2 +1,3 @@
 def dispense():
-    pass
+    print("PILL"*8)
+    return
