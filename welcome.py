@@ -15,13 +15,16 @@ def pull_pres():
     with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
         data = json.load(f)
     header = {"jwt":data["data"]["jwt"]}
-    
-    body = {"username":random_code,"medboxID":"1"}
+    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/pass.json") as f:
+        data = json.load(f)    
+    body = {"username":data["username"],"medboxID":"1"}
     # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
     # body = {"medboxID": "1","username": "user1"}
 
     response = requests.post("http://3.0.17.207:4000/queue/consume", body, headers=header)
     data = response.json()
+    with open("prescription.json", "w") as f:
+        json.dump(data, f)
 
 def pm_to_am(time_string):
     if time_string[-2]=="A":
@@ -102,6 +105,7 @@ def back_window2():
     quit_med_window.hide()
 
 def open_window3():
+    pull_pres()
     check_pre_window.show(wait=True)
 
 def back_window3():
