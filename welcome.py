@@ -36,11 +36,11 @@ def dispense():
 random_code = ""
 
 def notificate():
-    with open("/home/pi/Documents/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     header = {"jwt":data["data"]["jwt"]}
     # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
-    with open("/home/pi/Documents/MedBox_GUI/pass.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/pass.json") as f:
         data = json.load(f)    
     body = {"username":data["username"],"medboxID":"1"}
     response = requests.post("http://3.0.17.207:4000/notification/send", body, headers=header)
@@ -49,10 +49,10 @@ def notificate():
         json.dump(data, f)
 
 def pull_pres():
-    with open("/home/pi/Documents/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     header = {"jwt":data["data"]["jwt"]}
-    with open("/home/pi/Documents/MedBox_GUI/pass.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/pass.json") as f:
         data = json.load(f)    
     body = {"username":data["username"],"medboxID":"1"}
     # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
@@ -158,7 +158,7 @@ def back_window4():
 def open_window5():
     random_code =  "".join(random.choice(string.ascii_letters) for _ in range(3))+"".join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    with open("/home/pi/Documents/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     # print(data)
     header = {"jwt":data["data"]["jwt"]}
