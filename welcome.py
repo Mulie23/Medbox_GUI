@@ -224,7 +224,7 @@ def submit_setting():
 app = App(title="Homepage",bg = (255,255,224))
 app.set_full_screen()
 app.hide()
-login_window = Window(app, title="Login",bg = (255,255,224))
+login_window = Window(app, title="Login",bg = (255,255,224),width = 500, length = 2000)
 # login_window.set_full_screen()
 login_window.hide()
 
