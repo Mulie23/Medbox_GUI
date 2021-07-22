@@ -12,11 +12,11 @@ import threading
 random_code = ""
 
 def notificate():
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/MedBox_GUI/data.json") as f:
         data = json.load(f)
     header = {"jwt":data["data"]["jwt"]}
     # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/pass.json") as f:
+    with open("/home/pi/Documents/MedBox_GUI/pass.json") as f:
         data = json.load(f)    
     body = {"username":data["username"],"medboxID":"1"}
     response = requests.post("http://3.0.17.207:4000/notification/send", body, headers=header)
@@ -25,10 +25,10 @@ def notificate():
         json.dump(data, f)
 
 def pull_pres():
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/MedBox_GUI/data.json") as f:
         data = json.load(f)
     header = {"jwt":data["data"]["jwt"]}
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/pass.json") as f:
+    with open("/home/pi/Documents/MedBox_GUI/pass.json") as f:
         data = json.load(f)    
     body = {"username":data["username"],"medboxID":"1"}
     # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
@@ -62,7 +62,7 @@ def get_started():
         #     login_window.show(wait=True)
         #     f.close
         # else:
-        with open("D:/Term 8/Capstone/guizero/Medbox_GUI/data.json") as f:
+        with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
@@ -133,7 +133,7 @@ def back_window4():
 def open_window5():
     random_code =  "".join(random.choice(string.ascii_letters) for _ in range(3))+"".join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/MedBox_GUI/data.json") as f:
         data = json.load(f)
     # print(data)
     header = {"jwt":data["data"]["jwt"]}
@@ -155,7 +155,7 @@ def back_window6():
     setting_window.hide()
 
 def save_data():
-    f=open("D:/Term 8/Capstone/guizero/Medbox_GUI/medbox_data.txt","w")
+    f=open("/home/pi/Documents/Medbox_GUI/medbox_data.txt","w")
     f.write(my_name.value+"\n")
     f.close
 
@@ -171,14 +171,14 @@ def submit_setting():
     slot_dict["noon"]=pm_to_am(noon_set.value)
     slot_dict["after"]=pm_to_am(after_set.value)
     slot_dict["even"]=pm_to_am(even_set.value)
-    with open("D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json","w") as f:
+    with open("/home/pi/Documents/Medbox_GUI/slot.json","w") as f:
         json.dump(slot_dict,f)
     timer.cancel()
     now_time = datetime.datetime.now()
     now_year = now_time.date().year
     now_month = now_time.date().month
     now_day = now_time.date().day
-    with open("D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
         data = json.load(f)
     next_list=[]
     morn_hms = data["morn"]
@@ -225,7 +225,7 @@ app = App(title="Homepage",bg = (255,255,224))
 app.set_full_screen()
 app.hide()
 login_window = Window(app, title="Login",bg = (255,255,224))
-login_window.set_full_screen()
+# login_window.set_full_screen()
 login_window.hide()
 
 menu_window = Window(app, title="Menu",bg = (255,255,224))
@@ -239,7 +239,7 @@ if file_exists:
     #     f.close
     #     app.show()
     # else:
-    with open("D:/Term 8/Capstone/guizero/Medbox_GUI/data.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     if data["success"]==1:
         menu_window.show(wait=True)
@@ -256,7 +256,7 @@ if file_exist_time:
     now_year = now_time.date().year
     now_month = now_time.date().month
     now_day = now_time.date().day
-    with open("D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
         data = json.load(f)
     next_list=[]
     morn_hms = data["morn"]
