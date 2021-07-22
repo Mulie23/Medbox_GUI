@@ -1,1 +1,3 @@
 guizero
+requests
+playsound

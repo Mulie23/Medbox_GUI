@@ -5,9 +5,33 @@ import base64
 import random
 import string
 import os.path
-from dispensefunc import dispense
 import datetime
 import threading
+from playsound import playsound
+
+def refill_notification(medicine_name):
+    refill_window.info("Notificaiton", "Please refill" + medicine_name)
+    refill_window.show(wait=True)
+
+def compare():
+    with open("container.json","r") as f:
+        container_data = json.load(f)
+    with open("prescription.json","r") as f:
+        prescription_data = json.load(f)
+    prescription_list = prescription_data["data"]["prescription"]
+    # print(prescription_list)
+    med_list=[]
+    for i in range(len(prescription_list)):
+        med_list.append(prescription_list[i]["medicine_name"])
+    # print(med_list)
+    for i in med_list:
+        if  container_data.get(i) is None:
+            refill_notification(i)
+
+def dispense():
+    check_pre()
+    compare()
+    print("PILL"*8)
 
 random_code = ""
 
@@ -66,6 +90,7 @@ def get_started():
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
+            menu_window.set_full_screen()
         else:
             login_window.show(wait=True)
     else:
@@ -229,7 +254,6 @@ login_window = Window(app, title="Login",bg = (255,255,224),width = 1500, height
 login_window.hide()
 
 menu_window = Window(app, title="Menu",bg = (255,255,224))
-menu_window.set_full_screen()
 menu_window.hide()
 
 file_exists = os.path.isfile("data.json") 
@@ -244,6 +268,7 @@ if file_exists:
         data = json.load(f)
     if data["success"]==1:
         menu_window.show(wait=True)
+        menu_window.set_full_screen()
     else:
         app.show() 
 else:
