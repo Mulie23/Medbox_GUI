@@ -125,10 +125,10 @@ def back_window3():
     check_pre_window.hide()
 
 def open_window4():
-    emergency_window.show(wait=True)
+    refill_window.show(wait=True)
 
 def back_window4():
-    emergency_window.hide()
+    refill_window.hide()
 
 def open_window5():
     random_code =  "".join(random.choice(string.ascii_letters) for _ in range(3))+"".join(random.choice(string.digits) for _ in range(3))
@@ -229,8 +229,9 @@ login_window = Window(app, title="Login",bg = (255,255,224),width = 1500, height
 login_window.hide()
 
 menu_window = Window(app, title="Menu",bg = (255,255,224))
-menu_window.hide()
 menu_window.set_full_screen()
+menu_window.hide()
+
 file_exists = os.path.isfile("data.json") 
 # print(file_exists)
 if file_exists:
@@ -303,9 +304,9 @@ quit_med_window.hide()
 check_pre_window = Window(app, title="Check Prescription Window",bg = (255,255,224))
 check_pre_window.set_full_screen()
 check_pre_window.hide()
-emergency_window = Window(app, title="Emergency Window",bg = (255,255,224))
-emergency_window.set_full_screen()
-emergency_window.hide()
+refill_window = Window(app, title="Refill",bg = (255,255,224))
+refill_window.set_full_screen()
+refill_window.hide()
 code_window = Window(app, title="Code",bg = (255,255,224))
 
 code_window.set_full_screen()
@@ -358,9 +359,9 @@ check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription
 check_pre.bg=(135,206,250)
 check_pre.text_size=50
 blank_text8=Text(menu_box2,text="",align="left",width=70)
-emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left",height=2)
-emergency.bg=(135,206,250)
-emergency.text_size=50
+refill = PushButton(menu_box2, command=open_window4, text="Refill",width="fill",align="left",height=2)
+refill.bg=(135,206,250)
+refill.text_size=50
 
 blank_text9=Text(menu_window,text="",width="fill",height=7)
 menu_box3 = Box(menu_window,align="top",width="fill")
@@ -383,7 +384,7 @@ back_button3.text_size=50
 back_button4 = PushButton(check_pre_window, text="Back", command=back_window3, width=15,align="bottom")
 back_button4.bg=(255,160,122)
 back_button4.text_size=50
-back_button5 = PushButton(emergency_window, text="Back", command=back_window4, width=15,align="bottom")
+back_button5 = PushButton(refill_window, text="Back", command=back_window4, width=15,align="bottom")
 back_button5.bg=(255,160,122)
 back_button5.text_size=50
 
