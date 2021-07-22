@@ -9,8 +9,9 @@ import datetime
 import threading
 from playsound import playsound
 
-def refill_notification(medicine_name):
-    refill_window.info("Notificaiton", "Please refill" + medicine_name)
+def refill_notification():
+    playsound('noti1.wav')
+    refill_window.info("Notificaiton", "Please refill medicines first")
     refill_window.show(wait=True)
 
 def compare():
@@ -26,12 +27,12 @@ def compare():
     # print(med_list)
     for i in med_list:
         if  container_data.get(i) is None:
-            refill_notification(i)
+            refill_notification()
 
 def dispense():
     check_pre()
     compare()
-    print("PILL"*8)
+
 
 random_code = ""
 
