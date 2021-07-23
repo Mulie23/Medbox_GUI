@@ -709,8 +709,8 @@ confirm_finish_window = Window(app, title="Confirm finish",bg = (255,255,224))
 confirm_finish_window.set_full_screen()
 confirm_finish_window.hide()
 confirm_finish_txt = Text(confirm_finish_window,text="Do you want to refill other medicines?")
-finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
-finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func)
+# finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
+# finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func)
 
 
 
