@@ -5,18 +5,43 @@ import base64
 import random
 import string
 import os.path
-from dispensefunc import dispense
 import datetime
 import threading
+from playsound import playsound
+
+def refill_notification():
+    playsound('noti1.wav')
+    refill_window.info("Notificaiton", "Please refill medicines first")
+    refill_window.show(wait=True)
+
+def compare():
+    with open("container.json","r") as f:
+        container_data = json.load(f)
+    with open("prescription.json","r") as f:
+        prescription_data = json.load(f)
+    prescription_list = prescription_data["data"]["prescription"]
+    # print(prescription_list)
+    med_list=[]
+    for i in range(len(prescription_list)):
+        med_list.append(prescription_list[i]["medicine_name"])
+    # print(med_list)
+    for i in med_list:
+        if  container_data.get(i) is None:
+            refill_notification()
+
+def dispense():
+    check_pre()
+    compare()
+
 
 random_code = ""
 
 def notificate():
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     header = {"jwt":data["data"]["jwt"]}
     # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/pass.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/pass.json") as f:
         data = json.load(f)    
     body = {"username":data["username"],"medboxID":"1"}
     response = requests.post("http://3.0.17.207:4000/notification/send", body, headers=header)
@@ -25,10 +50,10 @@ def notificate():
         json.dump(data, f)
 
 def pull_pres():
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     header = {"jwt":data["data"]["jwt"]}
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/pass.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/pass.json") as f:
         data = json.load(f)    
     body = {"username":data["username"],"medboxID":"1"}
     # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
@@ -62,10 +87,11 @@ def get_started():
         #     login_window.show(wait=True)
         #     f.close
         # else:
-        with open("D:/Term 8/Capstone/guizero/Medbox_GUI/data.json") as f:
+        with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
+            menu_window.set_full_screen()
         else:
             login_window.show(wait=True)
     else:
@@ -125,15 +151,15 @@ def back_window3():
     check_pre_window.hide()
 
 def open_window4():
-    emergency_window.show(wait=True)
+    refill_window.show(wait=True)
 
 def back_window4():
-    emergency_window.hide()
+    refill_window.hide()
 
 def open_window5():
     random_code =  "".join(random.choice(string.ascii_letters) for _ in range(3))+"".join(random.choice(string.digits) for _ in range(3))
     caregiver_code.value = f"Your caregiver code is: {random_code}"
-    with open("D:/Term 8/Capstone/guizero/MedBox_GUI/data.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     # print(data)
     header = {"jwt":data["data"]["jwt"]}
@@ -155,7 +181,7 @@ def back_window6():
     setting_window.hide()
 
 def save_data():
-    f=open("D:/Term 8/Capstone/guizero/Medbox_GUI/medbox_data.txt","w")
+    f=open("/home/pi/Documents/Medbox_GUI/medbox_data.txt","w")
     f.write(my_name.value+"\n")
     f.close
 
@@ -171,14 +197,14 @@ def submit_setting():
     slot_dict["noon"]=pm_to_am(noon_set.value)
     slot_dict["after"]=pm_to_am(after_set.value)
     slot_dict["even"]=pm_to_am(even_set.value)
-    with open("D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json","w") as f:
+    with open("/home/pi/Documents/Medbox_GUI/slot.json","w") as f:
         json.dump(slot_dict,f)
     timer.cancel()
     now_time = datetime.datetime.now()
     now_year = now_time.date().year
     now_month = now_time.date().month
     now_day = now_time.date().day
-    with open("D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
         data = json.load(f)
     next_list=[]
     morn_hms = data["morn"]
@@ -224,13 +250,13 @@ def submit_setting():
 app = App(title="Homepage",bg = (255,255,224))
 app.set_full_screen()
 app.hide()
-login_window = Window(app, title="Login",bg = (255,255,224))
-login_window.set_full_screen()
+login_window = Window(app, title="Login",bg = (255,255,224),width = 1500, height = 1000)
+# login_window.set_full_screen()
 login_window.hide()
 
 menu_window = Window(app, title="Menu",bg = (255,255,224))
 menu_window.hide()
-menu_window.set_full_screen()
+
 file_exists = os.path.isfile("data.json") 
 # print(file_exists)
 if file_exists:
@@ -239,10 +265,11 @@ if file_exists:
     #     f.close
     #     app.show()
     # else:
-    with open("D:/Term 8/Capstone/guizero/Medbox_GUI/data.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     if data["success"]==1:
         menu_window.show(wait=True)
+        menu_window.set_full_screen()
     else:
         app.show() 
 else:
@@ -256,7 +283,7 @@ if file_exist_time:
     now_year = now_time.date().year
     now_month = now_time.date().month
     now_day = now_time.date().day
-    with open("D:/Term 8/Capstone/guizero/Medbox_GUI/slot.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
         data = json.load(f)
     next_list=[]
     morn_hms = data["morn"]
@@ -303,9 +330,9 @@ quit_med_window.hide()
 check_pre_window = Window(app, title="Check Prescription Window",bg = (255,255,224))
 check_pre_window.set_full_screen()
 check_pre_window.hide()
-emergency_window = Window(app, title="Emergency Window",bg = (255,255,224))
-emergency_window.set_full_screen()
-emergency_window.hide()
+refill_window = Window(app, title="Refill",bg = (255,255,224))
+refill_window.set_full_screen()
+refill_window.hide()
 code_window = Window(app, title="Code",bg = (255,255,224))
 
 code_window.set_full_screen()
@@ -358,9 +385,9 @@ check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription
 check_pre.bg=(135,206,250)
 check_pre.text_size=50
 blank_text8=Text(menu_box2,text="",align="left",width=70)
-emergency = PushButton(menu_box2, command=open_window4, text="Emergency call",width="fill",align="left",height=2)
-emergency.bg=(135,206,250)
-emergency.text_size=50
+refill = PushButton(menu_box2, command=open_window4, text="Refill",width="fill",align="left",height=2)
+refill.bg=(135,206,250)
+refill.text_size=50
 
 blank_text9=Text(menu_window,text="",width="fill",height=7)
 menu_box3 = Box(menu_window,align="top",width="fill")
@@ -383,7 +410,41 @@ back_button3.text_size=50
 back_button4 = PushButton(check_pre_window, text="Back", command=back_window3, width=15,align="bottom")
 back_button4.bg=(255,160,122)
 back_button4.text_size=50
-back_button5 = PushButton(emergency_window, text="Back", command=back_window4, width=15,align="bottom")
+
+
+
+#refill window
+medicine_txt1 = Text(refill_window, text="Medicine")
+medicine_txt2 = Text(refill_window, text="Medicine")
+quantity_txt1 = Text(refill_window, text="Quantity")
+quantity_txt2 = Text(refill_window, text="Quantity")
+medicine_name1 = Text(refill_window, text="")
+medicine_name2 = Text(refill_window, text="")
+medicine_name3 = Text(refill_window, text="")
+medicine_name4 = Text(refill_window, text="")
+medicine_name5 = Text(refill_window, text="")
+medicine_name6 = Text(refill_window, text="")
+medicine_name7 = Text(refill_window, text="")
+medicine_name8 = Text(refill_window, text="")
+medicine_name9 = Text(refill_window, text="")
+medicine_name10 = Text(refill_window, text="")
+medicine_name11 = Text(refill_window, text="")
+medicine_name12 = Text(refill_window, text="")
+medicine_quantity1 = Text(refill_window, text="")
+medicine_quantity2 = Text(refill_window, text="")
+medicine_quantity3 = Text(refill_window, text="")
+medicine_quantity4 = Text(refill_window, text="")
+medicine_quantity5 = Text(refill_window, text="")
+medicine_quantity6 = Text(refill_window, text="")
+medicine_quantity7 = Text(refill_window, text="")
+medicine_quantity8 = Text(refill_window, text="")
+medicine_quantity9 = Text(refill_window, text="")
+medicine_quantity10 = Text(refill_window, text="")
+medicine_quantity11 = Text(refill_window, text="")
+medicine_quantity12 = Text(refill_window, text="")
+med_list = [[medicine_name1,medicine_quantity1],[medicine_name2,medicine_quantity2],[medicine_name3,medicine_quantity3],[medicine_name4,medicine_quantity4],[medicine_name5,medicine_quantity5],[medicine_name6,medicine_quantity6],[medicine_name7,medicine_quantity7],[medicine_name8,medicine_quantity8],[medicine_name9,medicine_quantity9],[medicine_name10,medicine_quantity10],[medicine_name11,medicine_quantity11],[medicine_name12,medicine_quantity12]]
+scan_button = PushButton(refill_window, text = "Scan barcode", command = scan)
+back_button5 = PushButton(refill_window, text="Back", command=back_window4, width=15,align="bottom")
 back_button5.bg=(255,160,122)
 back_button5.text_size=50
 
