@@ -156,7 +156,7 @@ def refillProcess() :
 def refillComplete() : 
     # return true if all the medicines have been refilled 
     # return false if more medicines have to be filled
-    return 
+    return True
 
 
 def checkBarcode() : 
@@ -323,6 +323,40 @@ container = Containers(DIR, STEP, SLEEP)
 # turn_servo(default)
 
 print('done')
+
+def add_one():
+    int_qun = int(quantity_no.value)
+    int_qun += 1
+    quantity_no.value =int_qun
+
+def add_five():
+    int_qun = int(quantity_no.value)
+    int_qun += 5
+    quantity_no.value =int_qun
+
+def add_ten():
+    int_qun = int(quantity_no.value)
+    int_qun += 10
+    quantity_no.value =int_qun
+
+def minus_one():
+    int_qun = int(quantity_no.value)
+    int_qun -= 1
+    quantity_no.value =int_qun
+
+def minus_five():
+    int_qun = int(quantity_no.value)
+    int_qun -= 5
+    quantity_no.value =int_qun
+
+def minus_ten():
+    int_qun = int(quantity_no.value)
+    int_qun -= 10
+    quantity_no.value =int_qun
+
+def submit_quan():
+    quantity_window.hide()
+    scan_window.hide()
 
 def refill_notification():
     playsound('noti1.wav')
@@ -674,7 +708,8 @@ scan_txt = Text(scan_window,text="Play scan barcode of medicine to proceed",size
 quantity_window = Window(app, title="Scan",bg = (255,255,224))
 quantity_window.set_full_screen()
 quantity_window.hide()
-quantity_txt = Text(quantity_window,text="Please input the quantity of the medicine refilled",size=80)
+quantity_no_info = Text(quantity_window,text="Please input the quantity of the medicine refilled")
+quantity_no = Text(quantity_window,text="0")
 minus_one_btn = PushButton(quantity_window, text ="-1", command=minus_one)
 minus_five_btn = PushButton(quantity_window, text ="-5", command=minus_five)
 minus_ten_btn = PushButton(quantity_window, text ="-10", command=minus_ten)
