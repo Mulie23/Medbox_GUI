@@ -410,6 +410,40 @@ back_button3.text_size=50
 back_button4 = PushButton(check_pre_window, text="Back", command=back_window3, width=15,align="bottom")
 back_button4.bg=(255,160,122)
 back_button4.text_size=50
+
+
+
+#refill window
+medicine_txt1 = Text(refill_window, text="Medicine")
+medicine_txt2 = Text(refill_window, text="Medicine")
+quantity_txt1 = Text(refill_window, text="Quantity")
+quantity_txt2 = Text(refill_window, text="Quantity")
+medicine_name1 = Text(refill_window, text="")
+medicine_name2 = Text(refill_window, text="")
+medicine_name3 = Text(refill_window, text="")
+medicine_name4 = Text(refill_window, text="")
+medicine_name5 = Text(refill_window, text="")
+medicine_name6 = Text(refill_window, text="")
+medicine_name7 = Text(refill_window, text="")
+medicine_name8 = Text(refill_window, text="")
+medicine_name9 = Text(refill_window, text="")
+medicine_name10 = Text(refill_window, text="")
+medicine_name11 = Text(refill_window, text="")
+medicine_name12 = Text(refill_window, text="")
+medicine_quantity1 = Text(refill_window, text="")
+medicine_quantity2 = Text(refill_window, text="")
+medicine_quantity3 = Text(refill_window, text="")
+medicine_quantity4 = Text(refill_window, text="")
+medicine_quantity5 = Text(refill_window, text="")
+medicine_quantity6 = Text(refill_window, text="")
+medicine_quantity7 = Text(refill_window, text="")
+medicine_quantity8 = Text(refill_window, text="")
+medicine_quantity9 = Text(refill_window, text="")
+medicine_quantity10 = Text(refill_window, text="")
+medicine_quantity11 = Text(refill_window, text="")
+medicine_quantity12 = Text(refill_window, text="")
+med_list = [[medicine_name1,medicine_quantity1],[medicine_name2,medicine_quantity2],[medicine_name3,medicine_quantity3],[medicine_name4,medicine_quantity4],[medicine_name5,medicine_quantity5],[medicine_name6,medicine_quantity6],[medicine_name7,medicine_quantity7],[medicine_name8,medicine_quantity8],[medicine_name9,medicine_quantity9],[medicine_name10,medicine_quantity10],[medicine_name11,medicine_quantity11],[medicine_name12,medicine_quantity12]]
+scan_button = PushButton(refill_window, text = "Scan barcode", command = scan)
 back_button5 = PushButton(refill_window, text="Back", command=back_window4, width=15,align="bottom")
 back_button5.bg=(255,160,122)
 back_button5.text_size=50
