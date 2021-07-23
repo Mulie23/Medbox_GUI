@@ -133,6 +133,8 @@ def refillProcess() :
                 state = "error"
                 message = "couldn't rotate container"
         elif (state=="wait") : 
+            scan_window.hide()
+            quantity_window.show(wait=True)
             # wait for a button push on gui and number of pills form input 
             # update infromation i.e container.json
             if refillComplete() : 
@@ -378,12 +380,14 @@ def compare():
         if  container_data.get(i) is None:
             refill_notification()
 
-def dispense():
+def dispense1():
     check_pre()
     compare()
 
 
 random_code = ""
+def confirm_finish():
+    confirm_finish_window.show(wait=True)
 
 def notificate():
     with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
@@ -594,7 +598,7 @@ def submit_setting():
         if i > 0:
             timer_start_time = i
             break
-    timer1 = threading.Timer(timer_start_time, dispense)
+    timer1 = threading.Timer(timer_start_time, dispense1)
     timer1.start()
     setting_window.info("Info", "Your changes have been saved")
     setting_window.hide()
@@ -673,7 +677,7 @@ if file_exist_time:
         if i > 0:
             timer_start_time = i
             break
-    timer = threading.Timer(timer_start_time, dispense)
+    timer = threading.Timer(timer_start_time, dispense1)
     timer.start()
 
 add_med_window = Window(app, title="Add Medicine Window",bg = (255,255,224))
@@ -700,6 +704,16 @@ setting_window.hide()
 scan_window = Window(app, title="Scan",bg = (255,255,224))
 scan_window.set_full_screen()
 scan_window.hide()
+
+confirm_finish_window = Window(app, title="Confirm finish",bg = (255,255,224))
+confirm_finish_window.set_full_screen()
+confirm_finish_window.hide()
+confirm_finish_txt = Text(confirm_finish_window,text="Do you want to refill other medicines?")
+finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
+finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func)
+
+
+
 scan_txt = Text(scan_window,text="Play scan barcode of medicine to proceed",size=80)
 # back_button_scan = PushButton(scan_window, text ="Back", command=back_window_scan, width=15,align="bottom")
 # back_button_scan.bg=(255,160,122)
@@ -716,7 +730,7 @@ minus_ten_btn = PushButton(quantity_window, text ="-10", command=minus_ten)
 add_one_btn = PushButton(quantity_window, text ="+1", command=add_one)
 add_five_btn = PushButton(quantity_window, text ="+5", command=add_five)
 add_ten_btn = PushButton(quantity_window, text ="+10", command=add_ten)
-submit_quan_btn = PushButton(quantity_window, text ="Submit", command=submit_quan)
+submit_quan_btn = PushButton(quantity_window, text ="Submit", command=confirm_finish)
 # back_button_quantity = PushButton(quantity_window, text ="Back", command=back_window_quantity, width=15,align="bottom")
 # back_button_quantity.bg = (255,160,122)
 # back_button_quantity.text_size = 50
