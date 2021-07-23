@@ -1,10 +1,13 @@
 import guizero
-print(guizero.__version__)
+# print(guizero.__version__)
 
-from guizero import App
+from guizero import App, PushButton, Text
 
+def update():
+    text1.value = "asdasfas"
 app = App(title="Hello World")
 
-app.set_full_screen()
-
+# app.set_full_screen()
+text1 = Text(app, text="")
+button1 = PushButton(app,text="Press me",command=update)
 app.display()
