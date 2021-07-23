@@ -714,7 +714,7 @@ confirm_finish_txt = Text(confirm_finish_window,text="Do you want to refill othe
 
 
 
-scan_txt = Text(scan_window,text="Play scan barcode of medicine to proceed",size=80)
+scan_txt = Text(scan_window,text="Please scan barcode of medicine to proceed",size=80)
 # back_button_scan = PushButton(scan_window, text ="Back", command=back_window_scan, width=15,align="bottom")
 # back_button_scan.bg=(255,160,122)
 # back_button_scan.text_size=50
