@@ -7,8 +7,12 @@ def update():
     return True
 
 def tryit():
+    wonder()
+
+def wonder():
     while update != True:
         print("wait")
+
 app = App(title="Hello World")
 
 # app.set_full_screen()
