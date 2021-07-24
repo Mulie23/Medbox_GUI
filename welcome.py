@@ -15,6 +15,9 @@ import pigpio
 import json
 import serial
 
+submit_quan = False
+
+
 GPIO.setmode(GPIO.BCM)
 
 # setup all pins
@@ -109,9 +112,19 @@ def dispense(med_id, qty):
         # prompt UI to enter number of pill and click next 
     # ]
 
+isfinish = False
+yesno_press = False
+
+def check_choice():
+    global yesno_press
+    while yesno_press == False:
+        confirm_finish_window.show(wait=True)
+    return True
 
 def refillProcess() : 
     # pull updated prescription 
+    global isfinish
+    global yesno_press
     container = Containers(DIR, STEP, SLEEP) 
     stateMachine = True ; 
     state = 'barcode'
@@ -133,11 +146,17 @@ def refillProcess() :
                 state = "error"
                 message = "couldn't rotate container"
         elif (state=="wait") : 
-            scan_window.hide()
+            # scan_window.hide()
             quantity_window.show(wait=True)
             # wait for a button push on gui and number of pills form input 
             # update infromation i.e container.json
-            if refillComplete() : 
+            # if refillComplete() : 
+            #     state = "finish"
+            if check_submit_quan():
+                state = "ask"
+        elif (state=="ask") :    
+            check_choice()                
+            if isfinish==True : 
                 state = "finish"
             else : 
                 state = "barcode" 
@@ -326,6 +345,22 @@ container = Containers(DIR, STEP, SLEEP)
 
 print('done')
 
+def finish_yes_func():
+    global isfinish
+    global yesno_press
+    yesno_press = True
+    isfinish = True
+    confirm_finish_window.hide()
+    menu_window.show(wait=True)
+
+def finish_no_func():
+    global isfinish
+    global yesno_press
+    yesno_press = True
+    isfinish = False
+    confirm_finish_window.hide()
+
+
 def add_one():
     int_qun = int(quantity_no.value)
     int_qun += 1
@@ -357,8 +392,16 @@ def minus_ten():
     quantity_no.value =int_qun
 
 def submit_quan():
+    global submit_quan
+    submit_quan = True
     quantity_window.hide()
     scan_window.hide()
+
+def check_submit_quan():
+    global submit_quan
+    while submit_quan == False:
+        quantity_window.show(wait=True)
+    return True
 
 def refill_notification():
     playsound('noti1.wav')
@@ -704,17 +747,17 @@ setting_window.hide()
 scan_window = Window(app, title="Scan",bg = (255,255,224))
 scan_window.set_full_screen()
 scan_window.hide()
+scan_txt = Text(scan_window,text="Please scan barcode of medicine to proceed",size=80)
 
 confirm_finish_window = Window(app, title="Confirm finish",bg = (255,255,224))
 confirm_finish_window.set_full_screen()
 confirm_finish_window.hide()
 confirm_finish_txt = Text(confirm_finish_window,text="Do you want to refill other medicines?")
-# finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
-# finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func)
+finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
+finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func)
 
 
 
-scan_txt = Text(scan_window,text="Please scan barcode of medicine to proceed",size=80)
 # back_button_scan = PushButton(scan_window, text ="Back", command=back_window_scan, width=15,align="bottom")
 # back_button_scan.bg=(255,160,122)
 # back_button_scan.text_size=50

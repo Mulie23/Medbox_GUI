@@ -3,15 +3,15 @@ import guizero
 
 from guizero import App, PushButton, Text
 
+credit = False
+
 def update():
     return True
 
 def tryit():
-    wonder()
+    global credit
+    credit = True
 
-def wonder():
-    while update != True:
-        print("wait")
 
 app = App(title="Hello World")
 
