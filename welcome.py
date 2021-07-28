@@ -15,7 +15,7 @@ import pigpio
 import json
 import serial
 
-submit_quan = False
+submit_quan_value = False
 
 
 GPIO.setmode(GPIO.BCM)
@@ -398,8 +398,8 @@ def submit_quan():
     scan_window.hide()
 
 def check_submit_quan():
-    global submit_quan
-    while submit_quan == False:
+    global submit_quan_value
+    while submit_quan_value == False:
         quantity_window.show(wait=True)
     return True
 
