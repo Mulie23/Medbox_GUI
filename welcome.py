@@ -154,20 +154,21 @@ def refillProcess() :
         elif (state=="rotate") : 
             container_id = container.getContainer(medicine_id)
             if container.rotateContainerToRefillArea() : 
-                state="wait"
+                state="finish"
             else : 
                 state = "error"
                 message = "couldn't rotate container"
-        elif (state=="wait") : 
-            # wait for a button push on gui and number of pills form input 
-            # update infromation i.e container.json
-            if refillComplete() : 
-                state = "finish"
-            else : 
-                state = "barcode" 
+        # elif (state=="wait") : 
+        #     # wait for a button push on gui and number of pills form input 
+        #     # update infromation i.e container.json
+        #     if refillComplete() : 
+        #         state = "finish"
+        #     else : 
+        #         state = "barcode" 
         elif (state=="finish"): 
             container.writeToFile() 
             stateMachine = False 
+            refill_window.show(wait=True)
         elif  (state=="error") : 
             error = "there was some error" 
             stateMachine = False 
