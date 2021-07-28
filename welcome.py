@@ -36,12 +36,11 @@ PUMP = gpio.OutputDevice(19)
 DIST = gpio.InputDevice(23) #0 means that smth is close
 VALVE.off()
 PUMP.off()
-
 # setup scanner pins
 SCANNER = gpio.OutputDevice(4)
 SCAN = gpio.OutputDevice(27)
 
-# setup current sensor pins and variables
+# setup rrent sensor pins and variables
 import board
 import busio
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -153,7 +152,7 @@ def refillProcess() :
             # add GUI interrupt 
         elif (state=="rotate") : 
             container_id = container.getContainer(medicine_id)
-            if container.rotateContainerToRefillArea() : 
+            if container.rotateContainerToRefillArea(container_id) : 
                 state="finish"
             else : 
                 state = "error"
@@ -168,7 +167,7 @@ def refillProcess() :
         elif (state=="finish"): 
             container.writeToFile() 
             stateMachine = False 
-            refill_window.show(wait=True)
+#            refill_window.show(wait=True)
         elif  (state=="error") : 
             error = "there was some error" 
             stateMachine = False 
@@ -348,7 +347,7 @@ class Containers() :
 # os.system('sudo killall pigpiod')
 # os.system('sudo pigpiod')
 
-# dispense(51,1)
+#dispense(51,1)
 
 # default = 500
 # dispense = 1000
@@ -461,7 +460,7 @@ def dispense1():
 
 random_code = ""
 def confirm_finish():
-    confirm_finish_window.show(wait=True)
+    refill_window.show(wait=True)
 
 def notificate():
     with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
