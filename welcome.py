@@ -14,9 +14,7 @@ import RPi.GPIO as GPIO
 import pigpio
 import json
 import serial
-
-submit_quan_value = False
-
+import vlc
 
 GPIO.setmode(GPIO.BCM)
 
@@ -39,8 +37,31 @@ DIST = gpio.InputDevice(23) #0 means that smth is close
 VALVE.off()
 PUMP.off()
 
-SCANNER = GPIO.OutputDevice(4)
-SCAN = GPIO.OutputDevice(27)
+# setup scanner pins
+SCANNER = gpio.OutputDevice(4)
+SCAN = gpio.OutputDevice(27)
+
+# setup current sensor pins and variables
+import board
+import busio
+i2c = busio.I2C(board.SCL, board.SDA)
+
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
+ads = ADS.ADS1115(i2c)
+chan = AnalogIn(ads, ADS.P0)
+
+
+def play_alarm():
+    global alarm
+    alarm = vlc.MediaPlayer('samsung_alarm.mp3')
+    alarm.play()
+    # sounds alarm 
+    return True
+
+def stop_alarm():
+    alarm.stop()
+    return True
 
 def turn_servo(pos):
     pi = pigpio.pi()
@@ -59,14 +80,15 @@ def turn_servo(pos):
 def lower_nozzle():
     pi = pigpio.pi()
     pi.set_servo_pulsewidth(17,2000)
-    sleep(1) #delete later
+    cutoff = 12400
     PUMP.on()
     VALVE.off()
+    sleep(1)
     try:
         for i in range(0, 1001, 10):
             pi.set_servo_pulsewidth(17, 2000-i)
             sleep(0.3)
-            if DIST.value == 0:
+            if chan.value >= cutoff:
                 pi.set_servo_pulsewidth(17, 2000)
                 sleep(2)
                 pi.set_servo_pulsewidth(17, 0)
@@ -78,8 +100,8 @@ def lower_nozzle():
         print('interrupted')
 
 def dispense(med_id, qty):
-    default = 500
-    dispense = 1000
+    default = 1000
+    dispense = 500
     qty_left = qty
     container = Containers(DIR, STEP, SLEEP)
     container_id = container.getContainer(med_id)
@@ -89,6 +111,7 @@ def dispense(med_id, qty):
         turn_servo(dispense)#moves nozzle over the dispensing area
         sleep(2)
         VALVE.on()
+        sleep(1)
         PUMP.off()
         VALVE.off()
         sleep(2)
@@ -112,26 +135,16 @@ def dispense(med_id, qty):
         # prompt UI to enter number of pill and click next 
     # ]
 
-isfinish = False
-yesno_press = False
-
-def check_choice():
-    global yesno_press
-    while yesno_press == False:
-        confirm_finish_window.show(wait=True)
-    return True
 
 def refillProcess() : 
     # pull updated prescription 
-    global isfinish
-    global yesno_press
     container = Containers(DIR, STEP, SLEEP) 
     stateMachine = True ; 
     state = 'barcode'
     while(stateMachine) : 
         if (state=="barcode") : 
+            quantity_window.show(wait=True)
             #display the relevant details on the front end - Wentao
-            scan_window.show(wait=True)
             # information on what medicine are to be filled up 
             medicine_id = checkBarcode() ; 
             if medicine_id!=None : 
@@ -146,17 +159,9 @@ def refillProcess() :
                 state = "error"
                 message = "couldn't rotate container"
         elif (state=="wait") : 
-            # scan_window.hide()
-            quantity_window.show(wait=True)
             # wait for a button push on gui and number of pills form input 
             # update infromation i.e container.json
-            # if refillComplete() : 
-            #     state = "finish"
-            if check_submit_quan():
-                state = "ask"
-        elif (state=="ask") :    
-            check_choice()                
-            if isfinish==True : 
+            if refillComplete() : 
                 state = "finish"
             else : 
                 state = "barcode" 
@@ -177,26 +182,31 @@ def refillProcess() :
 def refillComplete() : 
     # return true if all the medicines have been refilled 
     # return false if more medicines have to be filled
-    return True
+    return 
 
 
-def checkBarcode() : 
+def checkBarcode() :
+    # turn on scanner and reads te barcode. returns a 5 digit id
     ser = serial.Serial("/dev/ttyS0", 115200, timeout=0.5)
     SCANNER.on()
-    SCAN.on() #button not pressed
+    SCAN.off() #button not pressed
     info = b''
+    sleep(1)
     while info == b'':
-        SCAN.off()
+        print('scanning')
+        SCAN.on()
         counter = 0
-        while info == b'' and counter <= 7:
+        while info == b'' and counter <= 4:
             info = ser.readline()
-            print(tuple(list(info)))
             sleep(1)
             counter += 1
-        SCAN.on()
+        SCAN.off()
         sleep(1)
     f = open('med_id.json')
     med_id_check = json.load(f)
+    info = str(tuple(list(info)))
+    print(info)
+    SCANNER.off()
     for i in med_id_check:
         if i == info:
             return med_id_check[i]["id"]
@@ -226,7 +236,7 @@ class Containers() :
     def extractContainerData(self) : 
         f  = open('container.json')
         self.data = json.load(f)
-        self.current_pos = data["current_pos"]
+        self.current_pos = self.data["current_pos"]
         for i in self.data:
             if i!="current_pos" : 
                 if self.data[i]["filled"]==1 : 
@@ -332,16 +342,36 @@ class Containers() :
         with open("container.json", 'w') as outfile:
             json.dump(self.data, outfile)
 
-container = Containers(DIR, STEP, SLEEP)    
+# container = Containers(DIR, STEP, SLEEP)    
 # import os
+# os.system('sudo killall pigpiod')
 # os.system('sudo pigpiod')
 
-#dispense(52,1)
+dispense(51,1)
+
 # default = 500
 # dispense = 1000
 # turn_servo(dispense)
 # sleep(2)
 # turn_servo(default)
+# print('playing')
+# play_alarm()
+# sleep(5)
+# stop_alarm()
+# 
+# PUMP.on()
+# sleep(0.5)
+# cut_off = 12400
+# try:
+#     while chan.value <= cut_off:
+# #         min_val = min(chan.value, min_val)
+#         print(chan.value)
+#         
+#         sleep(0.11)
+#     PUMP.off()
+#     print('f yeah')
+# except KeyboardInterrupt:
+#     PUMP.off()
 
 print('done')
 
@@ -487,7 +517,7 @@ def get_started():
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
-            menu_window.set_full_screen()
+            # menu_window.set_full_screen()
         else:
             login_window.show(wait=True)
     else:
@@ -650,7 +680,7 @@ def submit_setting():
 
 
 app = App(title="Homepage",bg = (255,255,224))
-app.set_full_screen()
+# app.set_full_screen()
 app.hide()
 login_window = Window(app, title="Login",bg = (255,255,224),width = 1500, height = 1000)
 # login_window.set_full_screen()
@@ -671,7 +701,7 @@ if file_exists:
         data = json.load(f)
     if data["success"]==1:
         menu_window.show(wait=True)
-        menu_window.set_full_screen()
+        # menu_window.set_full_screen()
     else:
         app.show() 
 else:
@@ -724,33 +754,33 @@ if file_exist_time:
     timer.start()
 
 add_med_window = Window(app, title="Add Medicine Window",bg = (255,255,224))
-add_med_window.set_full_screen()
+# add_med_window.set_full_screen()
 add_med_window.hide()
 quit_med_window = Window(app, title="Quit Medicine Window",bg = (255,255,224))
-quit_med_window.set_full_screen()
+# quit_med_window.set_full_screen()
 quit_med_window.hide()
 check_pre_window = Window(app, title="Check Prescription Window",bg = (255,255,224))
-check_pre_window.set_full_screen()
+# check_pre_window.set_full_screen()
 check_pre_window.hide()
 refill_window = Window(app, title="Refill",bg = (255,255,224))
-refill_window.set_full_screen()
+# refill_window.set_full_screen()
 refill_window.hide()
 
 code_window = Window(app, title="Code",bg = (255,255,224))
-code_window.set_full_screen()
+# code_window.set_full_screen()
 code_window.hide()
 
 setting_window = Window(app, title="Setting",bg = (255,255,224))
-setting_window.set_full_screen()
+# setting_window.set_full_screen()
 setting_window.hide()
 
 scan_window = Window(app, title="Scan",bg = (255,255,224))
-scan_window.set_full_screen()
+# scan_window.set_full_screen()
 scan_window.hide()
 scan_txt = Text(scan_window,text="Please scan barcode of medicine to proceed",size=80)
 
 confirm_finish_window = Window(app, title="Confirm finish",bg = (255,255,224))
-confirm_finish_window.set_full_screen()
+# confirm_finish_window.set_full_screen()
 confirm_finish_window.hide()
 confirm_finish_txt = Text(confirm_finish_window,text="Do you want to refill other medicines?")
 finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
@@ -763,7 +793,7 @@ finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func
 # back_button_scan.text_size=50
 
 quantity_window = Window(app, title="Scan",bg = (255,255,224))
-quantity_window.set_full_screen()
+# quantity_window.set_full_screen()
 quantity_window.hide()
 quantity_no_info = Text(quantity_window,text="Please input the quantity of the medicine refilled")
 quantity_no = Text(quantity_window,text="0")
