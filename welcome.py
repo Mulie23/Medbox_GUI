@@ -348,7 +348,7 @@ class Containers() :
 # os.system('sudo killall pigpiod')
 # os.system('sudo pigpiod')
 
-dispense(51,1)
+# dispense(51,1)
 
 # default = 500
 # dispense = 1000
