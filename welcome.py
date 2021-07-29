@@ -623,6 +623,37 @@ def open_menu():
 def setting():
     setting_window.show(wait=True)
 
+def finish_dis():
+    dispense_window.hide()
+
+def medicine_info_check():
+    with open("container.json","w") as f:
+        data = json.load(f)
+    medicine_name1.value=data["container_1"]["medicine"]["name"]
+    medicine_name2.value=data["container_2"]["medicine"]["name"]
+    medicine_name3.value=data["container_3"]["medicine"]["name"]
+    medicine_name4.value=data["container_4"]["medicine"]["name"]
+    medicine_name5.value=data["container_5"]["medicine"]["name"]
+    medicine_name6.value=data["container_6"]["medicine"]["name"]
+    medicine_name7.value=data["container_7"]["medicine"]["name"]
+    medicine_name8.value=data["container_8"]["medicine"]["name"]
+    medicine_name9.value=data["container_9"]["medicine"]["name"]
+    medicine_name10.value=data["container_10"]["medicine"]["name"]
+    medicine_name11.value=data["container_11"]["medicine"]["name"]
+    medicine_name12.value=data["container_12"]["medicine"]["name"]
+    medicine_quantity1.value=data["container_1"]["quantity_left"]
+    medicine_quantity2.value=data["container_2"]["quantity_left"]
+    medicine_quantity3.value=data["container_3"]["quantity_left"]
+    medicine_quantity4.value=data["container_4"]["quantity_left"]
+    medicine_quantity5.value=data["container_5"]["quantity_left"]
+    medicine_quantity6.value=data["container_6"]["quantity_left"]
+    medicine_quantity7.value=data["container_7"]["quantity_left"]
+    medicine_quantity8.value=data["container_8"]["quantity_left"]
+    medicine_quantity9.value=data["container_9"]["quantity_left"]
+    medicine_quantity10.value=data["container_10"]["quantity_left"]
+    medicine_quantity11.value=data["container_11"]["quantity_left"]
+    medicine_quantity12.value=data["container_12"]["quantity_left"]
+
 def submit_setting():
     slot_dict = {}
     slot_dict["morn"]=pm_to_am(morn_set.value)
@@ -786,7 +817,39 @@ confirm_finish_txt = Text(confirm_finish_window,text="Do you want to refill othe
 finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
 finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func)
 
-
+#Dispense window
+dispense_window = Window(app,title="Dispense",bg =(255,255,224))
+# dispense_window.set_full_screen()
+dispense_window.hide()
+medicine_txt1_dis = Text(dispense_window, text="Medicine")
+medicine_txt2_dis = Text(dispense_window, text="Medicine")
+quantity_txt1_dis = Text(dispense_window, text="Quantity")
+quantity_txt2_dis = Text(dispense_window, text="Quantity")
+medicine_name1_dis = Text(dispense_window, text="")
+medicine_name2_dis = Text(dispense_window, text="")
+medicine_name3_dis = Text(dispense_window, text="")
+medicine_name4_dis = Text(dispense_window, text="")
+medicine_name5_dis = Text(dispense_window, text="")
+medicine_name6_dis = Text(dispense_window, text="")
+medicine_name7_dis = Text(dispense_window, text="")
+medicine_name8_dis = Text(dispense_window, text="")
+medicine_name9_dis = Text(dispense_window, text="")
+medicine_name10_dis = Text(dispense_window, text="")
+medicine_name11_dis = Text(dispense_window, text="")
+medicine_name12_dis = Text(dispense_window, text="")
+medicine_quantity1_dis = Text(dispense_window, text="")
+medicine_quantity2_dis = Text(dispense_window, text="")
+medicine_quantity3_dis = Text(dispense_window, text="")
+medicine_quantity4_dis = Text(dispense_window, text="")
+medicine_quantity5_dis = Text(dispense_window, text="")
+medicine_quantity6_dis = Text(dispense_window, text="")
+medicine_quantity7_dis = Text(dispense_window, text="")
+medicine_quantity8_dis = Text(dispense_window, text="")
+medicine_quantity9_dis = Text(dispense_window, text="")
+medicine_quantity10_dis = Text(dispense_window, text="")
+medicine_quantity11_dis = Text(dispense_window, text="")
+medicine_quantity12_dis = Text(dispense_window, text="")
+finish_dispense_btn = PushButton(dispense_window,text="Finish",command=finish_dis)
 
 # back_button_scan = PushButton(scan_window, text ="Back", command=back_window_scan, width=15,align="bottom")
 # back_button_scan.bg=(255,160,122)
@@ -971,5 +1034,7 @@ blank_text17=Text(setting_window,text="",width="fill",align="bottom")
 back_button7 = PushButton(setting_window, text="Back", command=back_window6, width=10,align="bottom")
 back_button7.bg=(255,160,122)
 back_button7.text_size=50
+
+medicine_info_check()
 
 app.display()

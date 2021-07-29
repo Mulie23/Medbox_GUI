@@ -7,7 +7,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Abacavir Sulfate",
             "message":"drink with water"
         }
     },
@@ -17,7 +17,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Acamprosate Calcium",
             "message":"drink with water"
         }
     },
@@ -27,7 +27,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Acrivastine and Pseudoephedrine",
             "message":"drink with water"
         }
     },
@@ -37,7 +37,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Abarelix",
             "message":"drink with water"
         }
     },
@@ -47,7 +47,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Abilify",
             "message":"drink with water"
         }
     },
@@ -57,7 +57,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Abraxane",
             "message":"drink with water"
         }
     },
@@ -67,7 +67,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Acarbose",
             "message":"drink with water"
         }
     },
@@ -77,7 +77,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "AccuNeb",
             "message":"drink with water"
         }
     },
@@ -87,7 +87,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Aceon",
             "message":"drink with water"
         }
     },
@@ -97,7 +97,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Aci-Jel",
             "message":"drink with water"
         }
     },
@@ -107,7 +107,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Acthrel",
             "message":"drink with water"
         }
     },
@@ -117,7 +117,7 @@
         "quantity_left": 12,
         "medicine":{
             "id": 1,
-            "name": "asprin",
+            "name": "Acticin",
             "message":"drink with water"
         }
     }
