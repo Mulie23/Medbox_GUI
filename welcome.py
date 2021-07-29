@@ -439,9 +439,9 @@ def refill_notification():
     refill_window.show(wait=True)
 
 def compare():
-    with open("container.json","r") as f:
+    with open("container.json") as f:
         container_data = json.load(f)
-    with open("prescription.json","r") as f:
+    with open("prescription.json") as f:
         prescription_data = json.load(f)
     prescription_list = prescription_data["data"]["prescription"]
     # print(prescription_list)
@@ -628,7 +628,7 @@ def finish_dis():
     dispense_window.hide()
 
 def medicine_info_check():
-    with open("container.json","w") as f:
+    with open("container.json") as f:
         data = json.load(f)
     medicine_name1.value=data["container_1"]["medicine"]["name"]
     medicine_name2.value=data["container_2"]["medicine"]["name"]
