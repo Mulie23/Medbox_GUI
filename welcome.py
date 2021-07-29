@@ -41,14 +41,14 @@ SCANNER = gpio.OutputDevice(4)
 SCAN = gpio.OutputDevice(27)
 
 # setup rrent sensor pins and variables
-import board
-import busio
-i2c = busio.I2C(board.SCL, board.SDA)
+# import board
+# import busio
+# i2c = busio.I2C(board.SCL, board.SDA)
 
-import adafruit_ads1x15.ads1115 as ADS
-from adafruit_ads1x15.analog_in import AnalogIn
-ads = ADS.ADS1115(i2c)
-chan = AnalogIn(ads, ADS.P0)
+# import adafruit_ads1x15.ads1115 as ADS
+# from adafruit_ads1x15.analog_in import AnalogIn
+# ads = ADS.ADS1115(i2c)
+# chan = AnalogIn(ads, ADS.P0)
 
 
 def play_alarm():
@@ -577,6 +577,7 @@ def back_window3():
     check_pre_window.hide()
 
 def open_window4():
+    # medicine_info_check()
     refill_window.show(wait=True)
 
 def back_window4():
