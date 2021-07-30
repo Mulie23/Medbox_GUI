@@ -517,7 +517,7 @@ def get_started():
             data = json.load(f)
         if data["success"]==1:
             menu_window.show(wait=True)
-            # menu_window.set_full_screen()
+            menu_window.set_full_screen()
         else:
             login_window.show(wait=True)
     else:
@@ -733,7 +733,7 @@ if file_exists:
         data = json.load(f)
     if data["success"]==1:
         menu_window.show(wait=True)
-        # menu_window.set_full_screen()
+        menu_window.set_full_screen()
     else:
         app.show() 
 else:
@@ -902,7 +902,7 @@ back_button1.text_size=50
 
 blank_text5=Text(menu_window,text="",width="fill",height=6)
 menu_box1 = Box(menu_window,align="top",width="fill")
-refill = PushButton(menu_box1, command=open_window4, text="Refill",width="fill",align="left",height=2)
+refill = PushButton(menu_box1, command=open_window4, text="Refill Medicine",width="fill",align="left",height=2)
 refill.bg=(135,206,250)
 refill.text_size=50
 blank_text6=Text(menu_box1,text="",align="left",width=70)
