@@ -77,9 +77,9 @@ class Containers() :
         # if container exists get id, else allocate and return id 
         # if no free container return None 
         if medicineID in self.filled_containers.keys() : 
-            print(self.filled_containers)
-            refilling_quantity.value = self.filled_containers[medicineID]
-            return self.filled_containers[medicineID]
+            container_id = self.filled_containers[medicineID]
+            refilling_quantity.value = self.data[container_id]["medicine"]["name"]
+            return container_id
         else : 
             if len(self.unfilled_containers)==0 : 
                 return None 
