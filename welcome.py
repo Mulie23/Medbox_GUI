@@ -984,10 +984,40 @@ medicine_message11_chepre = Text(check_pre_window, text="")
 medicine_message12_chepre = Text(check_pre_window, text="")
 
 #refill window
-medicine_txt1 = Text(refill_window, text="Medicine")
-medicine_txt2 = Text(refill_window, text="Medicine")
-quantity_txt1 = Text(refill_window, text="Quantity")
-quantity_txt2 = Text(refill_window, text="Quantity")
+blank_text_n1=Text(refill_window,text="",width="fill",height=6)
+refill_box1 = Box(refill_window,align="top",width="fill")
+medicine_txt1 = Text(refill_box1, text="Medicine",width=15,align="left",height=2)
+medicine_txt1.bg=(135,206,250)
+medicine_txt1.text_size=20
+blank_text_n2=Text(refill_box1,text="",align="left",width=20)
+quantity_txt1 = Text(refill_box1, text="Quantity",width="fill",align="left",height=2)
+quantity_txt1.bg=(135,206,250)
+quantity_txt1.text_size=20
+blank_text_n6=Text(refill_box1,text="",align="left",width=20)
+medicine_txt2 = Text(refill_box1, text="Medicine",width=15,align="left",height=2)
+medicine_txt2.bg=(135,206,250)
+medicine_txt2.text_size=20
+blank_text_n7=Text(refill_box1,text="",align="left",width=20)
+quantity_txt2 = Text(refill_box1, text="Quantity",width="fill",align="left",height=2)
+quantity_txt2.bg=(135,206,250)
+quantity_txt2.text_size=20
+
+blank_text_n3=Text(refill_window,text="",width="fill",height=7)
+refill_box2 = Box(refill_window,align="top",width="fill")
+check_pre = PushButton(refill_box2, command=open_window3, text="Check Prescription",width=15,align="left",height=2)
+check_pre.bg=(135,206,250)
+check_pre.text_size=50
+blank_text_n4=Text(refill_box2,text="",align="left",width=70)
+add_caregiver_code = PushButton(refill_box2, command=open_window5, text="Caregiver Code",width="fill",align="left",height=2)
+add_caregiver_code.bg=(135,206,250)
+add_caregiver_code.text_size=50
+
+blank_text_n5=Text(refill_window,text="",width="fill",height=7)
+
+# medicine_txt1 = Text(refill_window, text="Medicine")
+# medicine_txt2 = Text(refill_window, text="Medicine")
+# quantity_txt1 = Text(refill_window, text="Quantity")
+# quantity_txt2 = Text(refill_window, text="Quantity")
 medicine_name1 = Text(refill_window, text="")
 medicine_name2 = Text(refill_window, text="")
 medicine_name3 = Text(refill_window, text="")
