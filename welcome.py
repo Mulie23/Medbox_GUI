@@ -82,13 +82,20 @@ class Containers() :
             if len(self.unfilled_containers)==0 : 
                 return None 
             else : 
+                with open("prescription.json") as f:
+                    data = json.load(f)
+                for i in data["data"]["prescription"][0]:
+                    if i["medicine_id"] == medicineID:
+                        medicine_name_in_pres = i["medicine_name"]
+                        message_in_pres = i["message"]
+                refilling_quantity.value=medicine_name_in_pres
                 container_id  = self.unfilled_containers.pop(0) 
                 self.data[container_id]["filled"] = 1 
                 self.data[container_id]["quantity_left"] = 0 
                 self.data[container_id]["medicine"] = {
                     "id": medicineID,
-                    "name": None, # need to retrive somehow from db ? 
-                    "message": None # need to retrive from db ? 
+                    "name": medicine_name_in_pres, # need to retrive somehow from db ? 
+                    "message": message_in_pres # need to retrive from db ? 
                 }
                 self.filled_containers[medicineID] = container_id
                 return container_id
@@ -257,8 +264,6 @@ def dispense(med_id, qty):
 def refillProcess() : 
     # pull updated prescription 
     container = Containers(DIR, STEP, SLEEP) 
-    print("1")
-    print(container.data)
     stateMachine = True ; 
     state = 'barcode'
     while(stateMachine) : 
@@ -273,11 +278,8 @@ def refillProcess() :
             # add GUI interrupt 
         elif (state=="rotate") : 
             container_id = container.getContainer(medicine_id)
-            print("1")
-            print(container.data)
+            refilling_quantity.value=container_id
             if container.rotateContainerToRefillArea(container_id) : 
-                print("1")
-                print(container.data)
                 state="finish"
             else : 
                 state = "error"
@@ -299,7 +301,6 @@ def refillProcess() :
         else : 
             state = "error" 
             error = "invalid sate" 
-
     return  True     
 
 
@@ -468,7 +469,13 @@ def dispense1():
 random_code = ""
 
 def confirm_finish():
-    
+    with open("container.json") as f:
+        data = json.load(f)
+    for i in data:
+        if data[i]["medicine"]["name"] == refilling_quantity.value:
+            data[i]["quantity_left"] += quantity_no.value
+    with open("container.json","w") as f:
+        json.dump(data, f)
     medicine_info_check()
     refill_window.show(wait=True)
 
@@ -871,6 +878,7 @@ quantity_window.set_full_screen()
 quantity_window.hide()
 blank_text_nb2=Text(quantity_window,text="",width="fill",height=2)
 quantity_no_info = Text(quantity_window,text="Please input the quantity of the medicine refilled",size=50)
+refilling_quantity = Text(quantity_window,text="",size=50)
 # blank_text_b1=Text(quantity_window,text="",width="fill",height=2)
 # quantity_box = Box(quantity_window,align="top",width="fill")
 # minus_ten_btn = PushButton(quantity_box, text ="-10", command=minus_ten,align="left",width=7)
