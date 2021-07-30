@@ -478,7 +478,7 @@ def confirm_finish():
         # print(data[i]["medicine"]["name"])
         # print(refilling_quantity.value)
             if data[i]["medicine"]["name"] == refilling_quantity.value:
-                data[i]["quantity_left"] += quantity_no.value
+                data[i]["quantity_left"] += int(quantity_no.value)
     with open("container.json","w") as f:
         json.dump(data, f)
     medicine_info_check()
