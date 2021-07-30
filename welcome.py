@@ -84,7 +84,7 @@ class Containers() :
             else : 
                 with open("prescription.json") as f:
                     data = json.load(f)
-                for i in data["data"]["prescription"][0]:
+                for i in data["data"]["prescription"]:
                     if i["medicine_id"] == medicineID:
                         medicine_name_in_pres = i["medicine_name"]
                         message_in_pres = i["message"]
