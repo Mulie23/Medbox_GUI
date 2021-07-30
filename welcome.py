@@ -271,6 +271,7 @@ def refillProcess() :
     state = 'barcode'
     while(stateMachine) : 
         if (state=="barcode") : 
+            refill_window.hide()
             quantity_window.show(wait=True)
             #display the relevant details on the front end - Wentao
             # information on what medicine are to be filled up 
