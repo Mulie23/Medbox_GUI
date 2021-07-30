@@ -89,6 +89,7 @@ class Containers() :
                         medicine_name_in_pres = i["medicine_name"]
                         message_in_pres = i["message"]
                 refilling_quantity.value=medicine_name_in_pres
+                print(refilling_quantity)
                 container_id  = self.unfilled_containers.pop(0) 
                 self.data[container_id]["filled"] = 1 
                 self.data[container_id]["quantity_left"] = 0 
@@ -472,6 +473,7 @@ def confirm_finish():
     with open("container.json") as f:
         data = json.load(f)
     for i in data:
+        print(data[i]["medicine"]["name"])
         if data[i]["medicine"]["name"] == refilling_quantity.value:
             data[i]["quantity_left"] += quantity_no.value
     with open("container.json","w") as f:
