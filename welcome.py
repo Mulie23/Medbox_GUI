@@ -76,7 +76,7 @@ class Containers() :
     def getContainer(self, medicineID ) : 
         # if container exists get id, else allocate and return id 
         # if no free container return None 
-        if medicineID in self.filled_containers.keys : 
+        if medicineID in self.filled_containers.keys() : 
             return self.filled_containers[medicineID]
         else : 
             if len(self.unfilled_containers)==0 : 
@@ -469,13 +469,13 @@ def dispense1():
 random_code = ""
 
 def confirm_finish():
-    # with open("container.json") as f:
-    #     data = json.load(f)
-    # for i in data:
-    #     if data[i]["medicine"]["name"] == refilling_quantity.value:
-    #         data[i]["quantity_left"] += quantity_no.value
-    # with open("container.json","w") as f:
-    #     json.dump(data, f)
+    with open("container.json") as f:
+        data = json.load(f)
+    for i in data:
+        if data[i]["medicine"]["name"] == refilling_quantity.value:
+            data[i]["quantity_left"] += quantity_no.value
+    with open("container.json","w") as f:
+        json.dump(data, f)
     medicine_info_check()
     refill_window.show(wait=True)
 
