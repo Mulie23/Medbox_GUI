@@ -881,28 +881,29 @@ quantity_no_info = Text(quantity_window,text="Please input the quantity of the m
 refilling_quantity = Text(quantity_window,text="",size=50)
 
 quantity_box1 = Box(quantity_window,align="top",width="fill")
+blank_text6=Text(quantity_box1,text="",align="left",width=14)
 minus_ten_btn = PushButton(quantity_box1, command=minus_ten, text="-10",width=5,align="left",height=2)
 minus_ten_btn.bg=(135,206,250)
 minus_ten_btn.text_size=20
-blank_text6=Text(quantity_box1,text="",align="left",width=10)
+blank_text6=Text(quantity_box1,text="",align="left",width=14)
 minus_five_btn = PushButton(quantity_box1, command=minus_five, text="-5"  ,width=5,align="left",height=2)
 minus_five_btn.bg=(135,206,250)
 minus_five_btn.text_size=20
-blank_text6=Text(quantity_box1,text="",align="left",width=10)
+blank_text6=Text(quantity_box1,text="",align="left",width=14)
 minus_one_btn = PushButton(quantity_box1, command=minus_one, text="-1"  ,width=5,align="left",height=2)
 minus_one_btn.bg=(135,206,250)
 minus_one_btn.text_size=20
-blank_text6=Text(quantity_box1,text="",align="left",width=10)
+blank_text6=Text(quantity_box1,text="",align="left",width=14)
 quantity_no = Text(quantity_box1,text="0",align="left",size=30)
-blank_text6=Text(quantity_box1,text="",align="left",width=10)
+blank_text6=Text(quantity_box1,text="",align="left",width=14)
 add_one_btn = PushButton(quantity_box1, text ="+1", command=add_one,width=5,align="left",height=2)
 add_one_btn.bg=(135,206,250)
 add_one_btn.text_size=20
-blank_text6=Text(quantity_box1,text="",align="left",width=10)
+blank_text6=Text(quantity_box1,text="",align="left",width=14)
 add_five_btn = PushButton(quantity_box1, text ="+5", command=add_five,width=5,align="left",height=2)
 add_five_btn.bg=(135,206,250)
 add_five_btn.text_size=20
-blank_text6=Text(quantity_box1,text="",align="left",width=10)
+blank_text6=Text(quantity_box1,text="",align="left",width=14)
 add_ten_btn = PushButton(quantity_box1, text ="+10", command=add_ten,width=5,align="left",height=2)
 add_ten_btn.bg=(135,206,250)
 add_ten_btn.text_size=20
