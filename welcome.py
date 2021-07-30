@@ -473,7 +473,8 @@ def confirm_finish():
     with open("container.json") as f:
         data = json.load(f)
     for i in data:
-        # print(data[i]["medicine"]["name"])
+        print(data[i]["medicine"]["name"])
+        print(refilling_quantity.value)
         if data[i]["medicine"]["name"] == refilling_quantity.value:
             data[i]["quantity_left"] += quantity_no.value
     with open("container.json","w") as f:
