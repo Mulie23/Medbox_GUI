@@ -279,7 +279,6 @@ def refillProcess() :
             # add GUI interrupt 
         elif (state=="rotate") : 
             container_id = container.getContainer(medicine_id)
-            refilling_quantity.value=container_id
             if container.rotateContainerToRefillArea(container_id) : 
                 state="finish"
             else : 
