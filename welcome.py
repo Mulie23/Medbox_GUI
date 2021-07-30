@@ -881,7 +881,7 @@ quantity_no_info = Text(quantity_window,text="Please input the quantity of the m
 refilling_quantity = Text(quantity_window,text="",size=50)
 
 quantity_box1 = Box(quantity_window,align="top",width="fill")
-blank_text6=Text(quantity_box1,text="",align="left",width=14)
+blank_text6=Text(quantity_box1,text="",align="left",width=21)
 minus_ten_btn = PushButton(quantity_box1, command=minus_ten, text="-10",width=5,align="left",height=2)
 minus_ten_btn.bg=(135,206,250)
 minus_ten_btn.text_size=20
