@@ -884,35 +884,28 @@ quantity_box1 = Box(quantity_window,align="top",width="fill")
 minus_ten_btn = PushButton(quantity_box1, command=minus_ten, text="-10",width=5,align="left",height=2)
 minus_ten_btn.bg=(135,206,250)
 minus_ten_btn.text_size=20
-blank_text6=Text(quantity_box1,text="",align="left",width=70)
+blank_text6=Text(quantity_box1,text="",align="left",width=10)
 minus_five_btn = PushButton(quantity_box1, command=minus_five, text="-5"  ,width=5,align="left",height=2)
 minus_five_btn.bg=(135,206,250)
 minus_five_btn.text_size=20
-blank_text6=Text(quantity_box1,text="",align="left",width=70)
+blank_text6=Text(quantity_box1,text="",align="left",width=10)
 minus_one_btn = PushButton(quantity_box1, command=minus_one, text="-1"  ,width=5,align="left",height=2)
 minus_one_btn.bg=(135,206,250)
 minus_one_btn.text_size=20
-# blank_text_b1=Text(quantity_window,text="",width="fill",height=2)
-# quantity_box = Box(quantity_window,align="top",width="fill")
-# minus_ten_btn = PushButton(quantity_box, text ="-10", command=minus_ten,align="left",width=7)
-# minus_ten_btn.text_size=30
-# blank_text_b2=Text(quantity_box,text="",width=5)
-# minus_five_btn = PushButton(quantity_box, text ="-5", command=minus_five,align="left",width=7)
-# minus_five_btn.text_size=30
-# blank_text_b3=Text(quantity_box,text="",width=5)
-# minus_one_btn = PushButton(quantity_box, text ="-1", command=minus_one,align="left",width=7)
-# minus_one_btn.text_size=30
-# blank_text_b4=Text(quantity_box,text="",width=5)
-# quantity_no = Text(quantity_box,text="0",align="left",size=30)
-# blank_text_b5=Text(quantity_box,text="",width=5)
-# add_one_btn = PushButton(quantity_box, text ="+1", command=add_one,align="left",width=7)
-# add_one_btn.text_size=30
-# blank_text_b6=Text(quantity_box,text="",width=5)
-# add_five_btn = PushButton(quantity_box, text ="+5", command=add_five,align="left",width=7)
-# add_five_btn.text_size=30
-# blank_text_b7=Text(quantity_box,text="",width=5)
-# add_ten_btn = PushButton(quantity_box, text ="+10", command=add_ten,align="left",width=7)
-# add_ten_btn.text_size=30
+blank_text6=Text(quantity_box1,text="",align="left",width=10)
+quantity_no = Text(quantity_box1,text="0",align="left",size=30)
+blank_text6=Text(quantity_box1,text="",align="left",width=10)
+add_one_btn = PushButton(quantity_box1, text ="+1", command=add_one,width=5,align="left",height=2)
+add_one_btn.bg=(135,206,250)
+add_one_btn.text_size=20
+blank_text6=Text(quantity_box1,text="",align="left",width=10)
+add_five_btn = PushButton(quantity_box1, text ="+5", command=add_five,width=5,align="left",height=2)
+add_five_btn.bg=(135,206,250)
+add_five_btn.text_size=20
+blank_text6=Text(quantity_box1,text="",align="left",width=10)
+add_ten_btn = PushButton(quantity_box1, text ="+10", command=add_ten,width=5,align="left",height=2)
+add_ten_btn.bg=(135,206,250)
+add_ten_btn.text_size=20
 # quantity_no = Text(quantity_window,text="0")
 # minus_one_btn = PushButton(quantity_window, text ="-1", command=minus_one)
 # minus_five_btn = PushButton(quantity_window, text ="-5", command=minus_five)
