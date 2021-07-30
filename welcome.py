@@ -459,7 +459,10 @@ def dispense1():
 
 
 random_code = ""
+
 def confirm_finish():
+    
+    medicine_info_check()
     refill_window.show(wait=True)
 
 def notificate():
@@ -940,7 +943,45 @@ back_button4 = PushButton(check_pre_window, text="Back", command=back_window3, w
 back_button4.bg=(255,160,122)
 back_button4.text_size=50
 
-
+medicine_txt1_chepre = Text(check_pre_window, text="Medicine")
+quantity_txt1_chepre = Text(check_pre_window, text="Quantity")
+message_txt1_chepre = Text(check_pre_window, text="Message")
+medicine_name1_chepre = Text(check_pre_window, text="")
+medicine_name2_chepre = Text(check_pre_window, text="")
+medicine_name3_chepre = Text(check_pre_window, text="")
+medicine_name4_chepre = Text(check_pre_window, text="")
+medicine_name5_chepre = Text(check_pre_window, text="")
+medicine_name6_chepre = Text(check_pre_window, text="")
+medicine_name7_chepre = Text(check_pre_window, text="")
+medicine_name8_chepre = Text(check_pre_window, text="")
+medicine_name9_chepre = Text(check_pre_window, text="")
+medicine_name10_chepre = Text(check_pre_window, text="")
+medicine_name11_chepre = Text(check_pre_window, text="")
+medicine_name12_chepre = Text(check_pre_window, text="")
+medicine_quantity1_chepre = Text(check_pre_window, text="")
+medicine_quantity2_chepre = Text(check_pre_window, text="")
+medicine_quantity3_chepre = Text(check_pre_window, text="")
+medicine_quantity4_chepre = Text(check_pre_window, text="")
+medicine_quantity5_chepre = Text(check_pre_window, text="")
+medicine_quantity6_chepre = Text(check_pre_window, text="")
+medicine_quantity7_chepre = Text(check_pre_window, text="")
+medicine_quantity8_chepre = Text(check_pre_window, text="")
+medicine_quantity9_chepre = Text(check_pre_window, text="")
+medicine_quantity10_chepre = Text(check_pre_window, text="")
+medicine_quantity11_chepre = Text(check_pre_window, text="")
+medicine_quantity12_chepre = Text(check_pre_window, text="")
+medicine_message1_chepre = Text(check_pre_window, text="")
+medicine_message2_chepre = Text(check_pre_window, text="")
+medicine_message3_chepre = Text(check_pre_window, text="")
+medicine_message4_chepre = Text(check_pre_window, text="")
+medicine_message5_chepre = Text(check_pre_window, text="")
+medicine_message6_chepre = Text(check_pre_window, text="")
+medicine_message7_chepre = Text(check_pre_window, text="")
+medicine_message8_chepre = Text(check_pre_window, text="")
+medicine_message9_chepre = Text(check_pre_window, text="")
+medicine_message10_chepre = Text(check_pre_window, text="")
+medicine_message11_chepre = Text(check_pre_window, text="")
+medicine_message12_chepre = Text(check_pre_window, text="")
 
 #refill window
 medicine_txt1 = Text(refill_window, text="Medicine")
