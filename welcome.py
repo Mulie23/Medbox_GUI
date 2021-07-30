@@ -862,16 +862,23 @@ finish_dispense_btn = PushButton(dispense_window,text="Finish",command=finish_di
 quantity_window = Window(app, title="Scan",bg = (255,255,224))
 quantity_window.set_full_screen()
 quantity_window.hide()
-quantity_no_info = Text(quantity_window,text="Please input the quantity of the medicine refilled")
+blank_text_n2=Text(quantity_window,text="",width="fill",height=2)
+quantity_no_info = Text(quantity_window,text="Please input the quantity of the medicine refilled",size=50)
 blank_text_n1=Text(quantity_window,text="",width="fill",height=2)
 quantity_box = Box(quantity_window,align="top",width="fill")
-minus_ten_btn = PushButton(quantity_box, text ="-10", command=minus_ten)
-minus_five_btn = PushButton(quantity_box, text ="-5", command=minus_five)
-minus_one_btn = PushButton(quantity_box, text ="-1", command=minus_one)
-quantity_no = Text(quantity_box,text="0")
-add_one_btn = PushButton(quantity_box, text ="+1", command=add_one)
-add_five_btn = PushButton(quantity_box, text ="+5", command=add_five)
-add_ten_btn = PushButton(quantity_box, text ="+10", command=add_ten)
+minus_ten_btn = PushButton(quantity_box, text ="-10", command=minus_ten,align="left")
+minus_ten_btn.text_size=30
+minus_five_btn = PushButton(quantity_box, text ="-5", command=minus_five,align="left")
+minus_five_btn.text_size=30
+minus_one_btn = PushButton(quantity_box, text ="-1", command=minus_one,align="left")
+minus_one_btn.text_size=30
+quantity_no = Text(quantity_box,text="0",align="left",size=30)
+add_one_btn = PushButton(quantity_box, text ="+1", command=add_one,align="left")
+add_one_btn.text_size=30
+add_five_btn = PushButton(quantity_box, text ="+5", command=add_five,align="left")
+add_five_btn.text_size=30
+add_ten_btn = PushButton(quantity_box, text ="+10", command=add_ten,align="left")
+add_ten_btn.text_size=30
 # quantity_no = Text(quantity_window,text="0")
 # minus_one_btn = PushButton(quantity_window, text ="-1", command=minus_one)
 # minus_five_btn = PushButton(quantity_window, text ="-5", command=minus_five)
