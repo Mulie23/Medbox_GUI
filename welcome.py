@@ -1051,7 +1051,7 @@ blank_text_n7=Text(refill_box7,text="",align="left",width=15)
 medicine_quantity12 = Text(refill_box7, text="",width="fill",align="left",height=2,size=20)
 
 med_list = [[medicine_name1,medicine_quantity1],[medicine_name2,medicine_quantity2],[medicine_name3,medicine_quantity3],[medicine_name4,medicine_quantity4],[medicine_name5,medicine_quantity5],[medicine_name6,medicine_quantity6],[medicine_name7,medicine_quantity7],[medicine_name8,medicine_quantity8],[medicine_name9,medicine_quantity9],[medicine_name10,medicine_quantity10],[medicine_name11,medicine_quantity11],[medicine_name12,medicine_quantity12]]
-blank_text_bfscan = Text(refill_window,text="",height=40)
+blank_text_bfscan = Text(refill_window,text="",height=10)
 scan_button = PushButton(refill_window, text = "Scan barcode", command = refillProcess, width=15)
 # submit_set_button = PushButton(setting_window, text="Submit",command=submit_setting, width=10)
 scan_button.bg=(152,251,152)
