@@ -902,7 +902,7 @@ back_button1.text_size=50
 
 blank_text5=Text(menu_window,text="",width="fill",height=6)
 menu_box1 = Box(menu_window,align="top",width="fill")
-refill = PushButton(menu_box1, command=open_window4, text="Refill Medicine",width="fill",align="left",height=2)
+refill = PushButton(menu_box1, command=open_window4, text="Refill Medicine",width=15,align="left",height=2)
 refill.bg=(135,206,250)
 refill.text_size=50
 blank_text6=Text(menu_box1,text="",align="left",width=70)
@@ -916,7 +916,7 @@ check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription
 check_pre.bg=(135,206,250)
 check_pre.text_size=50
 blank_text8=Text(menu_box2,text="",align="left",width=70)
-add_caregiver_code = PushButton(menu_box2, command=open_window5, text="Caregiver Code",width=15,align="left",height=2)
+add_caregiver_code = PushButton(menu_box2, command=open_window5, text="Caregiver Code",width="fill",align="left",height=2)
 add_caregiver_code.bg=(135,206,250)
 add_caregiver_code.text_size=50
 
