@@ -50,178 +50,6 @@ SCAN = gpio.OutputDevice(27)
 # ads = ADS.ADS1115(i2c)
 # chan = AnalogIn(ads, ADS.P0)
 
-
-def play_alarm():
-    global alarm
-    alarm = vlc.MediaPlayer('samsung_alarm.mp3')
-    alarm.play()
-    # sounds alarm 
-    return True
-
-def stop_alarm():
-    alarm.stop()
-    return True
-
-def turn_servo(pos):
-    pi = pigpio.pi()
-    if pos == 1000:
-        for k in range (500, pos+1, 50):
-            pi.set_servo_pulsewidth(24,k)
-            sleep(0.02)
-    elif pos == 500:
-        for l in range (1000, pos-1, -50):
-            pi.set_servo_pulsewidth(24,l)
-            sleep(0.02)
-    
-    sleep(1)
-    pi.set_servo_pulsewidth(24,0)
-
-def lower_nozzle():
-    pi = pigpio.pi()
-    pi.set_servo_pulsewidth(17,2000)
-    cutoff = 12400
-    PUMP.on()
-    VALVE.off()
-    sleep(1)
-    try:
-        for i in range(0, 1001, 10):
-            pi.set_servo_pulsewidth(17, 2000-i)
-            sleep(0.3)
-            if chan.value >= cutoff:
-                pi.set_servo_pulsewidth(17, 2000)
-                sleep(2)
-                pi.set_servo_pulsewidth(17, 0)
-                break
-        
-    except KeyboardInterrupt:
-        pi.set_servo_pulsewidth(17, 2000)
-        pi.set_servo_pulsewidth(17, 0)
-        print('interrupted')
-
-def dispense(med_id, qty):
-    default = 1000
-    dispense = 500
-    qty_left = qty
-    container = Containers(DIR, STEP, SLEEP)
-    container_id = container.getContainer(med_id)
-    container.rotateContainerToDispenseArea(container_id)
-    while qty_left != 0:
-        lower_nozzle() #turns on pump and lowers vacuum nozzle, the nozzle will rise after getting clsoe to a pill
-        turn_servo(dispense)#moves nozzle over the dispensing area
-        sleep(2)
-        VALVE.on()
-        sleep(1)
-        PUMP.off()
-        VALVE.off()
-        sleep(2)
-        turn_servo(default)
-        qty_left = qty_left - 1
-    container.updateContainerInformation(container_id, -qty)
-    container.writeToFile()
-    return True
-
-
-   # show all medicines 
-
-    # [ (iterate for each medicine) state machine 
-    # GUI prompt  to scan 
-    # turn on scanner 
-    # wait here untill scanner is pressed or back is pressed 
-    # if scanner returns a value 
-        # get medicine ID 
-        # if container exists get id, else allocate and return id 
-        # rotate the slot to the area 
-        # prompt UI to enter number of pill and click next 
-    # ]
-
-
-def refillProcess() : 
-    # pull updated prescription 
-    container = Containers(DIR, STEP, SLEEP) 
-    stateMachine = True ; 
-    state = 'barcode'
-    while(stateMachine) : 
-        if (state=="barcode") : 
-            quantity_window.show(wait=True)
-            #display the relevant details on the front end - Wentao
-            # information on what medicine are to be filled up 
-            medicine_id = checkBarcode() ; 
-            if medicine_id!=None : 
-                state = "rotate"
-
-            # add GUI interrupt 
-        elif (state=="rotate") : 
-            container_id = container.getContainer(medicine_id)
-            if container.rotateContainerToRefillArea(container_id) : 
-                state="finish"
-            else : 
-                state = "error"
-                message = "couldn't rotate container"
-        # elif (state=="wait") : 
-        #     # wait for a button push on gui and number of pills form input 
-        #     # update infromation i.e container.json
-        #     if refillComplete() : 
-        #         state = "finish"
-        #     else : 
-        #         state = "barcode" 
-        elif (state=="finish"): 
-            container.writeToFile() 
-            stateMachine = False 
-#            refill_window.show(wait=True)
-        elif  (state=="error") : 
-            error = "there was some error" 
-            stateMachine = False 
-        else : 
-            state = "error" 
-            error = "invalid sate" 
-
-    return  True     
-
-
-
-def refillComplete() : 
-    # return true if all the medicines have been refilled 
-    # return false if more medicines have to be filled
-    return 
-
-
-def checkBarcode() :
-    # turn on scanner and reads te barcode. returns a 5 digit id
-    ser = serial.Serial("/dev/ttyS0", 115200, timeout=0.5)
-    SCANNER.on()
-    SCAN.off() #button not pressed
-    info = b''
-    sleep(1)
-    while info == b'':
-        print('scanning')
-        SCAN.on()
-        counter = 0
-        while info == b'' and counter <= 4:
-            info = ser.readline()
-            sleep(1)
-            counter += 1
-        SCAN.off()
-        sleep(1)
-    f = open('med_id.json')
-    med_id_check = json.load(f)
-    info = str(tuple(list(info)))
-    print(info)
-    SCANNER.off()
-    for i in med_id_check:
-        if i == info:
-            return med_id_check[i]["id"]
-        else:
-            None
-    return None 
-    
-
-
-def pullPrescription() : 
-    # if prescription is updated 
-        # update the prescription 
-    return True 
-
-
 class Containers() : 
     def __init__(self, DIR, STEP, SLEEP) : 
         self.DIR = DIR
@@ -248,7 +76,7 @@ class Containers() :
     def getContainer(self, medicineID ) : 
         # if container exists get id, else allocate and return id 
         # if no free container return None 
-        if medicineID in self.filled_containers : 
+        if medicineID in self.filled_containers.keys : 
             return self.filled_containers[medicineID]
         else : 
             if len(self.unfilled_containers)==0 : 
@@ -341,6 +169,185 @@ class Containers() :
     def writeToFile(self) : 
         with open("container.json", 'w') as outfile:
             json.dump(self.data, outfile)
+
+def play_alarm():
+    global alarm
+    alarm = vlc.MediaPlayer('samsung_alarm.mp3')
+    alarm.play()
+    # sounds alarm 
+    return True
+
+def stop_alarm():
+    alarm.stop()
+    return True
+
+def turn_servo(pos):
+    pi = pigpio.pi()
+    if pos == 1000:
+        for k in range (500, pos+1, 50):
+            pi.set_servo_pulsewidth(24,k)
+            sleep(0.02)
+    elif pos == 500:
+        for l in range (1000, pos-1, -50):
+            pi.set_servo_pulsewidth(24,l)
+            sleep(0.02)
+    
+    sleep(1)
+    pi.set_servo_pulsewidth(24,0)
+
+def lower_nozzle():
+    pi = pigpio.pi()
+    pi.set_servo_pulsewidth(17,2000)
+    cutoff = 12400
+    PUMP.on()
+    VALVE.off()
+    sleep(1)
+    try:
+        for i in range(0, 1001, 10):
+            pi.set_servo_pulsewidth(17, 2000-i)
+            sleep(0.3)
+            if chan.value >= cutoff:
+                pi.set_servo_pulsewidth(17, 2000)
+                sleep(2)
+                pi.set_servo_pulsewidth(17, 0)
+                break
+        
+    except KeyboardInterrupt:
+        pi.set_servo_pulsewidth(17, 2000)
+        pi.set_servo_pulsewidth(17, 0)
+        print('interrupted')
+
+def dispense(med_id, qty):
+    default = 1000
+    dispense = 500
+    qty_left = qty
+    container = Containers(DIR, STEP, SLEEP)
+    container_id = container.getContainer(med_id)
+    container.rotateContainerToDispenseArea(container_id)
+    while qty_left != 0:
+        lower_nozzle() #turns on pump and lowers vacuum nozzle, the nozzle will rise after getting clsoe to a pill
+        turn_servo(dispense)#moves nozzle over the dispensing area
+        sleep(2)
+        VALVE.on()
+        sleep(1)
+        PUMP.off()
+        VALVE.off()
+        sleep(2)
+        turn_servo(default)
+        qty_left = qty_left - 1
+    container.updateContainerInformation(container_id, -qty)
+    container.writeToFile()
+    return True
+
+
+   # show all medicines 
+
+    # [ (iterate for each medicine) state machine 
+    # GUI prompt  to scan 
+    # turn on scanner 
+    # wait here untill scanner is pressed or back is pressed 
+    # if scanner returns a value 
+        # get medicine ID 
+        # if container exists get id, else allocate and return id 
+        # rotate the slot to the area 
+        # prompt UI to enter number of pill and click next 
+    # ]
+
+
+def refillProcess() : 
+    # pull updated prescription 
+    container = Containers(DIR, STEP, SLEEP) 
+    print("1")
+    print(container.data)
+    stateMachine = True ; 
+    state = 'barcode'
+    while(stateMachine) : 
+        if (state=="barcode") : 
+            quantity_window.show(wait=True)
+            #display the relevant details on the front end - Wentao
+            # information on what medicine are to be filled up 
+            medicine_id = checkBarcode() ; 
+            if medicine_id!=None : 
+                state = "rotate"
+
+            # add GUI interrupt 
+        elif (state=="rotate") : 
+            container_id = container.getContainer(medicine_id)
+            print("1")
+            print(container.data)
+            if container.rotateContainerToRefillArea(container_id) : 
+                print("1")
+                print(container.data)
+                state="finish"
+            else : 
+                state = "error"
+                message = "couldn't rotate container"
+        # elif (state=="wait") : 
+        #     # wait for a button push on gui and number of pills form input 
+        #     # update infromation i.e container.json
+        #     if refillComplete() : 
+        #         state = "finish"
+        #     else : 
+        #         state = "barcode" 
+        elif (state=="finish"): 
+            container.writeToFile() 
+            stateMachine = False 
+#            refill_window.show(wait=True)
+        elif  (state=="error") : 
+            error = "there was some error" 
+            stateMachine = False 
+        else : 
+            state = "error" 
+            error = "invalid sate" 
+
+    return  True     
+
+
+
+def refillComplete() : 
+    # return true if all the medicines have been refilled 
+    # return false if more medicines have to be filled
+    return 
+
+
+def checkBarcode() :
+    # turn on scanner and reads te barcode. returns a 5 digit id
+    ser = serial.Serial("/dev/ttyS0", 115200, timeout=0.5)
+    SCANNER.on()
+    SCAN.off() #button not pressed
+    info = b''
+    sleep(1)
+    while info == b'':
+        print('scanning')
+        SCAN.on()
+        counter = 0
+        while info == b'' and counter <= 4:
+            info = ser.readline()
+            sleep(1)
+            counter += 1
+        SCAN.off()
+        sleep(1)
+    f = open('med_id.json')
+    med_id_check = json.load(f)
+    info = str(tuple(list(info)))
+    print(info)
+    SCANNER.off()
+    for i in med_id_check:
+        if i == info:
+            return med_id_check[i]["id"]
+        else:
+            None
+    return None 
+    
+
+
+def pullPrescription() : 
+    # if prescription is updated 
+        # update the prescription 
+    return True 
+
+
+
 
 # container = Containers(DIR, STEP, SLEEP)    
 # import os
