@@ -26,6 +26,7 @@ class Containers() :
         # if container exists get id, else allocate and return id 
         # if no free container return None 
         if medicineID in self.filled_containers.keys() : 
+            print(self.filled_containers)
             return self.filled_containers[medicineID]
         else : 
             if len(self.unfilled_containers)==0 : 
@@ -129,5 +130,5 @@ class Containers() :
 
 
 container = Containers(DIR, STEP, SLEEP) 
-container_id = container.getContainer(medicine_id)
-print(container)
+container_id = container.getContainer("101")
+print(container_id)
