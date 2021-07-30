@@ -984,7 +984,7 @@ medicine_message11_chepre = Text(check_pre_window, text="")
 medicine_message12_chepre = Text(check_pre_window, text="")
 
 #refill window
-blank_text_n1=Text(refill_window,text="",width="fill",height=6)
+blank_text_n1=Text(refill_window,text="",width="fill",height=2)
 refill_box1 = Box(refill_window,align="top",width="fill")
 medicine_txt1 = Text(refill_box1, text="Medicine",width=15,align="left",height=2,size=20)
 blank_text_n2=Text(refill_box1,text="",align="left",width=20)
@@ -994,7 +994,7 @@ medicine_txt2 = Text(refill_box1, text="Medicine",width=15,align="left",height=2
 blank_text_n7=Text(refill_box1,text="",align="left",width=20)
 quantity_txt2 = Text(refill_box1, text="Quantity",width="fill",align="left",height=2,size=20)
 
-blank_text_n3=Text(refill_window,text="",width="fill",height=7)
+# blank_text_n3=Text(refill_window,text="",width="fill",height=7)
 refill_box2 = Box(refill_window,align="top",width="fill")
 medicine_name1 = Text(refill_box2, text="",width=15,align="left",height=2,size=20)
 blank_text_n2=Text(refill_box2,text="",align="left",width=20)
@@ -1004,7 +1004,7 @@ medicine_name2 = Text(refill_box2, text="",width=15,align="left",height=2,size=2
 blank_text_n7=Text(refill_box2,text="",align="left",width=20)
 medicine_quantity2 = Text(refill_box2, text="",width="fill",align="left",height=2,size=20)
 
-blank_text_n3=Text(refill_window,text="",width="fill",height=7)
+# blank_text_n3=Text(refill_window,text="",width="fill",height=7)
 refill_box3 = Box(refill_window,align="top",width="fill")
 medicine_name3 = Text(refill_box3, text="",width=15,align="left",height=2,size=20)
 blank_text_n2=Text(refill_box3,text="",align="left",width=20)
