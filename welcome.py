@@ -16,6 +16,7 @@ import json
 import serial
 import vlc
 
+timer = 0
 GPIO.setmode(GPIO.BCM)
 
 # setup all pins
@@ -41,14 +42,14 @@ SCANNER = gpio.OutputDevice(4)
 SCAN = gpio.OutputDevice(27)
 
 # setup rrent sensor pins and variables
-# import board
-# import busio
-# i2c = busio.I2C(board.SCL, board.SDA)
+import board
+import busio
+i2c = busio.I2C(board.SCL, board.SDA)
 
-# import adafruit_ads1x15.ads1115 as ADS
-# from adafruit_ads1x15.analog_in import AnalogIn
-# ads = ADS.ADS1115(i2c)
-# chan = AnalogIn(ads, ADS.P0)
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
+ads = ADS.ADS1115(i2c)
+chan = AnalogIn(ads, ADS.P0)
 
 class Containers() : 
     def __init__(self, DIR, STEP, SLEEP) : 
@@ -462,10 +463,40 @@ def compare():
     # print(med_list)
     for i in med_list:
         if  container_data.get(i) is None:
+            timer1 = threading.Timer(900, dispense1)
+            timer.start()
             refill_notification()
-
-
-
+            return
+    #show medicine names
+    dispense_window.show(wait=True)
+    dispense_all()
+     
+def dispense_all():
+    with open("container.json") as f:
+        container_data = json.load(f)
+    with open("prescription.json") as f:
+        prescription_data = json.load(f)
+    week_list=["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]     
+    day_int = datetime.datetime.today().weekday()
+    day_str = week_list[day_int]
+    now_session = 0
+    now = datetime.datetime.now()
+    today10am = now.replace(hour=10, minute=0, second=0, microsecond=0)
+    today1pm = now.replace(hour=13, minute=0, second=0, microsecond=0)
+    today5pm = now.replace(hour=17, minute=0, second=0, microsecond=0)
+    if now < today10am:
+        now_session = 0
+    elif now < today1pm:
+        now_session = 1
+    elif now < today5pm:
+        now_session = 2
+    else:
+        now_session = 3
+    for i in prescription_data["data"]["prescription"]:
+        med_id_to_dispense = i["medicine_id"]
+        med_quantity_to_dispense = i["time"][day_str][now_session]
+        if med_quantity_to_dispense != 0:
+            dispense(med_id_to_dispense,med_quantity_to_dispense)
 
 random_code = ""
 
@@ -569,6 +600,7 @@ def pull_pres():
 def dispense1():
     pull_pres()
     compare()
+
 
 def pm_to_am(time_string):
     if time_string[-2]=="A":
@@ -736,6 +768,7 @@ def medicine_info_check():
     medicine_quantity12.value=data["container_12"]["quantity_left"]
 
 def submit_setting():
+    global timer
     slot_dict = {}
     slot_dict["morn"]=pm_to_am(morn_set.value)
     slot_dict["noon"]=pm_to_am(noon_set.value)
@@ -743,56 +776,62 @@ def submit_setting():
     slot_dict["even"]=pm_to_am(even_set.value)
     with open("/home/pi/Documents/Medbox_GUI/slot.json","w") as f:
         json.dump(slot_dict,f)
-    # timer.cancel()
-    # now_time = datetime.datetime.now()
-    # now_year = now_time.date().year
-    # now_month = now_time.date().month
-    # now_day = now_time.date().day
-    # with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
-    #     data = json.load(f)
-    # next_list=[]
-    # morn_hms = data["morn"]
-    # morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
-    # morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    # morn_sec = (morn_time - now_time).total_seconds()
-    # next_list.append(morn_sec)
-    # noon_hms = data["noon"]
-    # noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
-    # noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
-    # noon_sec = (noon_time - now_time).total_seconds()
-    # next_list.append(noon_sec)
-    # after_hms = data["after"]
-    # after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
-    # after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
-    # after_sec = (after_time - now_time).total_seconds()
-    # next_list.append(after_sec)
-    # even_hms = data["even"]
-    # even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
-    # even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
-    # even_sec = (even_time - now_time).total_seconds()
-    # next_list.append(even_sec)
-    # next_time = now_time + datetime.timedelta(days=+1)
-    # next_year = next_time.date().year
-    # next_month = next_time.date().month
-    # next_day = next_time.date().day
-    # next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    # next_morn_sec = (next_morn - now_time).total_seconds()
-    # next_list.append(next_morn_sec)
-    # for i in next_list:
-    #     print(i)
-    #     if i > 0:
-    #         timer_start_time = i
-    #         break
-    # timer1 = threading.Timer(timer_start_time, dispense1)
-    # timer1.start()
+    if timer != 0:
+        timer.cancel()
+    set_timer()
     setting_window.info("Info", "Your changes have been saved")
     setting_window.hide()
     menu_window.show(wait=True)
 
+def set_timer():
+    global timer
+    file_exist_time = os.path.isfile("slot.json") 
+    if file_exist_time:
+        now_time = datetime.datetime.now()
+        now_year = now_time.date().year
+        now_month = now_time.date().month
+        now_day = now_time.date().day
+        with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
+            data = json.load(f)
+        next_list=[]
+        morn_hms = data["morn"]
+        morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
+        morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+        morn_sec = (morn_time - now_time).total_seconds()
+        next_list.append(morn_sec)
+        noon_hms = data["noon"]
+        noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
+        noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
+        noon_sec = (noon_time - now_time).total_seconds()
+        next_list.append(noon_sec)
+        after_hms = data["after"]
+        after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
+        after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
+        after_sec = (after_time - now_time).total_seconds()
+        next_list.append(after_sec)
+        even_hms = data["even"]
+        even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
+        even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
+        even_sec = (even_time - now_time).total_seconds()
+        next_list.append(even_sec)
+        next_time = now_time + datetime.timedelta(days=+1)
+        next_year = next_time.date().year
+        next_month = next_time.date().month
+        next_day = next_time.date().day
+        next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+        next_morn_sec = (next_morn - now_time).total_seconds()
+        next_list.append(next_morn_sec)
+        for i in next_list:
+            # print(i)
+            if i > 0:
+                timer_start_time = i
+                break
+        timer = threading.Timer(timer_start_time, dispense_all)
+        timer.start()
 
 
 app = App(title="Homepage",bg = (255,255,224))
-# app.set_full_screen()
+app.set_full_screen()
 app.hide()
 login_window = Window(app, title="Login",bg = (255,255,224),width = 1500, height = 1000)
 # login_window.set_full_screen()
@@ -821,78 +860,35 @@ else:
 
 
 
-file_exist_time = os.path.isfile("slot.json") 
-if file_exist_time:
-    now_time = datetime.datetime.now()
-    now_year = now_time.date().year
-    now_month = now_time.date().month
-    now_day = now_time.date().day
-    with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
-        data = json.load(f)
-    next_list=[]
-    morn_hms = data["morn"]
-    morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
-    morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    morn_sec = (morn_time - now_time).total_seconds()
-    next_list.append(morn_sec)
-    noon_hms = data["noon"]
-    noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
-    noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
-    noon_sec = (noon_time - now_time).total_seconds()
-    next_list.append(noon_sec)
-    after_hms = data["after"]
-    after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
-    after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
-    after_sec = (after_time - now_time).total_seconds()
-    next_list.append(after_sec)
-    even_hms = data["even"]
-    even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
-    even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
-    even_sec = (even_time - now_time).total_seconds()
-    next_list.append(even_sec)
-    next_time = now_time + datetime.timedelta(days=+1)
-    next_year = next_time.date().year
-    next_month = next_time.date().month
-    next_day = next_time.date().day
-    next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    next_morn_sec = (next_morn - now_time).total_seconds()
-    next_list.append(next_morn_sec)
-    for i in next_list:
-        # print(i)
-        if i > 0:
-            timer_start_time = i
-            break
-    timer = threading.Timer(timer_start_time, dispense1)
-    timer.start()
 
 add_med_window = Window(app, title="Add Medicine Window",bg = (255,255,224))
-# add_med_window.set_full_screen()
+add_med_window.set_full_screen()
 add_med_window.hide()
 quit_med_window = Window(app, title="Quit Medicine Window",bg = (255,255,224))
-# quit_med_window.set_full_screen()
+quit_med_window.set_full_screen()
 quit_med_window.hide()
 check_pre_window = Window(app, title="Check Prescription Window",bg = (255,255,224))
-# check_pre_window.set_full_screen()
+check_pre_window.set_full_screen()
 check_pre_window.hide()
 refill_window = Window(app, title="Refill",bg = (255,255,224))
 refill_window.set_full_screen()
 refill_window.hide()
 
 code_window = Window(app, title="Code",bg = (255,255,224))
-# code_window.set_full_screen()
+code_window.set_full_screen()
 code_window.hide()
 
 setting_window = Window(app, title="Setting",bg = (255,255,224))
-# setting_window.set_full_screen()
+setting_window.set_full_screen()
 setting_window.hide()
 
 scan_window = Window(app, title="Scan",bg = (255,255,224))
-# scan_window.set_full_screen()
+scan_window.set_full_screen()
 scan_window.hide()
 scan_txt = Text(scan_window,text="Please scan barcode of medicine to proceed",size=80)
 
 confirm_finish_window = Window(app, title="Confirm finish",bg = (255,255,224))
-# confirm_finish_window.set_full_screen()
+confirm_finish_window.set_full_screen()
 confirm_finish_window.hide()
 confirm_finish_txt = Text(confirm_finish_window,text="Do you want to refill other medicines?")
 finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
@@ -900,7 +896,7 @@ finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func
 
 #Dispense window
 dispense_window = Window(app,title="Dispense",bg =(255,255,224))
-# dispense_window.set_full_screen()
+dispense_window.set_full_screen()
 dispense_window.hide()
 medicine_txt1_dis = Text(dispense_window, text="Medicine")
 medicine_txt2_dis = Text(dispense_window, text="Medicine")
@@ -1228,5 +1224,6 @@ back_button7.bg=(255,160,122)
 back_button7.text_size=50
 
 medicine_info_check()
+set_timer()
 
 app.display()
