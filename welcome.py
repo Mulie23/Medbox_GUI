@@ -18,8 +18,8 @@ import pygame
 timer = 0
 timer_1 = 0
 timer_2 = 0
-pygame.init()
-pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
+# pygame.init()
+# pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
 
 GPIO.setmode(GPIO.BCM)
 
@@ -47,14 +47,14 @@ SCANNER = gpio.OutputDevice(4)
 SCAN = gpio.OutputDevice(27)
 
 # setup current sensor pins and variables
-import board
-import busio
-i2c = busio.I2C(board.SCL, board.SDA)
+# import board
+# import busio
+# i2c = busio.I2C(board.SCL, board.SDA)
 
-import adafruit_ads1x15.ads1115 as ADS
-from adafruit_ads1x15.analog_in import AnalogIn
-ads = ADS.ADS1115(i2c)
-chan = AnalogIn(ads, ADS.P0)
+# import adafruit_ads1x15.ads1115 as ADS
+# from adafruit_ads1x15.analog_in import AnalogIn
+# ads = ADS.ADS1115(i2c)
+# chan = AnalogIn(ads, ADS.P0)
 
 
 def play_alarm():
@@ -1052,7 +1052,7 @@ back_button4.text_size=50
 check_pre_box1 = Box(check_pre_window,align="top",width="fill")
 medicine_txt1_chepre = Text(check_pre_box1, text="Medicine",width=35,align="left",height=2,size=20)
 blank_text_n2=Text(check_pre_box1,text="",align="left",width=15)
-medicine_txt1_chepre = Text(check_pre_box1, text="Quantity",width=35,align="left",height=2,size=20)
+medicine_txt1_chepre = Text(check_pre_box1, text="Dose",width=35,align="left",height=2,size=20)
 blank_text_n6=Text(check_pre_box1,text="",align="left",width=15)
 message_txt1_chepre = Text(check_pre_box1, text="Message",width=35,align="left",height=2,size=20)
 
