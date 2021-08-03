@@ -456,7 +456,7 @@ def compare():
 def dispense_all():
     global timer_1
     global timer_2
-    dispense_window.show()
+    dispense_window.show(wait=True)
     with open("container.json") as f:
         container_data = json.load(f)
     with open("prescription.json") as f:
