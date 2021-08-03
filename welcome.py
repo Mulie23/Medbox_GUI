@@ -15,6 +15,53 @@ import pigpio
 import json
 import serial
 import pygame
+import subprocess
+import os
+
+"""
+NOTE : for the program to work , you need to have network-manager installed in the linux machine
+TODO : to install network-manager run - 
+     sudo apt install network-manager 
+
+"""
+class WIFI : 
+    def __init__(self) : 
+        self.data = {}
+
+    def scan(self) : 
+        self.data = {} 
+        devices = subprocess.check_output(['netsh','wlan','show','network'])
+        # decode it to strings
+        devices = devices.decode('ascii')
+        devices= devices.replace("\r","")
+        devices = devices.split("\n\n")
+
+        for i in devices[1:-1] : 
+            temp = i.split("\n")
+            name = temp[0].split(":")[-1].strip(" ")
+            interface = temp[2].split(":")[-1].strip(" ")
+            self.data[name] = interface 
+    
+    """
+    @arguments
+        name is from the data 
+        password is from the GUI
+        interface wifi.data[name]
+
+    """
+    
+    def connect(self, name, password, interface) : 
+        try:
+            os.system("nmcli d wifi connect {} password {} iface {}".format(name,password,interface))
+        except:
+            raise
+        else:
+            return True
+
+wifi = WIFI() 
+wifi.scan() 
+print(wifi.data)
+
 timer = 0
 timer_1 = 0
 timer_2 = 0
@@ -478,11 +525,50 @@ def dispense_all():
         now_session = 2
     else:
         now_session = 3
+    n = 0
     for i in prescription_data["data"]["prescription"]:
+        med_name_to_dispense = i["medicine_name"]
         med_id_to_dispense = i["medicine_id"]
         med_quantity_to_dispense = i["time"][day_str][now_session]
         if med_quantity_to_dispense != 0:
             dispense(med_id_to_dispense,med_quantity_to_dispense)
+            n += 1
+            if n == 1:
+                medicine_name1_dis.value = med_name_to_dispense
+                medicine_quantity1_dis = med_quantity_to_dispense
+            if n == 2:
+                medicine_name2_dis.value = med_name_to_dispense
+                medicine_quantity2_dis = med_quantity_to_dispense        
+            if n == 3:
+                medicine_name3_dis.value = med_name_to_dispense
+                medicine_quantity3_dis = med_quantity_to_dispense     
+            if n == 4:
+                medicine_name4_dis.value = med_name_to_dispense
+                medicine_quantity4_dis = med_quantity_to_dispense     
+            if n == 5:
+                medicine_name5_dis.value = med_name_to_dispense
+                medicine_quantity5_dis = med_quantity_to_dispense     
+            if n == 6:
+                medicine_name6_dis.value = med_name_to_dispense
+                medicine_quantity6_dis = med_quantity_to_dispense     
+            if n == 7:
+                medicine_name7_dis.value = med_name_to_dispense
+                medicine_quantity7_dis = med_quantity_to_dispense     
+            if n == 8:
+                medicine_name8_dis.value = med_name_to_dispense
+                medicine_quantity8_dis = med_quantity_to_dispense     
+            if n == 9:
+                medicine_name9_dis.value = med_name_to_dispense
+                medicine_quantity9_dis = med_quantity_to_dispense     
+            if n == 10:
+                medicine_name10_dis.value = med_name_to_dispense
+                medicine_quantity10_dis = med_quantity_to_dispense     
+            if n == 11:
+                medicine_name11_dis.value = med_name_to_dispense
+                medicine_quantity11_dis = med_quantity_to_dispense     
+            if n == 12:
+                medicine_name12_dis.value = med_name_to_dispense
+                medicine_quantity12_dis = med_quantity_to_dispense                             
     play_alarm()
     timer_1 = threading.Timer(60, play_alarm)
     timer_1.start()   
@@ -609,26 +695,27 @@ def pm_to_am(time_string):
         return hour_minute
 
 def get_started():
-    file_exists = os.path.isfile("data.json") 
-    # print(file_exists)
-    if file_exists:
-        # f = open("data.json", "r")
-        # if f.read() == "":
-        #     login_window.show(wait=True)
-        #     f.close
-        # else:
-        with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
-            data = json.load(f)
-        if data["success"]==1:
-            menu_window.show(wait=True)
-            menu_window.set_full_screen()
-        else:
-            login_window.show(wait=True)
-    else:
-        # f = open("data.json", "w")
-        # f.write("")
-        # f.close
-        login_window.show(wait=True)
+    wifi_window.show(wait=True)
+    # file_exists = os.path.isfile("data.json") 
+    # # print(file_exists)
+    # if file_exists:
+    #     # f = open("data.json", "r")
+    #     # if f.read() == "":
+    #     #     login_window.show(wait=True)
+    #     #     f.close
+    #     # else:
+    #     with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
+    #         data = json.load(f)
+    #     if data["success"]==1:
+    #         menu_window.show(wait=True)
+    #         menu_window.set_full_screen()
+    #     else:
+    #         login_window.show(wait=True)
+    # else:
+    #     # f = open("data.json", "w")
+    #     # f.write("")
+    #     # f.close
+    #     login_window.show(wait=True)
 
 
 
@@ -829,6 +916,31 @@ def set_timer():
         timer = threading.Timer(timer_start_time, dispense_all)
         timer.start()
 
+def back_window_wifi():
+    wifi_window.hide()
+
+def submit_wifi():
+    
+    file_exists = os.path.isfile("data.json") 
+    # print(file_exists)
+    if file_exists:
+        # f = open("data.json", "r")
+        # if f.read() == "":
+        #     login_window.show(wait=True)
+        #     f.close
+        # else:
+        with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
+            data = json.load(f)
+        if data["success"]==1:
+            menu_window.show(wait=True)
+            menu_window.set_full_screen()
+        else:
+            login_window.show(wait=True)
+    else:
+        # f = open("data.json", "w")
+        # f.write("")
+        # f.close
+        login_window.show(wait=True)
 
 app = App(title="Homepage",bg = (255,255,224))
 app.set_full_screen()
@@ -894,39 +1006,104 @@ confirm_finish_txt = Text(confirm_finish_window,text="Do you want to refill othe
 finish_yes = PushButton(confirm_finish_window, text ="Yes", command=finish_yes_func)
 finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func)
 
+#WIFI window
+wifi_window = Window(app,title="Wifi",bg = (255,255,224),width = 1500, height = 1000)
+wifi_window.hide()
+
+blank_text10=Text(wifi_window,text="",width="fill")
+select_wifi_txt = Text(wifi_window, text="Please select your wifi",size=70)
+wifi_name = TextBox(wifi_window,width = 25)
+wifi_name.bg =(232, 240, 254)
+wifi_name.text_size=70
+blank_text11=Text(wifi_window,text="",width="fill")
+wifi_password_text = Text(wifi_window, text="Please type in wifi password",size=70)
+wifi_password = TextBox(wifi_window,width = 25)
+wifi_password.bg=(232, 240, 254)
+wifi_password.text_size=70
+
+blank_text4 = Text(wifi_window,text="",size=80)
+
+submit_button = PushButton(wifi_window, text="Submit",command=submit_wifi, width=10)
+submit_button.bg=(152,251,152)
+submit_button.text_size=50
+blank_text12=Text(wifi_window,text="",width="fill",align="bottom")
+back_button1 = PushButton(wifi_window, text="Back", command=back_window_wifi, width=10,align="bottom")
+back_button1.bg=(255,160,122)
+back_button1.text_size=50
+
 #Dispense window
 dispense_window = Window(app,title="Dispense",bg =(255,255,224))
 dispense_window.set_full_screen()
 dispense_window.hide()
-medicine_txt1_dis = Text(dispense_window, text="Medicine")
-medicine_txt2_dis = Text(dispense_window, text="Medicine")
-quantity_txt1_dis = Text(dispense_window, text="Quantity")
-quantity_txt2_dis = Text(dispense_window, text="Quantity")
-medicine_name1_dis = Text(dispense_window, text="")
-medicine_name2_dis = Text(dispense_window, text="")
-medicine_name3_dis = Text(dispense_window, text="")
-medicine_name4_dis = Text(dispense_window, text="")
-medicine_name5_dis = Text(dispense_window, text="")
-medicine_name6_dis = Text(dispense_window, text="")
-medicine_name7_dis = Text(dispense_window, text="")
-medicine_name8_dis = Text(dispense_window, text="")
-medicine_name9_dis = Text(dispense_window, text="")
-medicine_name10_dis = Text(dispense_window, text="")
-medicine_name11_dis = Text(dispense_window, text="")
-medicine_name12_dis = Text(dispense_window, text="")
-medicine_quantity1_dis = Text(dispense_window, text="")
-medicine_quantity2_dis = Text(dispense_window, text="")
-medicine_quantity3_dis = Text(dispense_window, text="")
-medicine_quantity4_dis = Text(dispense_window, text="")
-medicine_quantity5_dis = Text(dispense_window, text="")
-medicine_quantity6_dis = Text(dispense_window, text="")
-medicine_quantity7_dis = Text(dispense_window, text="")
-medicine_quantity8_dis = Text(dispense_window, text="")
-medicine_quantity9_dis = Text(dispense_window, text="")
-medicine_quantity10_dis = Text(dispense_window, text="")
-medicine_quantity11_dis = Text(dispense_window, text="")
-medicine_quantity12_dis = Text(dispense_window, text="")
-finish_dispense_btn = PushButton(dispense_window,text="Finish",command=finish_dis)
+
+blank_text_n1=Text(dispense_window,text="",width="fill",height=2)
+dispense_box1 = Box(dispense_window,align="top",width="fill")
+medicine_txt1_dis = Text(dispense_box1, text="Medicine",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(dispense_box1,text="",align="left",width=15)
+quantity_txt1_dis = Text(dispense_box1, text="Quantity",width="fill",align="left",height=2,size=20)
+blank_text_n6=Text(dispense_box1,text="",align="left",width=15)
+medicine_txt2_dis = Text(dispense_box1, text="Medicine",width=35,align="left",height=2,size=20)
+blank_text_n7=Text(dispense_box1,text="",align="left",width=15)
+quantity_txt2_dis = Text(dispense_box1, text="Quantity",width="fill",align="left",height=2,size=20)
+
+# blank_text_n3=Text(dispense_window,text="",width="fill",height=7)
+dispense_box2 = Box(dispense_window,align="top",width="fill")
+medicine_name1_dis = Text(dispense_box2, text="",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(dispense_box2,text="",align="left",width=15)
+medicine_quantity1_dis = Text(dispense_box2, text="",width="fill",align="left",height=2,size=20)
+blank_text_n6=Text(dispense_box2,text="",align="left",width=15)
+medicine_name2_dis = Text(dispense_box2, text="",width=35,align="left",height=2,size=20)
+blank_text_n7=Text(dispense_box2,text="",align="left",width=15)
+medicine_quantity2_dis = Text(dispense_box2, text="",width="fill",align="left",height=2,size=20)
+
+dispense_box3 = Box(dispense_window,align="top",width="fill")
+medicine_name3_dis = Text(dispense_box3, text="",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(dispense_box3,text="",align="left",width=15)
+medicine_quantity3_dis = Text(dispense_box3, text="",width="fill",align="left",height=2,size=20)
+blank_text_n6=Text(dispense_box3,text="",align="left",width=15)
+medicine_name4_dis = Text(dispense_box3, text="",width=35,align="left",height=2,size=20)
+blank_text_n7=Text(dispense_box3,text="",align="left",width=15)
+medicine_quantity4_dis = Text(dispense_box3, text="",width="fill",align="left",height=2,size=20)
+
+dispense_box4 = Box(dispense_window,align="top",width="fill")
+medicine_name5_dis = Text(dispense_box4, text="",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(dispense_box4,text="",align="left",width=15)
+medicine_quantity5_dis = Text(dispense_box4, text="",width="fill",align="left",height=2,size=20)
+blank_text_n6=Text(dispense_box4,text="",align="left",width=15)
+medicine_name6_dis = Text(dispense_box4, text="",width=35,align="left",height=2,size=20)
+blank_text_n7=Text(dispense_box4,text="",align="left",width=15)
+medicine_quantity6_dis = Text(dispense_box4, text="",width="fill",align="left",height=2,size=20)
+
+dispense_box5 = Box(dispense_window,align="top",width="fill")
+medicine_name7_dis = Text(dispense_box5, text="",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(dispense_box5,text="",align="left",width=15)
+medicine_quantity7_dis = Text(dispense_box5, text="",width="fill",align="left",height=2,size=20)
+blank_text_n6=Text(dispense_box5,text="",align="left",width=15)
+medicine_name8_dis = Text(dispense_box5, text="",width=35,align="left",height=2,size=20)
+blank_text_n7=Text(dispense_box5,text="",align="left",width=15)
+medicine_quantity8_dis = Text(dispense_box5, text="",width="fill",align="left",height=2,size=20)
+
+dispense_box6 = Box(dispense_window,align="top",width="fill")
+medicine_name9_dis = Text(dispense_box6, text="",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(dispense_box6,text="",align="left",width=15)
+medicine_quantity9_dis = Text(dispense_box6, text="",width="fill",align="left",height=2,size=20)
+blank_text_n6=Text(dispense_box6,text="",align="left",width=15)
+medicine_name10_dis = Text(dispense_box6, text="",width=35,align="left",height=2,size=20)
+blank_text_n7=Text(dispense_box6,text="",align="left",width=15)
+medicine_quantity10_dis = Text(dispense_box6, text="",width="fill",align="left",height=2,size=20)
+
+dispense_box7 = Box(dispense_window,align="top",width="fill")
+medicine_name11_dis = Text(dispense_box7, text="",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(dispense_box7,text="",align="left",width=15)
+medicine_quantity11_dis = Text(dispense_box7, text="",width="fill",align="left",height=2,size=20)
+blank_text_n6=Text(dispense_box7,text="",align="left",width=15)
+medicine_name12_dis = Text(dispense_box7, text="",width=35,align="left",height=2,size=20)
+blank_text_n7=Text(dispense_box7,text="",align="left",width=15)
+medicine_quantity12_dis = Text(dispense_box7, text="",width="fill",align="left",height=2,size=20)
+
+finish_dispense_btn = PushButton(dispense_window,text="Finish",command=finish_dis,width=15)
+finish_dispense_btn.bg=(152,251,152)
+finish_dispense_btn.text_size=50
 
 # back_button_scan = PushButton(scan_window, text ="Back", command=back_window_scan, width=15,align="bottom")
 # back_button_scan.bg=(255,160,122)
@@ -1127,45 +1304,6 @@ blank_text_n2=Text(check_pre_box13,text="",align="left",width=10)
 medicine_dose12_chepre = Text(check_pre_box13, text="1",width=35,align="left",height=2,size=20)
 blank_text_n6=Text(check_pre_box13,text="",align="left",width=15)
 medicine_message12_chepre = Text(check_pre_box13, text="1",width=35,align="left",height=2,size=20)
-# medicine_txt1_chepre = Text(check_pre_window, text="Medicine")
-# dose_txt1_chepre = Text(check_pre_window, text="Dose")
-# message_txt1_chepre = Text(check_pre_window, text="Message")
-# medicine_name1_chepre = Text(check_pre_window, text="")
-# medicine_name2_chepre = Text(check_pre_window, text="")
-# medicine_name3_chepre = Text(check_pre_window, text="")
-# medicine_name4_chepre = Text(check_pre_window, text="")
-# medicine_name5_chepre = Text(check_pre_window, text="")
-# medicine_name6_chepre = Text(check_pre_window, text="")
-# medicine_name7_chepre = Text(check_pre_window, text="")
-# medicine_name8_chepre = Text(check_pre_window, text="")
-# medicine_name9_chepre = Text(check_pre_window, text="")
-# medicine_name10_chepre = Text(check_pre_window, text="")
-# medicine_name11_chepre = Text(check_pre_window, text="")
-# medicine_name12_chepre = Text(check_pre_window, text="")
-# medicine_dose1_chepre = Text(check_pre_window, text="")
-# medicine_dose2_chepre = Text(check_pre_window, text="")
-# medicine_dose3_chepre = Text(check_pre_window, text="")
-# medicine_dose4_chepre = Text(check_pre_window, text="")
-# medicine_dose5_chepre = Text(check_pre_window, text="")
-# medicine_dose6_chepre = Text(check_pre_window, text="")
-# medicine_dose7_chepre = Text(check_pre_window, text="")
-# medicine_dose8_chepre = Text(check_pre_window, text="")
-# medicine_dose9_chepre = Text(check_pre_window, text="")
-# medicine_dose10_chepre = Text(check_pre_window, text="")
-# medicine_dose11_chepre = Text(check_pre_window, text="")
-# medicine_dose12_chepre = Text(check_pre_window, text="")
-# medicine_message1_chepre = Text(check_pre_window, text="")
-# medicine_message2_chepre = Text(check_pre_window, text="")
-# medicine_message3_chepre = Text(check_pre_window, text="")
-# medicine_message4_chepre = Text(check_pre_window, text="")
-# medicine_message5_chepre = Text(check_pre_window, text="")
-# medicine_message6_chepre = Text(check_pre_window, text="")
-# medicine_message7_chepre = Text(check_pre_window, text="")
-# medicine_message8_chepre = Text(check_pre_window, text="")
-# medicine_message9_chepre = Text(check_pre_window, text="")
-# medicine_message10_chepre = Text(check_pre_window, text="")
-# medicine_message11_chepre = Text(check_pre_window, text="")
-# medicine_message12_chepre = Text(check_pre_window, text="")
 
 #refill window
 blank_text_n1=Text(refill_window,text="",width="fill",height=2)
