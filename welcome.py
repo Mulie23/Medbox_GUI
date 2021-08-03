@@ -15,6 +15,9 @@ import pigpio
 import json
 import serial
 import pygame
+timer = 0
+timer_1 = 0
+timer_2 = 0
 pygame.init()
 pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/smasho_mode_alarm.mp3')
 
@@ -451,6 +454,8 @@ def compare():
     dispense_all()
      
 def dispense_all():
+    global timer_1
+    global timer_2
     dispense_window.show()
     with open("container.json") as f:
         container_data = json.load(f)
@@ -477,6 +482,12 @@ def dispense_all():
         med_quantity_to_dispense = i["time"][day_str][now_session]
         if med_quantity_to_dispense != 0:
             dispense(med_id_to_dispense,med_quantity_to_dispense)
+    play_alarm()
+    timer_1 = threading.Timer(60, play_alarm)
+    timer_1.start()   
+    timer_2 = threading.Timer(120, notificate)
+    timer_2.start()   
+
 
 random_code = ""
 
@@ -717,9 +728,14 @@ def setting():
     setting_window.show(wait=True)
 
 def finish_dis():
+    global timer_1
+    global timer_2
     if DIST.value()==0:
         dispense_window.info("Notificaiton", "Please take out the cup first")
     else:
+        stop_alarm()
+        timer_1.cancel()
+        timer_2.cancel()
         dispense_window.hide()
 
 def medicine_info_check():
