@@ -68,7 +68,7 @@ def turn_servo(pos):
 #     pi.set_PWM_frequency(24, 50)
     pos_dict = {"default": 1580, "dispense": 1400}
     pi.set_servo_pulsewidth(24,pos_dict[pos])    
-    sleep(1)
+    sleep(0.9)
     pi.set_servo_pulsewidth(24,0)
     return True
 # turn_servo("dispense")
