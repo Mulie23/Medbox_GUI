@@ -146,7 +146,7 @@ class Containers() :
         current = int(self.data['current_pos'])  #current container at the refill spot
         destination = ids - offset
         if destination <= 0 :
-            destination = 12 - destination
+            destination = 12 + destination
         else:
             None
         if current != destination:
