@@ -103,12 +103,12 @@
     },
     "container_11":{
         "angleServo": 12,
-        "filled": 1,
-        "quantity_left": 12,
+        "filled": 0,
+        "quantity_left": 0,
         "medicine":{
-            "id": 110,
-            "name": "Acthrel",
-            "message":"drink with water"
+            "id": 0,
+            "name": "",
+            "message":""
         }
     },
     "container_12":{
