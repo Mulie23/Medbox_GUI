@@ -1,4 +1,11 @@
-import json
-with open("D:/Term 8/Capstone/guizero/Medbox_GUI/prescription.json") as f:
-    data1 = json.load(f)
-print(data1["data"]["prescription"][0]["time"]["tuesday"])
+import vlc
+def play_alarm():
+    global alarm
+    alarm = vlc.MediaPlayer('samsung_alarm.mp3')
+    alarm.play()
+    # sounds alarm 
+    return True
+
+def stop_alarm():
+    alarm.stop()
+    return True

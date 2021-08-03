@@ -513,7 +513,7 @@ def pull_pres():
     with open("/home/pi/Documents/Medbox_GUI/prescription.json") as f:
         data = json.load(f)
     week_list=["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]     
-    day_int = datetime.today().weekday()
+    day_int = datetime.datetime.today().weekday()
     day_str = week_list[day_int]
     if len(data["data"]["prescription"]) >= 1:
         medicine_name1_chepre.value = data["data"]["prescription"][0]["medicine_name"]
