@@ -1051,10 +1051,16 @@ back_button4.text_size=50
 
 check_pre_box1 = Box(check_pre_window,align="top",width="fill")
 medicine_txt1_chepre = Text(check_pre_box1, text="Medicine",width=35,align="left",height=2,size=20)
-blank_text_n2=Text(check_pre_box1,text="",align="left",width=15)
+blank_text_n2=Text(check_pre_box1,text="",align="left",width=10)
 medicine_txt1_chepre = Text(check_pre_box1, text="Dose",width=35,align="left",height=2,size=20)
 blank_text_n6=Text(check_pre_box1,text="",align="left",width=15)
 message_txt1_chepre = Text(check_pre_box1, text="Message",width=35,align="left",height=2,size=20)
+check_pre_box2 = Box(check_pre_window,align="top",width="fill")
+medicine_name1_chepre = Text(check_pre_box2, text="Medicine",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(check_pre_box2,text="",align="left",width=10)
+medicine_dose1_chepre = Text(check_pre_box2, text="Dose",width=35,align="left",height=2,size=20)
+blank_text_n6=Text(check_pre_box2,text="",align="left",width=15)
+medicine_message1_chepre = Text(check_pre_box2, text="Message",width=35,align="left",height=2,size=20)
 
 # medicine_txt1_chepre = Text(check_pre_window, text="Medicine")
 # dose_txt1_chepre = Text(check_pre_window, text="Dose")
