@@ -1049,9 +1049,16 @@ back_button4 = PushButton(check_pre_window, text="Back", command=back_window3, w
 back_button4.bg=(255,160,122)
 back_button4.text_size=50
 
-medicine_txt1_chepre = Text(check_pre_window, text="Medicine")
-quantity_txt1_chepre = Text(check_pre_window, text="Quantity")
-message_txt1_chepre = Text(check_pre_window, text="Message")
+check_pre_box1 = Box(check_pre_window,align="top",width="fill")
+medicine_txt1_chepre = Text(check_pre_box1, text="Medicine",width=35,align="left",height=2,size=20)
+blank_text_n2=Text(check_pre_box1,text="",align="left",width=15)
+medicine_txt1_chepre = Text(check_pre_box1, text="Quantity",width=35,align="left",height=2,size=20)
+blank_text_n6=Text(check_pre_box1,text="",align="left",width=15)
+message_txt1_chepre = Text(check_pre_box1, text="Message",width=35,align="left",height=2,size=20)
+
+# medicine_txt1_chepre = Text(check_pre_window, text="Medicine")
+# dose_txt1_chepre = Text(check_pre_window, text="Dose")
+# message_txt1_chepre = Text(check_pre_window, text="Message")
 medicine_name1_chepre = Text(check_pre_window, text="")
 medicine_name2_chepre = Text(check_pre_window, text="")
 medicine_name3_chepre = Text(check_pre_window, text="")
