@@ -464,9 +464,7 @@ def compare():
         if  container_data.get(i) is None:
             refill_notification()
 
-def dispense1():
-    check_pre()
-    compare()
+
 
 
 random_code = ""
@@ -508,10 +506,69 @@ def pull_pres():
     # header = {"jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjI2ODQyNjY1LCJleHAiOjE2MjY5MjkwNjV9.L_bOISzaIMUGM9d0L0dbGjFQt_tHmf4ZQ1Rl-Lo1GDY"}
     # body = {"medboxID": "1","username": "user1"}
 
-    response = requests.post("http://3.0.17.207:4000/queue/consume", body, headers=header)
-    data = response.json()
-    with open("prescription.json", "w") as f:
-        json.dump(data, f)
+    # response = requests.post("http://3.0.17.207:4000/queue/consume", body, headers=header)
+    # data = response.json()
+    # with open("prescription.json", "w") as f:
+    #     json.dump(data, f)
+    with open("/home/pi/Documents/Medbox_GUI/prescription.json") as f:
+        data = json.load(f)
+    week_list=["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]     
+    day_int = datetime.today().weekday()
+    day_str = week_list[day_int]
+    if len(data["data"]["prescription"]) >= 1:
+        medicine_name1_chepre.value = data["data"]["prescription"][0]["medicine_name"]
+        medicine_dose1_chepre.value = data["data"]["prescription"][0]["time"]["day_str"]
+        medicine_message1_chepre.value = data["data"]["prescription"][0]["message"]
+    if len(data["data"]["prescription"]) >= 2:
+        medicine_name2_chepre.value = data["data"]["prescription"][1]["medicine_name"]
+        medicine_dose2_chepre.value = data["data"]["prescription"][1]["time"]["day_str"]
+        medicine_message2_chepre.value = data["data"]["prescription"][1]["message"]
+    if len(data["data"]["prescription"]) >= 3:
+        medicine_name3_chepre.value = data["data"]["prescription"][2]["medicine_name"]
+        medicine_dose3_chepre.value = data["data"]["prescription"][2]["time"]["day_str"]
+        medicine_message3_chepre.value = data["data"]["prescription"][2]["message"]
+    if len(data["data"]["prescription"]) >= 4:
+        medicine_name4_chepre.value = data["data"]["prescription"][3]["medicine_name"]
+        medicine_dose4_chepre.value = data["data"]["prescription"][3]["time"]["day_str"]
+        medicine_message4_chepre.value = data["data"]["prescription"][3]["message"]
+    if len(data["data"]["prescription"]) >= 5:
+        medicine_name5_chepre.value = data["data"]["prescription"][4]["medicine_name"]
+        medicine_dose5_chepre.value = data["data"]["prescription"][4]["time"]["day_str"]
+        medicine_message5_chepre.value = data["data"]["prescription"][4]["message"]
+    if len(data["data"]["prescription"]) >= 6:
+        medicine_name6_chepre.value = data["data"]["prescription"][5]["medicine_name"]
+        medicine_dose6_chepre.value = data["data"]["prescription"][5]["time"]["day_str"]
+        medicine_message6_chepre.value = data["data"]["prescription"][5]["message"]
+    if len(data["data"]["prescription"]) >= 7:
+        medicine_name7_chepre.value = data["data"]["prescription"][6]["medicine_name"]
+        medicine_dose7_chepre.value = data["data"]["prescription"][6]["time"]["day_str"]
+        medicine_message7_chepre.value = data["data"]["prescription"][6]["message"]
+    if len(data["data"]["prescription"]) >= 8:
+        medicine_name8_chepre.value = data["data"]["prescription"][7]["medicine_name"]
+        medicine_dose8_chepre.value = data["data"]["prescription"][7]["time"]["day_str"]
+        medicine_message8_chepre.value = data["data"]["prescription"][7]["message"]
+    if len(data["data"]["prescription"]) >= 9:
+        medicine_name9_chepre.value = data["data"]["prescription"][8]["medicine_name"]
+        medicine_dose9_chepre.value = data["data"]["prescription"][8]["time"]["day_str"]
+        medicine_message9_chepre.value = data["data"]["prescription"][8]["message"]
+    if len(data["data"]["prescription"]) >= 19:
+        medicine_name10_chepre.value = data["data"]["prescription"][9]["medicine_name"]
+        medicine_dose10_chepre.value = data["data"]["prescription"][9]["time"]["day_str"]
+        medicine_message10_chepre.value = data["data"]["prescription"][9]["message"]
+    if len(data["data"]["prescription"]) >= 11:
+        medicine_name11_chepre.value = data["data"]["prescription"][10]["medicine_name"]
+        medicine_dose11_chepre.value = data["data"]["prescription"][10]["time"]["day_str"]
+        medicine_message11_chepre.value = data["data"]["prescription"][10]["message"]
+    if len(data["data"]["prescription"]) >= 12:
+        medicine_name12_chepre.value = data["data"]["prescription"][11]["medicine_name"]
+        medicine_dose12_chepre.value = data["data"]["prescription"][11]["time"]["day_str"]
+        medicine_message12_chepre.value = data["data"]["prescription"][11]["message"]
+
+
+
+def dispense1():
+    pull_pres()
+    compare()
 
 def pm_to_am(time_string):
     if time_string[-2]=="A":
@@ -686,48 +743,48 @@ def submit_setting():
     slot_dict["even"]=pm_to_am(even_set.value)
     with open("/home/pi/Documents/Medbox_GUI/slot.json","w") as f:
         json.dump(slot_dict,f)
-    timer.cancel()
-    now_time = datetime.datetime.now()
-    now_year = now_time.date().year
-    now_month = now_time.date().month
-    now_day = now_time.date().day
-    with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
-        data = json.load(f)
-    next_list=[]
-    morn_hms = data["morn"]
-    morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
-    morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    morn_sec = (morn_time - now_time).total_seconds()
-    next_list.append(morn_sec)
-    noon_hms = data["noon"]
-    noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
-    noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
-    noon_sec = (noon_time - now_time).total_seconds()
-    next_list.append(noon_sec)
-    after_hms = data["after"]
-    after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
-    after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
-    after_sec = (after_time - now_time).total_seconds()
-    next_list.append(after_sec)
-    even_hms = data["even"]
-    even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
-    even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
-    even_sec = (even_time - now_time).total_seconds()
-    next_list.append(even_sec)
-    next_time = now_time + datetime.timedelta(days=+1)
-    next_year = next_time.date().year
-    next_month = next_time.date().month
-    next_day = next_time.date().day
-    next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
-    next_morn_sec = (next_morn - now_time).total_seconds()
-    next_list.append(next_morn_sec)
-    for i in next_list:
-        print(i)
-        if i > 0:
-            timer_start_time = i
-            break
-    timer1 = threading.Timer(timer_start_time, dispense1)
-    timer1.start()
+    # timer.cancel()
+    # now_time = datetime.datetime.now()
+    # now_year = now_time.date().year
+    # now_month = now_time.date().month
+    # now_day = now_time.date().day
+    # with open("/home/pi/Documents/Medbox_GUI/slot.json") as f:
+    #     data = json.load(f)
+    # next_list=[]
+    # morn_hms = data["morn"]
+    # morn_str = " " + morn_hms[0] + ":" + morn_hms[1] + ":" + "00"
+    # morn_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+    # morn_sec = (morn_time - now_time).total_seconds()
+    # next_list.append(morn_sec)
+    # noon_hms = data["noon"]
+    # noon_str = " " + noon_hms[0] + ":" + noon_hms[1] + ":" + "00"
+    # noon_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+noon_str, "%Y-%m-%d %H:%M:%S")
+    # noon_sec = (noon_time - now_time).total_seconds()
+    # next_list.append(noon_sec)
+    # after_hms = data["after"]
+    # after_str = " " + after_hms[0] + ":" + after_hms[1] + ":" + "00"
+    # after_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+after_str, "%Y-%m-%d %H:%M:%S")
+    # after_sec = (after_time - now_time).total_seconds()
+    # next_list.append(after_sec)
+    # even_hms = data["even"]
+    # even_str = " " + even_hms[0] + ":" + even_hms[1] + ":" + "00"
+    # even_time = datetime.datetime.strptime(str(now_year)+"-"+str(now_month)+"-"+str(now_day)+even_str, "%Y-%m-%d %H:%M:%S")
+    # even_sec = (even_time - now_time).total_seconds()
+    # next_list.append(even_sec)
+    # next_time = now_time + datetime.timedelta(days=+1)
+    # next_year = next_time.date().year
+    # next_month = next_time.date().month
+    # next_day = next_time.date().day
+    # next_morn = datetime.datetime.strptime(str(next_year)+"-"+str(next_month)+"-"+str(next_day)+morn_str, "%Y-%m-%d %H:%M:%S")
+    # next_morn_sec = (next_morn - now_time).total_seconds()
+    # next_list.append(next_morn_sec)
+    # for i in next_list:
+    #     print(i)
+    #     if i > 0:
+    #         timer_start_time = i
+    #         break
+    # timer1 = threading.Timer(timer_start_time, dispense1)
+    # timer1.start()
     setting_window.info("Info", "Your changes have been saved")
     setting_window.hide()
     menu_window.show(wait=True)
@@ -1011,18 +1068,18 @@ medicine_name9_chepre = Text(check_pre_window, text="")
 medicine_name10_chepre = Text(check_pre_window, text="")
 medicine_name11_chepre = Text(check_pre_window, text="")
 medicine_name12_chepre = Text(check_pre_window, text="")
-medicine_quantity1_chepre = Text(check_pre_window, text="")
-medicine_quantity2_chepre = Text(check_pre_window, text="")
-medicine_quantity3_chepre = Text(check_pre_window, text="")
-medicine_quantity4_chepre = Text(check_pre_window, text="")
-medicine_quantity5_chepre = Text(check_pre_window, text="")
-medicine_quantity6_chepre = Text(check_pre_window, text="")
-medicine_quantity7_chepre = Text(check_pre_window, text="")
-medicine_quantity8_chepre = Text(check_pre_window, text="")
-medicine_quantity9_chepre = Text(check_pre_window, text="")
-medicine_quantity10_chepre = Text(check_pre_window, text="")
-medicine_quantity11_chepre = Text(check_pre_window, text="")
-medicine_quantity12_chepre = Text(check_pre_window, text="")
+medicine_dose1_chepre = Text(check_pre_window, text="")
+medicine_dose2_chepre = Text(check_pre_window, text="")
+medicine_dose3_chepre = Text(check_pre_window, text="")
+medicine_dose4_chepre = Text(check_pre_window, text="")
+medicine_dose5_chepre = Text(check_pre_window, text="")
+medicine_dose6_chepre = Text(check_pre_window, text="")
+medicine_dose7_chepre = Text(check_pre_window, text="")
+medicine_dose8_chepre = Text(check_pre_window, text="")
+medicine_dose9_chepre = Text(check_pre_window, text="")
+medicine_dose10_chepre = Text(check_pre_window, text="")
+medicine_dose11_chepre = Text(check_pre_window, text="")
+medicine_dose12_chepre = Text(check_pre_window, text="")
 medicine_message1_chepre = Text(check_pre_window, text="")
 medicine_message2_chepre = Text(check_pre_window, text="")
 medicine_message3_chepre = Text(check_pre_window, text="")
