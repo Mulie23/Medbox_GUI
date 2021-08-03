@@ -19,7 +19,7 @@ timer = 0
 timer_1 = 0
 timer_2 = 0
 pygame.init()
-pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/smasho_mode_alarm.mp3')
+pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
 
 GPIO.setmode(GPIO.BCM)
 
@@ -83,10 +83,11 @@ def lower_nozzle():
     pi = pigpio.pi()
     max_height = 1950
     pi.set_servo_pulsewidth(17,max_height)
-    cutoff = 12250
+    # cutoff = 12250
     PUMP.on()
     VALVE.off()
     sleep(1)
+    cutoff = chan.value + 80
     try:
         for i in range(0, 1001, 10):
             pi.set_servo_pulsewidth(17, max_height-i)
@@ -730,7 +731,7 @@ def setting():
 def finish_dis():
     global timer_1
     global timer_2
-    if DIST.value()==0:
+    if DIST.value==0:
         dispense_window.info("Notificaiton", "Please take out the cup first")
     else:
         stop_alarm()
