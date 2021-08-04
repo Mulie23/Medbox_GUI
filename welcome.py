@@ -990,8 +990,8 @@ if file_exists:
     with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     if data["success"]==1:
-        app.show(wait=True)
-        app.set_full_screen()
+        app.show()
+        # app.set_full_screen()
     else:
         app.show() 
 else:
