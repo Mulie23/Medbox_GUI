@@ -1,1 +1,1 @@
-/etc/xdg/lession/LXDE-pi/
+/etc/xdg/lxsession/LXDE-pi/
