@@ -1192,26 +1192,29 @@ refill = PushButton(menu_box1, command=open_window4, text="Refill Medicine",widt
 refill.bg=(135,206,250)
 refill.text_size=50
 blank_text6=Text(menu_box1,text="",align="left",width=70)
-quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left",height=2)
-quit_med_button.bg=(135,206,250)
-quit_med_button.text_size=50
+check_pre = PushButton(menu_box1, command=open_window3, text="Check Prescription",width="fill",align="left",height=2)
+check_pre.bg=(135,206,250)
+check_pre.text_size=50
+# quit_med_button = PushButton(menu_box1, command=open_window2, text="Quit Medicine"  ,width="fill",align="left",height=2)
+# quit_med_button.bg=(135,206,250)
+# quit_med_button.text_size=50
 
 blank_text7=Text(menu_window,text="",width="fill",height=7)
 menu_box2 = Box(menu_window,align="top",width="fill")
-check_pre = PushButton(menu_box2, command=open_window3, text="Check Prescription",width=15,align="left",height=2)
-check_pre.bg=(135,206,250)
-check_pre.text_size=50
-blank_text8=Text(menu_box2,text="",align="left",width=70)
-add_caregiver_code = PushButton(menu_box2, command=open_window5, text="Caregiver Code",width="fill",align="left",height=2)
+add_caregiver_code = PushButton(menu_box2, command=open_window5, text="Caregiver Code",width=15,align="left",height=2)
 add_caregiver_code.bg=(135,206,250)
 add_caregiver_code.text_size=50
-
-blank_text9=Text(menu_window,text="",width="fill",height=7)
-menu_box3 = Box(menu_window,align="top",width="fill")
-setting_button = PushButton(menu_box3, command=setting, text="Setting",width=15,align="left",height=2)
+blank_text8=Text(menu_box2,text="",align="left",width=70)
+setting_button = PushButton(menu_box2, command=setting, text="Setting",width="fill",align="left",height=2)
 setting_button.bg=(135,206,250)
 setting_button.text_size=50
-blank_text16=Text(menu_box3,text="",align="left",width=70)
+
+# blank_text9=Text(menu_window,text="",width="fill",height=7)
+# menu_box3 = Box(menu_window,align="top",width="fill")
+# setting_button = PushButton(menu_box3, command=setting, text="Setting",width=15,align="left",height=2)
+# setting_button.bg=(135,206,250)
+# setting_button.text_size=50
+# blank_text16=Text(menu_box3,text="",align="left",width=70)
 
 # ask_med_text = Text(add_med_window, text="Please type in your medicine name")
 # med_name = TextBox(add_med_window)
