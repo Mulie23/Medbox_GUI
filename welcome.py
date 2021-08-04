@@ -85,7 +85,7 @@ import json
 import serial
 import pygame
 pygame.init()
-pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/smasho_mode_alarm.mp3')
+pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
 
 GPIO.setmode(GPIO.BCM)
 
@@ -583,40 +583,40 @@ def dispense_all():
             n += 1
             if n == 1:
                 medicine_name1_dis.value = med_name_to_dispense
-                medicine_quantity1_dis = med_quantity_to_dispense
+                medicine_quantity1_dis.value = med_quantity_to_dispense
             if n == 2:
                 medicine_name2_dis.value = med_name_to_dispense
-                medicine_quantity2_dis = med_quantity_to_dispense        
+                medicine_quantity2_dis.value = med_quantity_to_dispense        
             if n == 3:
                 medicine_name3_dis.value = med_name_to_dispense
-                medicine_quantity3_dis = med_quantity_to_dispense     
+                medicine_quantity3_dis.value = med_quantity_to_dispense     
             if n == 4:
                 medicine_name4_dis.value = med_name_to_dispense
-                medicine_quantity4_dis = med_quantity_to_dispense     
+                medicine_quantity4_dis.value = med_quantity_to_dispense     
             if n == 5:
                 medicine_name5_dis.value = med_name_to_dispense
-                medicine_quantity5_dis = med_quantity_to_dispense     
+                medicine_quantity5_dis.value = med_quantity_to_dispense     
             if n == 6:
                 medicine_name6_dis.value = med_name_to_dispense
-                medicine_quantity6_dis = med_quantity_to_dispense     
+                medicine_quantity6_dis.value = med_quantity_to_dispense     
             if n == 7:
                 medicine_name7_dis.value = med_name_to_dispense
-                medicine_quantity7_dis = med_quantity_to_dispense     
+                medicine_quantity7_dis.value = med_quantity_to_dispense     
             if n == 8:
                 medicine_name8_dis.value = med_name_to_dispense
-                medicine_quantity8_dis = med_quantity_to_dispense     
+                medicine_quantity8_dis.value = med_quantity_to_dispense     
             if n == 9:
                 medicine_name9_dis.value = med_name_to_dispense
-                medicine_quantity9_dis = med_quantity_to_dispense     
+                medicine_quantity9_dis.value = med_quantity_to_dispense     
             if n == 10:
                 medicine_name10_dis.value = med_name_to_dispense
-                medicine_quantity10_dis = med_quantity_to_dispense     
+                medicine_quantity10_dis.value = med_quantity_to_dispense     
             if n == 11:
                 medicine_name11_dis.value = med_name_to_dispense
-                medicine_quantity11_dis = med_quantity_to_dispense     
+                medicine_quantity11_dis.value = med_quantity_to_dispense     
             if n == 12:
                 medicine_name12_dis.value = med_name_to_dispense
-                medicine_quantity12_dis = med_quantity_to_dispense    
+                medicine_quantity12_dis.value = med_quantity_to_dispense    
     with open("container.json","w") as f:
         json.dump(container_data, f)                  
     play_alarm()
