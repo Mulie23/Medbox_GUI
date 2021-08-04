@@ -17,6 +17,7 @@ class WIFI :
         # decode it to strings
         devices = devices.decode('ascii')
         devices= devices.replace("\r","")
+        print(devices)
         devices = devices.split("\n\n")
 
         for i in devices[1:-1] : 
@@ -44,4 +45,4 @@ class WIFI :
 wifi = WIFI() 
 wifi.scan() 
 print(wifi.data)
-    
+# 15168877330

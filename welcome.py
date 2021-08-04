@@ -532,6 +532,10 @@ def dispense_all():
         med_quantity_to_dispense = i["time"][day_str][now_session]
         if med_quantity_to_dispense != 0:
             dispense(med_id_to_dispense,med_quantity_to_dispense)
+            for j in container_data:
+                if j != "current_pos":
+                    if container_data[j]["medicine"]["id"] == med_id_to_dispense:
+                        container_data[j]["quantity"] -= med_quantity_to_dispense
             n += 1
             if n == 1:
                 medicine_name1_dis.value = med_name_to_dispense
@@ -568,7 +572,9 @@ def dispense_all():
                 medicine_quantity11_dis = med_quantity_to_dispense     
             if n == 12:
                 medicine_name12_dis.value = med_name_to_dispense
-                medicine_quantity12_dis = med_quantity_to_dispense                             
+                medicine_quantity12_dis = med_quantity_to_dispense    
+    with open("container.json","w") as f:
+        json.dump(container_data, f)                  
     play_alarm()
     timer_1 = threading.Timer(60, play_alarm)
     timer_1.start()   
