@@ -1069,7 +1069,7 @@ finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func
 #WIFI window
 wifi_window = Window(app,title="Wifi",bg = (255,255,224),width = 1500, height = 1000)
 wifi_window.hide()
-
+print(wifi.scan())
 wifi_name_list=wifi.scan()
 if len(wifi_name_list)<10:
     for i in range(10-len(wifi_name_list)):
