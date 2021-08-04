@@ -19,6 +19,16 @@ TODO : to install network-manager run -
      sudo apt install network-manager 
 
 """
+
+def check_ping():
+    hostname = "google.com"
+    response = os.system("ping -c 1 " + hostname)
+    # and then check the response...
+    if response == 0:
+        return True
+    else:
+        return False
+
 class WIFI : 
     def __init__(self) :
         pass
@@ -973,7 +983,8 @@ def back_window_wifi():
 wifi = WIFI()
 def submit_wifi():
     global wifi
-    if wifi.connect(wifi_name.value,wifi_password.value) == True:
+    wifi.connect(wifi_name.value,wifi_password.value)
+    if check_ping() == True:  
         file_exists = os.path.isfile("data.json") 
         # print(file_exists)
         if file_exists:
