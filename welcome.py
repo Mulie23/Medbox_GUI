@@ -8,13 +8,6 @@ import os.path
 import datetime
 import threading
 from playsound import playsound
-from time import sleep
-import gpiozero as gpio
-import RPi.GPIO as GPIO
-import pigpio
-import json
-import serial
-import pygame
 import subprocess
 import os
 
@@ -82,11 +75,15 @@ class WIFI :
 # print(wifi.scan())
 # print(wifi.connect("WT", "15168877330"))
 
-timer = 0
-timer_1 = 0
-timer_2 = 0
+from time import sleep
+import gpiozero as gpio
+import RPi.GPIO as GPIO
+import pigpio
+import json
+import serial
+import pygame
 pygame.init()
-pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
+pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/smasho_mode_alarm.mp3')
 
 GPIO.setmode(GPIO.BCM)
 
@@ -100,12 +97,13 @@ CCW = 0
 SPR = 200
 SLEEP.off() #puts the board in sleep mode
 DIR.on() #sets to clockwise
-delay = 1.2/SPR
+delay = 2.4/SPR
 
 # setup pump pins
 VALVE = gpio.OutputDevice(13)
 PUMP = gpio.OutputDevice(19)
 DIST = gpio.InputDevice(23) #0 means that smth is close
+NDIST = gpio.InputDevice(22) #0 means that smth is close
 VALVE.off()
 PUMP.off()
 
@@ -135,11 +133,25 @@ def stop_alarm():
 
 def turn_servo(pos):
     pi = pigpio.pi()
+    pi.set_pull_up_down(24, pigpio.PUD_DOWN)
 #     pi.set_PWM_frequency(24, 50)
-    pos_dict = {"default": 1580, "dispense": 1400}
-    pi.set_servo_pulsewidth(24,pos_dict[pos])    
-    sleep(0.9)
-    pi.set_servo_pulsewidth(24,0)
+    servo = "180"
+    if servo == "180":
+        default = 1200
+        dispense = 700
+        if pos == "dispense":
+            for i in range (default, dispense+1, -25):
+                pi.set_servo_pulsewidth(24, i)
+                sleep(0.2)
+            sleep(1)
+            pi.set_servo_pulsewidth(24, 0)
+        elif pos == "default":
+            pi.set_servo_pulsewidth(24, default)
+    elif servo == "continuous":
+        pos_dict = {"default": 1580, "dispense": 1400}
+        pi.set_servo_pulsewidth(24,pos_dict[pos])    
+        sleep(0.9)
+        pi.set_servo_pulsewidth(24,0)
     return True
 # turn_servo("dispense")
 # sleep(2)
@@ -148,28 +160,38 @@ def turn_servo(pos):
 
 def lower_nozzle():
     pi = pigpio.pi()
-    max_height = 1950
+    pi.set_pull_up_down(17, pigpio.PUD_DOWN)
+    max_height = 2000
     pi.set_servo_pulsewidth(17,max_height)
-    # cutoff = 12250
+#     cutoff = 12350
     PUMP.on()
     VALVE.off()
     sleep(1)
     cutoff = chan.value + 80
+    pi.set_servo_pulsewidth(17,1300)
     try:
-        for i in range(0, 1001, 10):
-            pi.set_servo_pulsewidth(17, max_height-i)
-            sleep(0.3)
+        for i in range(max_height, 1029, -100):
+            pi.set_servo_pulsewidth(17, i)
+            sleep(0.5)
             print(chan.value, cutoff)
-            if chan.value >= cutoff:
-                pi.set_servo_pulsewidth(17, max_height)
-                sleep(3)
-                pi.set_servo_pulsewidth(17, 0)
+            if NDIST.value == 0:
+                for j in range(i, 1019, -10):
+                    pi.set_servo_pulsewidth(17, j)
+                    sleep(1)
+                    if chan.value >= cutoff:
+                        pi.set_servo_pulsewidth(17, max_height)
+                        sleep(3)
+                        pi.set_servo_pulsewidth(17, 0)
+                        print("pill picked up")
+                        break
                 break
         
     except KeyboardInterrupt:
         pi.set_servo_pulsewidth(17, max_height)
         pi.set_servo_pulsewidth(17, 0)
+        PUMP.off()
         print('interrupted')
+        
     pi.set_servo_pulsewidth(17, max_height)
     sleep(3)
     pi.set_servo_pulsewidth(17, 0)
@@ -183,7 +205,7 @@ def dispense(med_id, qty):
     while qty_left != 0:
         lower_nozzle() #turns on pump and lowers vacuum nozzle, the nozzle will rise after getting clsoe to a pill
         turn_servo("dispense")#moves nozzle over the dispensing area
-        sleep(2)
+        sleep(0)
         VALVE.on()
         sleep(1)
         PUMP.off()
