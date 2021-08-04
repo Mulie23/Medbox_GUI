@@ -1078,7 +1078,7 @@ blank_text10=Text(wifi_window,text="",width="fill")
 select_wifi_txt = Text(wifi_window, text="Please select your wifi",size=70)
 wifi_name = Combo(wifi_window, options=[wifi_name_list[0],wifi_name_list[1],wifi_name_list[2],wifi_name_list[3],wifi_name_list[4],wifi_name_list[5],wifi_name_list[6],wifi_name_list[7],wifi_name_list[8],wifi_name_list[9]],width=20)
 wifi_name.bg =(232, 240, 254)
-wifi_name.text_size=70
+wifi_name.text_size=50
 blank_text11=Text(wifi_window,text="",width="fill")
 wifi_password_text = Text(wifi_window, text="Please type in wifi password",size=70)
 wifi_password = TextBox(wifi_window,width = 20)
