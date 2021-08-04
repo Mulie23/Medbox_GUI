@@ -580,6 +580,7 @@ def dispense_all():
     timer_1.start()   
     timer_2 = threading.Timer(120, notificate)
     timer_2.start()   
+    set_timer()
 
 
 random_code = ""
