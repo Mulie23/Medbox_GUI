@@ -1265,7 +1265,7 @@ check_pre.text_size=50
 # quit_med_button.bg=(135,206,250)
 # quit_med_button.text_size=50
 
-blank_text7=Text(menu_window,text="",width="fill",height=7)
+blank_text7=Text(menu_window,text="",width="fill",height=10)
 menu_box2 = Box(menu_window,align="top",width="fill")
 add_caregiver_code = PushButton(menu_box2, command=open_window5, text="Caregiver Code",width=15,align="left",height=2)
 add_caregiver_code.bg=(135,206,250)
