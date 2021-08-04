@@ -10,7 +10,9 @@ import threading
 from playsound import playsound
 import subprocess
 import os
-
+timer=0
+timer_1=0
+timer_2=0
 """
 NOTE : for the program to work , you need to have network-manager installed in the linux machine
 TODO : to install network-manager run - 
@@ -577,7 +579,7 @@ def dispense_all():
             for j in container_data:
                 if j != "current_pos":
                     if container_data[j]["medicine"]["id"] == med_id_to_dispense:
-                        container_data[j]["quantity"] -= med_quantity_to_dispense
+                        container_data[j]["quantity_left"] -= med_quantity_to_dispense
             n += 1
             if n == 1:
                 medicine_name1_dis.value = med_name_to_dispense
@@ -971,7 +973,7 @@ def back_window_wifi():
 wifi = WIFI()
 def submit_wifi():
     global wifi
-    if wifi.connect(wifi_name,wifi_password) == True:
+    if wifi.connect(wifi_name.value,wifi_password.value) == True:
         file_exists = os.path.isfile("data.json") 
         # print(file_exists)
         if file_exists:
