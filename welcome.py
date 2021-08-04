@@ -85,8 +85,8 @@ class WIFI :
 timer = 0
 timer_1 = 0
 timer_2 = 0
-# pygame.init()
-# pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
+pygame.init()
+pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
 
 GPIO.setmode(GPIO.BCM)
 
@@ -114,14 +114,14 @@ SCANNER = gpio.OutputDevice(4)
 SCAN = gpio.OutputDevice(27)
 
 # setup current sensor pins and variables
-# import board
-# import busio
-# i2c = busio.I2C(board.SCL, board.SDA)
+import board
+import busio
+i2c = busio.I2C(board.SCL, board.SDA)
 
-# import adafruit_ads1x15.ads1115 as ADS
-# from adafruit_ads1x15.analog_in import AnalogIn
-# ads = ADS.ADS1115(i2c)
-# chan = AnalogIn(ads, ADS.P0)
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
+ads = ADS.ADS1115(i2c)
+chan = AnalogIn(ads, ADS.P0)
 
 
 def play_alarm():
@@ -946,28 +946,37 @@ def set_timer():
 def back_window_wifi():
     wifi_window.hide()
 
+wifi = WIFI()
 def submit_wifi():
-    
-    file_exists = os.path.isfile("data.json") 
-    # print(file_exists)
-    if file_exists:
-        # f = open("data.json", "r")
-        # if f.read() == "":
-        #     login_window.show(wait=True)
-        #     f.close
-        # else:
-        with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
-            data = json.load(f)
-        if data["success"]==1:
-            menu_window.show(wait=True)
-            menu_window.set_full_screen()
+    global wifi
+    if wifi.connect(wifi_name,wifi_password) == True:
+        file_exists = os.path.isfile("data.json") 
+        # print(file_exists)
+        if file_exists:
+            # f = open("data.json", "r")
+            # if f.read() == "":
+            #     login_window.show(wait=True)
+            #     f.close
+            # else:
+            with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
+                data = json.load(f)
+            if data["success"]==1:
+                menu_window.show(wait=True)
+                menu_window.set_full_screen()
+                wifi_window.hide()
+            else:
+                login_window.show(wait=True)
+                wifi_window.hide()
         else:
+            # f = open("data.json", "w")
+            # f.write("")
+            # f.close
             login_window.show(wait=True)
+            wifi_window.hide()
+
     else:
-        # f = open("data.json", "w")
-        # f.write("")
-        # f.close
-        login_window.show(wait=True)
+        wifi_window.info("Notificaiton", "Cannot connect to this wifi, please check password")
+
 
 app = App(title="Homepage",bg = (255,255,224))
 app.set_full_screen()
@@ -1037,7 +1046,6 @@ finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func
 wifi_window = Window(app,title="Wifi",bg = (255,255,224),width = 1500, height = 1000)
 wifi_window.hide()
 
-wifi = WIFI()
 wifi_name_list=wifi.scan()
 if len(wifi_name_list)<10:
     for i in range(10-len(wifi_name_list)):
@@ -1046,12 +1054,12 @@ if len(wifi_name_list)<10:
 # print(wifi.connect("WT", "15168877330"))
 blank_text10=Text(wifi_window,text="",width="fill")
 select_wifi_txt = Text(wifi_window, text="Please select your wifi",size=70)
-wifi_name = Combo(wifi_window, options=[wifi_name_list[0],wifi_name_list[1],wifi_name_list[2],wifi_name_list[3],wifi_name_list[4],wifi_name_list[5],wifi_name_list[6],wifi_name_list[7],wifi_name_list[8],wifi_name_list[9]],width=10)
+wifi_name = Combo(wifi_window, options=[wifi_name_list[0],wifi_name_list[1],wifi_name_list[2],wifi_name_list[3],wifi_name_list[4],wifi_name_list[5],wifi_name_list[6],wifi_name_list[7],wifi_name_list[8],wifi_name_list[9]],width=20)
 wifi_name.bg =(232, 240, 254)
-wifi_name.text_size=40
+wifi_name.text_size=70
 blank_text11=Text(wifi_window,text="",width="fill")
 wifi_password_text = Text(wifi_window, text="Please type in wifi password",size=70)
-wifi_password = TextBox(wifi_window,width = 25)
+wifi_password = TextBox(wifi_window,width = 20)
 wifi_password.bg=(232, 240, 254)
 wifi_password.text_size=70
 
