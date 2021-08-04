@@ -15,7 +15,72 @@ import pigpio
 import json
 import serial
 import pygame
+import subprocess
+import os
 
+"""
+NOTE : for the program to work , you need to have network-manager installed in the linux machine
+TODO : to install network-manager run - 
+     sudo apt install network-manager 
+
+"""
+class WIFI : 
+    def __init__(self) :
+        pass
+        
+
+
+    def scan_windows(self) : 
+        self.dictData = {} 
+        #devices = subprocess.check_output(['wlan','network'])
+        # decode it to strings
+        devices = devices.decode('ascii')
+        devices= devices.replace("\r","")
+        devices = devices.split("\n\n")
+
+        for i in devices[1:-1] : 
+            temp = i.split("\n")
+            name = temp[0].split(":")[-1].strip(" ")
+            interface = temp[2].split(":")[-1].strip(" ")
+            self.dictData[name] = interface 
+    
+    """
+    @arguments
+        name is from the data 
+        password is from the GUI
+        interface wifi.data[name]
+
+    """
+    
+    def scan(self) :
+        devices = os.popen("nmcli device wifi list").read()
+        devices.replace("\r", " ")
+        devices = devices.split("\n")
+        data = set() 
+        for i in devices[1:-1] :
+            temp = i.split("\n")
+            name = temp[0].replace("  "," ").split(" ")[4]
+            data.add(name)
+        return list(data)
+           
+        
+    
+    def connect(self, name, password = None, interface=None) : 
+        try:
+            base = "nmcli d wifi connect {}".format(name)
+            if password!=None :
+                base += " password {}".format(password)
+            if interface!=None :
+                base += " iface {}".format(interface)
+            os.system(base) 
+        except:
+            raise
+        else:
+            return True
+
+# wifi = WIFI()
+# print(wifi.scan())
+# print(wifi.connect("WT", "15168877330"))
 
 timer = 0
 timer_1 = 0
@@ -925,8 +990,8 @@ if file_exists:
     with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
         data = json.load(f)
     if data["success"]==1:
-        menu_window.show(wait=True)
-        menu_window.set_full_screen()
+        app.show(wait=True)
+        app.set_full_screen()
     else:
         app.show() 
 else:
@@ -972,11 +1037,18 @@ finish_no = PushButton(confirm_finish_window, text ="No", command=finish_no_func
 wifi_window = Window(app,title="Wifi",bg = (255,255,224),width = 1500, height = 1000)
 wifi_window.hide()
 
+wifi = WIFI()
+wifi_name_list=wifi.scan()
+if len(wifi_name_list)<10:
+    for i in range(10-len(wifi_name_list)):
+        wifi_name_list.append("")
+# print(wifi.scan())
+# print(wifi.connect("WT", "15168877330"))
 blank_text10=Text(wifi_window,text="",width="fill")
 select_wifi_txt = Text(wifi_window, text="Please select your wifi",size=70)
-wifi_name = TextBox(wifi_window,width = 25)
+wifi_name = Combo(wifi_window, options=[wifi_name_list[0],wifi_name_list[1],wifi_name_list[2],wifi_name_list[3],wifi_name_list[4],wifi_name_list[5],wifi_name_list[6],wifi_name_list[7],wifi_name_list[8],wifi_name_list[9]],width=10)
 wifi_name.bg =(232, 240, 254)
-wifi_name.text_size=70
+wifi_name.text_size=40
 blank_text11=Text(wifi_window,text="",width="fill")
 wifi_password_text = Text(wifi_window, text="Please type in wifi password",size=70)
 wifi_password = TextBox(wifi_window,width = 25)
