@@ -13,6 +13,7 @@ import os
 timer=0
 timer_1=0
 timer_2=0
+timer_3=0
 """
 NOTE : for the program to work , you need to have network-manager installed in the linux machine
 TODO : to install network-manager run - 
@@ -708,15 +709,15 @@ def pm_to_am(time_string):
         return hour_minute
 
 def get_started():
-    global timer
+    global timer_3
     global wifi
     wifi = WIFI()
     if check_ping() == True:
         decide_screen()
     else:
         wifi_window.show(wait=True)
-    timer = threading.Timer(30, dispense_all)
-    timer.start()
+    timer_3 = threading.Timer(30, dispense_all)
+    timer_3.start()
         
 def decide_screen():
     file_exists = os.path.isfile("data.json") 
