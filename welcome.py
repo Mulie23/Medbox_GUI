@@ -709,15 +709,15 @@ def pm_to_am(time_string):
         return hour_minute
 
 def get_started():
-    global timer_3
+    # global timer_3
     global wifi
     wifi = WIFI()
     if check_ping() == True:
         decide_screen()
     else:
         wifi_window.show(wait=True)
-    timer_3 = threading.Timer(15, dispense_all)
-    timer_3.start()
+    # timer_3 = threading.Timer(15, dispense_all)
+    # timer_3.start()
         
 def decide_screen():
     file_exists = os.path.isfile("data.json") 
@@ -937,8 +937,8 @@ def set_timer():
             if i > 0:
                 timer_start_time = i
                 break
-        # timer = threading.Timer(timer_start_time, dispense_all)
-        # timer.start()
+        timer = threading.Timer(timer_start_time, dispense_all)
+        timer.start()
 
 def back_window_wifi():
     wifi_window.hide()
