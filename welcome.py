@@ -98,7 +98,15 @@ import pygame
 pygame.init()
 pygame.mixer.music.load('/home/pi/Documents/Medbox_GUI/samsung_alarm.mp3')
 
+os.system('sudo pigpiod')
+
 GPIO.setmode(GPIO.BCM)
+pi = pigpio.pi()
+pi.set_servo_pulsewidth(17,1970)
+pi.set_servo_pulsewidth(24,1500)
+sleep(2)
+pi.set_servo_pulsewidth(17,0)
+pi.set_servo_pulsewidth(24,0)
 
 # setup all pins
 #stepper motor
@@ -125,14 +133,14 @@ SCANNER = gpio.OutputDevice(4)
 SCAN = gpio.OutputDevice(27)
 
 # setup current sensor pins and variables
-# import board
-# import busio
-# i2c = busio.I2C(board.SCL, board.SDA)
+import board
+import busio
+i2c = busio.I2C(board.SCL, board.SDA)
 
-# import adafruit_ads1x15.ads1115 as ADS
-# from adafruit_ads1x15.analog_in import AnalogIn
-# ads = ADS.ADS1115(i2c)
-# chan = AnalogIn(ads, ADS.P0)
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
+ads = ADS.ADS1115(i2c)
+chan = AnalogIn(ads, ADS.P0)
 
 
 def play_alarm():
@@ -150,10 +158,10 @@ def turn_servo(pos):
 #     pi.set_PWM_frequency(24, 50)
     servo = "180"
     if servo == "180":
-        default = 1200
-        dispense = 700
+        default = 1500
+        dispense = 875
         if pos == "dispense":
-            for i in range (default, dispense+1, -25):
+            for i in range (default-200, dispense-1, -25):
                 pi.set_servo_pulsewidth(24, i)
                 sleep(0.2)
             sleep(1)
@@ -166,21 +174,19 @@ def turn_servo(pos):
         sleep(0.9)
         pi.set_servo_pulsewidth(24,0)
     return True
-# turn_servo("dispense")
-# sleep(2)
-# turn_servo("default")
+
 
 
 def lower_nozzle():
     pi = pigpio.pi()
     pi.set_pull_up_down(17, pigpio.PUD_DOWN)
-    max_height = 2000
+    max_height = 1970
     pi.set_servo_pulsewidth(17,max_height)
 #     cutoff = 12350
     PUMP.on()
     VALVE.off()
     sleep(1)
-    cutoff = chan.value + 80
+    cutoff = chan.value + 60
     pi.set_servo_pulsewidth(17,1300)
     try:
         for i in range(max_height, 1029, -100):
@@ -188,21 +194,24 @@ def lower_nozzle():
             sleep(0.5)
             print(chan.value, cutoff)
             if NDIST.value == 0:
-                for j in range(i, 1019, -10):
+                for j in range(i-50, 1019, -5):
                     pi.set_servo_pulsewidth(17, j)
-                    sleep(1)
+                    sleep(0.5)
+                    print(chan.value, cutoff)
                     if chan.value >= cutoff:
                         pi.set_servo_pulsewidth(17, max_height)
                         sleep(3)
                         pi.set_servo_pulsewidth(17, 0)
                         print("pill picked up")
                         break
+                sleep(1)
                 break
         
     except KeyboardInterrupt:
         pi.set_servo_pulsewidth(17, max_height)
         pi.set_servo_pulsewidth(17, 0)
-        PUMP.off()
+#         PUMP.off()
+        sleep(4)
         print('interrupted')
         
     pi.set_servo_pulsewidth(17, max_height)
@@ -218,74 +227,16 @@ def dispense(med_id, qty):
     while qty_left != 0:
         lower_nozzle() #turns on pump and lowers vacuum nozzle, the nozzle will rise after getting clsoe to a pill
         turn_servo("dispense")#moves nozzle over the dispensing area
-        sleep(0)
         VALVE.on()
         sleep(1)
         PUMP.off()
         VALVE.off()
-        sleep(2)
+        sleep(0.5)
         turn_servo("default")
         qty_left = qty_left - 1
     container.updateContainerInformation(container_id, -qty)
     container.writeToFile()    
     return True
-
-
-   # show all medicines 
-
-    # [ (iterate for each medicine) state machine 
-    # GUI prompt  to scan 
-    # turn on scanner 
-    # wait here untill scanner is pressed or back is pressed 
-    # if scanner returns a value 
-        # get medicine ID 
-        # if container exists get id, else allocate and return id 
-        # rotate the slot to the area 
-        # prompt UI to enter number of pill and click next 
-    # ]
-
-
-def refillProcess() : 
-    # pull updated prescription 
-    container = Containers(DIR, STEP, SLEEP) 
-    stateMachine = True ; 
-    state = 'barcode'
-    while(stateMachine) : 
-        if (state=="barcode") : 
-            quantity_window.show(wait=True)
-            refill_window.hide()
-            #display the relevant details on the front end - Wentao
-            # information on what medicine are to be filled up 
-            medicine_id = checkBarcode() ; 
-            if medicine_id!=None : 
-                state = "rotate"
-
-            # add GUI interrupt 
-        elif (state=="rotate") : 
-            container_id = container.getContainer(medicine_id)
-            if container.rotateContainerToRefillArea(container_id) : 
-                state="finish"
-            else : 
-                state = "error"
-                message = "couldn't rotate container"
-        # elif (state=="wait") : 
-        #     # wait for a button push on gui and number of pills form input 
-        #     # update infromation i.e container.json
-        #     if refillComplete() : 
-        #         state = "finish"
-        #     else : 
-        #         state = "barcode" 
-        elif (state=="finish"): 
-            container.writeToFile() 
-            stateMachine = False 
-#            refill_window.show(wait=True)
-        elif  (state=="error") : 
-            error = "there was some error" 
-            stateMachine = False 
-        else : 
-            state = "error" 
-            error = "invalid sate" 
-    return  True
 
 
 
