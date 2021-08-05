@@ -646,6 +646,7 @@ def confirm_finish():
     with open("/home/pi/Documents/Medbox_GUI/container.json","w") as f:
         json.dump(data, f)
     medicine_info_check()
+    quantity_window.hide()
     refill_window.show(wait=True)
 
 def notificate():
