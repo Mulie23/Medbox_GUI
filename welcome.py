@@ -125,14 +125,14 @@ SCANNER = gpio.OutputDevice(4)
 SCAN = gpio.OutputDevice(27)
 
 # setup current sensor pins and variables
-import board
-import busio
-i2c = busio.I2C(board.SCL, board.SDA)
+# import board
+# import busio
+# i2c = busio.I2C(board.SCL, board.SDA)
 
-import adafruit_ads1x15.ads1115 as ADS
-from adafruit_ads1x15.analog_in import AnalogIn
-ads = ADS.ADS1115(i2c)
-chan = AnalogIn(ads, ADS.P0)
+# import adafruit_ads1x15.ads1115 as ADS
+# from adafruit_ads1x15.analog_in import AnalogIn
+# ads = ADS.ADS1115(i2c)
+# chan = AnalogIn(ads, ADS.P0)
 
 
 def play_alarm():
@@ -757,29 +757,35 @@ def pm_to_am(time_string):
         return hour_minute
 
 def get_started():
+    global timer
     global wifi
     wifi = WIFI()
-    wifi_window.show(wait=True)
-    # file_exists = os.path.isfile("data.json") 
-    # # print(file_exists)
-    # if file_exists:
-    #     # f = open("data.json", "r")
-    #     # if f.read() == "":
-    #     #     login_window.show(wait=True)
-    #     #     f.close
-    #     # else:
-    #     with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
-    #         data = json.load(f)
-    #     if data["success"]==1:
-    #         menu_window.show(wait=True)
-    #         menu_window.set_full_screen()
-    #     else:
-    #         login_window.show(wait=True)
-    # else:
-    #     # f = open("data.json", "w")
-    #     # f.write("")
-    #     # f.close
-    #     login_window.show(wait=True)
+    if check_ping() == True:
+        decide_screen()
+    else:
+        wifi_window.show(wait=True)
+        
+def decide_screen():
+    file_exists = os.path.isfile("data.json") 
+    # print(file_exists)
+    if file_exists:
+        # f = open("data.json", "r")
+        # if f.read() == "":
+        #     login_window.show(wait=True)
+        #     f.close
+        # else:
+        with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
+            data = json.load(f)
+        if data["success"]==1:
+            menu_window.show(wait=True)
+            menu_window.set_full_screen()
+        else:
+            login_window.show(wait=True)
+    else:
+        # f = open("data.json", "w")
+        # f.write("")
+        # f.close
+        login_window.show(wait=True)
 
 
 
