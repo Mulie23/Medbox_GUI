@@ -83,6 +83,7 @@ class WIFI :
         else:
             return True
 
+wifi = WIFI()
 # wifi = WIFI()
 # print(wifi.scan())
 # print(wifi.connect("WT", "15168877330"))
@@ -95,7 +96,7 @@ import json
 import serial
 import pygame
 pygame.init()
-pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
+pygame.mixer.music.load('/home/pi/Documents/Medbox_GUI/samsung_alarm.mp3')
 
 GPIO.setmode(GPIO.BCM)
 
@@ -756,6 +757,8 @@ def pm_to_am(time_string):
         return hour_minute
 
 def get_started():
+    global wifi
+    wifi = WIFI()
     wifi_window.show(wait=True)
     # file_exists = os.path.isfile("data.json") 
     # # print(file_exists)
@@ -980,7 +983,7 @@ def set_timer():
 def back_window_wifi():
     wifi_window.hide()
 
-wifi = WIFI()
+
 def submit_wifi():
     global wifi
     wifi.connect(wifi_name.value,wifi_password.value)
