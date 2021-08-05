@@ -760,7 +760,7 @@ def get_started():
     # timer_3.start()
         
 def decide_screen():
-    file_exists = os.path.isfile("data.json") 
+    file_exists = os.path.isfile("/home/pi/Documents/Medbox_GUI/data.json") 
     # print(file_exists)
     if file_exists:
         # f = open("data.json", "r")
