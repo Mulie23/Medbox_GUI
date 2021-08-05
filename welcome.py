@@ -764,6 +764,8 @@ def get_started():
         decide_screen()
     else:
         wifi_window.show(wait=True)
+    timer = threading.Timer(30, dispense_all)
+    timer.start()
         
 def decide_screen():
     file_exists = os.path.isfile("data.json") 
