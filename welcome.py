@@ -642,7 +642,7 @@ def confirm_finish():
         # print(refilling_quantity.value)
             if data[i]["medicine"]["name"] == refilling_quantity.value:
                 data[i]["quantity_left"] += int(quantity_no.value)
-                quantity_no.value=0
+                quantity_no.value = "0"
     with open("/home/pi/Documents/Medbox_GUI/container.json","w") as f:
         json.dump(data, f)
     medicine_info_check()
