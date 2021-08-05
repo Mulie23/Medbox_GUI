@@ -94,8 +94,8 @@ import pigpio
 import json
 import serial
 import pygame
-# pygame.init()
-# pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
+pygame.init()
+pygame.mixer.music.load('/home/pi/Documents/MedBox/pyFiles/samsung_alarm.mp3')
 
 GPIO.setmode(GPIO.BCM)
 
@@ -124,14 +124,14 @@ SCANNER = gpio.OutputDevice(4)
 SCAN = gpio.OutputDevice(27)
 
 # setup current sensor pins and variables
-# import board
-# import busio
-# i2c = busio.I2C(board.SCL, board.SDA)
+import board
+import busio
+i2c = busio.I2C(board.SCL, board.SDA)
 
-# import adafruit_ads1x15.ads1115 as ADS
-# from adafruit_ads1x15.analog_in import AnalogIn
-# ads = ADS.ADS1115(i2c)
-# chan = AnalogIn(ads, ADS.P0)
+import adafruit_ads1x15.ads1115 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
+ads = ADS.ADS1115(i2c)
+chan = AnalogIn(ads, ADS.P0)
 
 
 def play_alarm():
@@ -457,7 +457,7 @@ class Containers() :
         return True 
 
     def writeToFile(self) : 
-        with open("container.json", 'w') as outfile:
+        with open("/home/pi/Documents/Medbox_GUI/container.json", 'w') as outfile:
             json.dump(self.data, outfile)
 # container = Containers(DIR, STEP, SLEEP)
 # import os
@@ -535,7 +535,7 @@ def refill_notification():
     refill_window.show(wait=True)
 
 def compare():
-    with open("container.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/container.json") as f:
         container_data = json.load(f)
     with open("prescription.json") as f:
         prescription_data = json.load(f)
@@ -559,7 +559,7 @@ def dispense_all():
     global timer_1
     global timer_2
     dispense_window.show(wait=True)
-    with open("container.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/container.json") as f:
         container_data = json.load(f)
     with open("prescription.json") as f:
         prescription_data = json.load(f)
@@ -627,7 +627,7 @@ def dispense_all():
             if n == 12:
                 medicine_name12_dis.value = med_name_to_dispense
                 medicine_quantity12_dis.value = med_quantity_to_dispense    
-    with open("container.json","w") as f:
+    with open("/home/pi/Documents/Medbox_GUI/container.json","w") as f:
         json.dump(container_data, f)                  
     play_alarm()
     timer_1 = threading.Timer(60, play_alarm)
@@ -640,7 +640,7 @@ def dispense_all():
 random_code = ""
 
 def confirm_finish():
-    with open("container.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/container.json") as f:
         data = json.load(f)
     for i in data:
         if i != "current_pos":
@@ -648,7 +648,7 @@ def confirm_finish():
         # print(refilling_quantity.value)
             if data[i]["medicine"]["name"] == refilling_quantity.value:
                 data[i]["quantity_left"] += int(quantity_no.value)
-    with open("container.json","w") as f:
+    with open("/home/pi/Documents/Medbox_GUI/container.json","w") as f:
         json.dump(data, f)
     medicine_info_check()
     refill_window.show(wait=True)
@@ -888,7 +888,7 @@ def finish_dis():
         dispense_window.hide()
 
 def medicine_info_check():
-    with open("container.json") as f:
+    with open("/home/pi/Documents/Medbox_GUI/container.json") as f:
         data = json.load(f)
     medicine_name1.value=data["container_1"]["medicine"]["name"]
     medicine_name2.value=data["container_2"]["medicine"]["name"]
