@@ -104,7 +104,7 @@
     "container_11":{
         "angleServo": 12,
         "filled": 1,
-        "quantity_left": 30,
+        "quantity_left": 0,
         "medicine":{
             "id": 62374,
             "name": "Charcoal Pills",
@@ -114,7 +114,7 @@
     "container_12":{
         "angleServo": 12,
         "filled": 1,
-        "quantity_left": 30,
+        "quantity_left": 0,
         "medicine":{
             "id": 78921,
             "name": "Vitamin D",
