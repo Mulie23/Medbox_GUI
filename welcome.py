@@ -977,7 +977,7 @@ def set_timer():
             if i > 0:
                 timer_start_time = i
                 break
-        timer = threading.Timer(60, dispense_all)
+        timer = threading.Timer(timer_start_time, dispense_all)
         timer.start()
 
 def back_window_wifi():
