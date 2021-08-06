@@ -426,6 +426,7 @@ class Containers() :
         if current != destination:
             ang, dire = self.calc_turn_angle(current, destination)
             print(ang, dire)
+            ang=0
             self.turn_stepper(ang, dire)
             self.data['current_pos'] = destination
             self.current_pos = destination
