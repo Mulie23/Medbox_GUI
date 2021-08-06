@@ -426,7 +426,7 @@ class Containers() :
         if current != destination:
             ang, dire = self.calc_turn_angle(current, destination)
             print(ang, dire)
-            ang=0
+            # ang=0
             self.turn_stepper(ang, dire)
             self.data['current_pos'] = destination
             self.current_pos = destination
@@ -647,8 +647,8 @@ def confirm_finish():
     with open("/home/pi/Documents/Medbox_GUI/container.json","w") as f:
         json.dump(data, f)
     medicine_info_check()
-    quantity_window.hide()
     refill_window.show(wait=True)
+    quantity_window.hide()
 
 def notificate():
     with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
