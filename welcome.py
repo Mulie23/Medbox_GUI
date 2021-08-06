@@ -752,15 +752,15 @@ def pm_to_am(time_string):
         return hour_minute
 
 def get_started():
-    # global timer_3
+    global timer_3
     global wifi
     wifi = WIFI()
     if check_ping() == True:
         decide_screen()
     else:
         wifi_window.show(wait=True)
-    # timer_3 = threading.Timer(15, dispense_all)
-    # timer_3.start()
+    timer_3 = threading.Timer(15, dispense_all)
+    timer_3.start()
         
 def decide_screen():
     file_exists = os.path.isfile("/home/pi/Documents/Medbox_GUI/data.json") 
