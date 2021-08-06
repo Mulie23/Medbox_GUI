@@ -225,7 +225,7 @@ def dispense(med_id, qty):
     container = Containers(DIR, STEP, SLEEP)
     container_id = container.getContainer(med_id)
     container.rotateContainerToDispenseArea(container_id)
-    sleep(5)
+    # sleep(5)
     while qty_left != 0:
         lower_nozzle() #turns on pump and lowers vacuum nozzle, the nozzle will rise after getting clsoe to a pill
         turn_servo("dispense")#moves nozzle over the dispensing area
