@@ -114,7 +114,7 @@
     "container_12":{
         "angleServo": 12,
         "filled": 1,
-        "quantity_left": 0,
+        "quantity_left": 10,
         "medicine":{
             "id": 78921,
             "name": "Vitamin D",
