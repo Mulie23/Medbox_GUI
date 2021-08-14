@@ -7,9 +7,10 @@ import string
 import os.path
 import datetime
 import threading
-from playsound import playsound
+# from playsound import playsound
 import subprocess
 import os
+
 timer=0
 timer_1=0
 timer_2=0
