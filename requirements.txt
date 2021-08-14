@@ -1,0 +1,8 @@
+guizero==1.2.0
+requests==2.21.0
+pygame==2.0.0
+adafruit_ads1x15==1.0.2
+board==1.0
+gpiozero==1.6.2
+pigpio==1.78
+pyserial==3.5

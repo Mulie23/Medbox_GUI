@@ -1,5 +1,0 @@
-guizero
-requests
-vlc
-board
-adafruit_ads1x15
