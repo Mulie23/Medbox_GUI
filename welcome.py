@@ -1389,11 +1389,11 @@ medicine_dose11_chepre = Text(check_pre_box12, text="",width=35,align="left",hei
 blank_text_n6=Text(check_pre_box12,text="",align="left",width=15)
 medicine_message11_chepre = Text(check_pre_box12, text="",width=35,align="left",height=2,size=20)
 check_pre_box13 = Box(check_pre_window,align="top",width="fill")
-medicine_name12_chepre = Text(check_pre_box13, text="1",width=35,align="left",height=2,size=20)
+medicine_name12_chepre = Text(check_pre_box13, text="",width=35,align="left",height=2,size=20)
 blank_text_n2=Text(check_pre_box13,text="",align="left",width=10)
-medicine_dose12_chepre = Text(check_pre_box13, text="1",width=35,align="left",height=2,size=20)
+medicine_dose12_chepre = Text(check_pre_box13, text="",width=35,align="left",height=2,size=20)
 blank_text_n6=Text(check_pre_box13,text="",align="left",width=15)
-medicine_message12_chepre = Text(check_pre_box13, text="1",width=35,align="left",height=2,size=20)
+medicine_message12_chepre = Text(check_pre_box13, text="",width=35,align="left",height=2,size=20)
 
 #refill window
 blank_text_n1=Text(refill_window,text="",width="fill",height=2)
