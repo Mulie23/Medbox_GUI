@@ -242,46 +242,47 @@ def dispense(med_id, qty):
     return True
 
 def refillProcess() : 
-    # pull updated prescription 
-    container = Containers(DIR, STEP, SLEEP) 
-    stateMachine = True ; 
-    state = 'barcode'
-    while(stateMachine) : 
-        if (state=="barcode") : 
-            quantity_window.show(wait=True)
-            refill_window.hide()
-            #display the relevant details on the front end - Wentao
-            # information on what medicine are to be filled up 
-            medicine_id = checkBarcode() ; 
-            if medicine_id!=None : 
-                state = "rotate"
+#     # pull updated prescription 
+#     container = Containers(DIR, STEP, SLEEP) 
+#     stateMachine = True ; 
+#     state = 'barcode'
+#     while(stateMachine) : 
+#         if (state=="barcode") : 
+#             quantity_window.show(wait=True)
+#             refill_window.hide()
+#             #display the relevant details on the front end - Wentao
+#             # information on what medicine are to be filled up 
+#             medicine_id = checkBarcode() ; 
+#             if medicine_id!=None : 
+#                 state = "rotate"
 
-            # add GUI interrupt 
-        elif (state=="rotate") : 
-            container_id = container.getContainer(medicine_id)
-            if container.rotateContainerToRefillArea(container_id) : 
-                state="finish"
-            else : 
-                state = "error"
-                message = "couldn't rotate container"
-        # elif (state=="wait") : 
-        #     # wait for a button push on gui and number of pills form input 
-        #     # update infromation i.e container.json
-        #     if refillComplete() : 
-        #         state = "finish"
-        #     else : 
-        #         state = "barcode" 
-        elif (state=="finish"): 
-            container.writeToFile() 
-            stateMachine = False 
-#            refill_window.show(wait=True)
-        elif  (state=="error") : 
-            error = "there was some error" 
-            stateMachine = False 
-        else : 
-            state = "error" 
-            error = "invalid sate" 
-    return  True
+#             # add GUI interrupt 
+#         elif (state=="rotate") : 
+#             container_id = container.getContainer(medicine_id)
+#             if container.rotateContainerToRefillArea(container_id) : 
+#                 state="finish"
+#             else : 
+#                 state = "error"
+#                 message = "couldn't rotate container"
+#         # elif (state=="wait") : 
+#         #     # wait for a button push on gui and number of pills form input 
+#         #     # update infromation i.e container.json
+#         #     if refillComplete() : 
+#         #         state = "finish"
+#         #     else : 
+#         #         state = "barcode" 
+#         elif (state=="finish"): 
+#             container.writeToFile() 
+#             stateMachine = False 
+# #            refill_window.show(wait=True)
+#         elif  (state=="error") : 
+#             error = "there was some error" 
+#             stateMachine = False 
+#         else : 
+#             state = "error" 
+#             error = "invalid sate" 
+#     return  True
+    scan_window.show(wait=True)
 
 def refillComplete() : 
     # return true if all the medicines have been refilled 
@@ -853,10 +854,10 @@ def open_window5():
     body = {"password":random_code,"medboxID":"1"}
     # print(header)
     # print(body)
-    response2 = requests.post("http://3.0.17.207:4000/onboard/register", body,header)
-    caregiver_response_data = response2.json()
-    with open("caregiver_response_data.json", "w") as f:
-        json.dump(caregiver_response_data, f)
+    # response2 = requests.post("http://3.0.17.207:4000/onboard/register", body,header)
+    # caregiver_response_data = response2.json()
+    # with open("caregiver_response_data.json", "w") as f:
+    #     json.dump(caregiver_response_data, f)
 
     code_window.show(wait=True)
 
@@ -1133,9 +1134,9 @@ quantity_txt2_dis = Text(dispense_box1, text="Quantity",width="fill",align="left
 
 # blank_text_n3=Text(dispense_window,text="",width="fill",height=7)
 dispense_box2 = Box(dispense_window,align="top",width="fill")
-medicine_name1_dis = Text(dispense_box2, text="",width=35,align="left",height=2,size=20)
+medicine_name1_dis = Text(dispense_box2, text="Vitamin D",width=35,align="left",height=2,size=20)
 blank_text_n2=Text(dispense_box2,text="",align="left",width=15)
-medicine_quantity1_dis = Text(dispense_box2, text="",width="fill",align="left",height=2,size=20)
+medicine_quantity1_dis = Text(dispense_box2, text="1",width="fill",align="left",height=2,size=20)
 blank_text_n6=Text(dispense_box2,text="",align="left",width=15)
 medicine_name2_dis = Text(dispense_box2, text="",width=35,align="left",height=2,size=20)
 blank_text_n7=Text(dispense_box2,text="",align="left",width=15)
