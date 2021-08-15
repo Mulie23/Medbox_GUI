@@ -778,6 +778,7 @@ def decide_screen():
         if data["success"]==1:
             menu_window.show(wait=True)
             menu_window.set_full_screen()
+            pull_pres()
         else:
             login_window.show(wait=True)
     else:
@@ -785,7 +786,6 @@ def decide_screen():
         # f.write("")
         # f.close
         login_window.show(wait=True)
-
 
 
 
@@ -806,6 +806,7 @@ def submit():
     # print(data)
     if data["success"] == 1:
         setting_window.show(wait=True)
+        pull_pres()
     elif data["success"] == 0:
         if data["error"] == "db connection error":
             login_window.info("Error", "Cannot connect to the database")
