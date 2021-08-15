@@ -991,38 +991,35 @@ def back_window_wifi():
 
 
 def submit_wifi():
-    # global wifi
-    # wifi.connect(wifi_name.value,wifi_password.value)
-    # if check_ping() == True:  
-    #     file_exists = os.path.isfile("data.json") 
-    #     # print(file_exists)
-    #     if file_exists:
-    #         # f = open("data.json", "r")
-    #         # if f.read() == "":
-    #         #     login_window.show(wait=True)
-    #         #     f.close
-    #         # else:
-    #         with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
-    #             data = json.load(f)
-    #         if data["success"]==1:
-    #             menu_window.show(wait=True)
-    #             menu_window.set_full_screen()
-    #             wifi_window.hide()
-    #         else:
-    #             login_window.show(wait=True)
-    #             wifi_window.hide()
-    #     else:
-    #         # f = open("data.json", "w")
-    #         # f.write("")
-    #         # f.close
-    #         login_window.show(wait=True)
-    #         wifi_window.hide()
+    global wifi
+    wifi.connect(wifi_name.value,wifi_password.value)
+    if check_ping() == True:  
+        file_exists = os.path.isfile("data.json") 
+        # print(file_exists)
+        if file_exists:
+            # f = open("data.json", "r")
+            # if f.read() == "":
+            #     login_window.show(wait=True)
+            #     f.close
+            # else:
+            with open("/home/pi/Documents/Medbox_GUI/data.json") as f:
+                data = json.load(f)
+            if data["success"]==1:
+                menu_window.show(wait=True)
+                menu_window.set_full_screen()
+                wifi_window.hide()
+            else:
+                login_window.show(wait=True)
+                wifi_window.hide()
+        else:
+            # f = open("data.json", "w")
+            # f.write("")
+            # f.close
+            login_window.show(wait=True)
+            wifi_window.hide()
 
-    # else:
-    #     wifi_window.info("Notificaiton", "Cannot connect to this wifi, please check password")
-    login_window.show(wait=True)
-    # menu_window.set_full_screen()
-    wifi_window.hide()
+    else:
+        wifi_window.info("Notificaiton", "Cannot connect to this wifi, please check password")
 
 
 app = App(title="Homepage",bg = (255,255,224))
