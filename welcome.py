@@ -282,7 +282,7 @@ def refillProcess() :
 #             state = "error" 
 #             error = "invalid sate" 
 #     return  True
-    quantity_window.show(wait=True)
+    scan_window.show(wait=True)
 
 def refillComplete() : 
     # return true if all the medicines have been refilled 
